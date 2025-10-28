@@ -1,0 +1,233 @@
+/* src/bookmark.module.css */
+/* 전체 레이아웃 */
+.layout {
+  display: flex;
+  background-color: #535353;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 60px;
+  margin-right: 20px;
+  margin-left: 100px;
+  width: calc(100% - 120px);
+  height: calc(100vh - 40px);
+  box-sizing: border-box;
+  border-radius: 0 10px 10px 0;
+}
+
+.container2 {
+  display: flex;
+  width: 100%;
+  overflow-y: auto;
+  border-bottom-right-radius: 10px;
+}
+
+/* 메인 콘텐츠 */
+.mainContent {
+  flex: 1;
+  padding: 30px;
+  background-color: #f5f3e9;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  border-top-right-radius: 10px;
+  font-size: 12px;
+}
+
+.mainContent h2 {
+  margin-bottom: 20px;
+}
+
+/* 헤더 스타일 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* 버튼 스타일 */
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 6px 14px;
+  border: 1px solid #333;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: #333;
+  color: white;
+}
+
+.btn:disabled {
+  background-color: #f0f0f0;
+  color: #999;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
+}
+
+.bookmarkGrid {
+  display: grid;
+  flex: 1;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  min-height: 300px;
+  border: 1px solid #333;
+  row-gap: 30px;
+  column-gap: 20px;
+  /* ✨ [수정] auto-fit을 auto-fill로 변경하여 아이템이 늘어나는 것을 방지합니다. */
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  overflow-y: auto;
+  align-content: flex-start;
+  justify-items: start;
+}
+
+.emptyState {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #666;
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #666;
+}
+
+.bookmarkItem {
+  width: 160px;
+  min-height: 200px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.bookmarkItem:hover {
+  transform: translateY(-2px);
+}
+
+.bookmarkCard {
+  flex-grow: 1;
+  position: relative;
+}
+
+.placeholderImage {
+  width: 100%;
+  height: 180px;
+  background-color: #00bcd4;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.bookmarkCheckbox {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  accent-color: white;
+  cursor: pointer;
+  margin: 0;
+  z-index: 10;
+}
+
+.bookmarkFooter {
+  min-height: 50px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+/* ✨ [수정] 긴 제목을 2줄로 제한하고 말줄임표(...)로 표시하도록 변경합니다. */
+.bookmarkTitle {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.4;
+  flex: 1;
+  margin-right: 5px;
+
+  /* 아래 5줄 추가 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* 2줄로 제한 */
+  -webkit-box-orient: vertical;
+}
+
+.bookmarkOptions {
+  font-size: 18px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.modalInput {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.optionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.optionButton {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #f7f7f7;
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.optionButton:hover {
+  background-color: #e0e0e0;
+}

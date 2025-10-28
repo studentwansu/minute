@@ -1,0 +1,242 @@
+/* qnaDetail.module.css (답변 아이템 하단에 직접 마진 추가) */
+
+.layout {
+  display: flex;
+}
+
+.container {
+  display: flex;
+  background-color: #fff;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  margin-left: 100px;
+  width: calc(100% - 120px);
+  height: calc(100vh - 41px);
+  box-sizing: border-box;
+  scrollbar-width: none;
+  padding-left: 30px;
+  border-radius: 0 10px 10px 0;
+  overflow-y: auto;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.background {
+  padding: 20px; /* 상하좌우 기본 패딩 유지 */
+  color: #333;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%; /* 추가: .container 높이를 채우도록 시도 */
+}
+
+/* Q&A 제목 링크 */
+.qnaLinkContainer {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.qnaLink {
+  font-size: 2.5em;
+  font-weight: 600;
+  color: #2c3e50;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.qnaLink:hover {
+  color: #FF69B4;
+  text-decoration: none;
+}
+
+/* 문의 내용 영역 */
+.contentArea {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px 35px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 문의 정보 바 */
+.info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 10px 20px;
+}
+
+.info span {
+  font-size: 14px;
+  color: #555;
+}
+
+.statusTag {
+  font-weight: 600;
+  padding: 5px 10px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #495057;
+}
+.authorName {}
+.postTitleMain {
+  flex-grow: 1;
+  min-width: 150px;
+  font-weight: bold;
+  color: #333;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+.postDate {
+  font-size: 13px;
+  color: #777;
+  margin-left: auto;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* 문의 내용 텍스트 박스 */
+.textbox {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  min-height: 100px;
+  line-height: 1.7;
+  color: #343a40;
+  font-size: 1em;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.textbox p { margin: 0; }
+.textbox br { display: block; margin-bottom: 0.6em; }
+
+/* 첨부 이미지 영역 */
+.img {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.img img {
+  width: 120px;
+  height: 120px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  object-fit: cover;
+  background-color: #f0f0f0;
+}
+
+/* --- 관리자 답변 영역 스타일 --- */
+.answerSection {
+  margin-top: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  /* 이전에 여기에 주었던 margin-bottom은 adminAnswerItem으로 옮기거나, .background의 padding-bottom으로 조절 */
+}
+
+.answerTitle {
+  font-size: 1.4em;
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ecf0f1;
+  font-weight: 600;
+}
+
+.adminAnswerItem {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 20px 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 50px; /* === 관리자 답변 아이템(폼) 바로 밑에 하단 여백 50px 추가 === */
+}
+
+.adminAnswerMeta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 0.9em;
+  gap: 10px;
+}
+
+.adminAnswerAuthor { font-weight: 600; color: #34495e; }
+.adminAnswerDate { color: #95a5a6; font-size: 0.9em; white-space: nowrap; flex-shrink: 0; }
+
+.adminAnswerContent {
+  line-height: 1.7;
+  color: #4a6177;
+  font-size: 1em;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+.adminAnswerContent br { display: block; margin-bottom: 0.5em; }
+
+/* --- 관리자 답변 영역 스타일 끝 --- */
+
+/* --- 문의글 수정/삭제 등 액션 버튼 영역 --- */
+.qnaMainActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #ecf0f1;
+}
+
+.actionButton {
+  padding: 8px 18px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  background-color: #000000;
+  color: white;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+.actionButton:hover { background-color: #333333; border-color: #333333; }
+
+.editButton {}
+
+/* --- 액션 버튼 영역 끝 --- */
+
+.imagePlaceholder {
+  width: 100px;
+  height: 100px;
+  border: 2px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f7f7;
+  color: #888;
+  font-size: 13px;
+  border-radius: 4px;
+}

@@ -1,0 +1,436 @@
+.layout {
+  display: flex;
+}
+
+.container {
+  display: flex;
+  background: #000;
+  margin: 20px 20px 20px 100px;
+  width: calc(100% - 120px);
+  height: calc(100vh - 41px);
+  padding-left: 30px;
+  border-radius: 0 10px 10px 0;
+  overflow: hidden;
+}
+
+.contents_wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #000;
+  padding: 32px 0px;
+  border-radius: 0 10px 10px 0;
+  height: calc(100vh - 42px);
+  overflow: visible;
+  color: #fff;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.monthNav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.arrowBtn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+  width: 15px;
+}
+
+.monthLabel {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.weekHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.dayBox {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.dayBox:hover {
+  background: #2a2a2a;
+}
+
+.dateNum {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.weekDay {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.todayBox {
+  background-color: #ff3366;
+}
+
+.selectedBox {
+  background: #2a2a2a;
+}
+
+.mainBox {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+  height: 65vh;
+}
+
+.listSection {
+  background: #1f1f1f;
+  border-radius: 8px;
+  padding: 16px;
+  width: 27%;
+  height: 65vh;
+  overflow-y: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.addForm {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.addInput {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.confirmBtn,
+.cancelBtn {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.listContent {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* src/assets/styles/CalendarPage2.module.css */
+
+/* ① label을 그리드로 바꿔서 첫 번째 칸은 체크박스, 두 번째 칸은 텍스트 */
+.listItem label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;      /* 체크박스와 텍스트 사이 간격 */
+  align-items: start;   /* 체크박스와 텍스트 박스 상단 정렬 */
+}
+
+/* ② span은 여러 줄로 감싸지도록 */
+.listItem label span {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* ③ input[type="checkbox"] 크기 고정(선택사항) */
+.listItem label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: auto 0;
+}
+
+
+.listItem {
+  display: flex;
+  align-items: center;      /* 체크박스와 텍스트 수직 중앙 정렬 */
+  justify-content: space-between;
+  background: #2a2a2a;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  min-width: 300px;
+  align-items: center;
+}
+
+/* 체크박스 기본 스타일 제거하고 pink 박스 그리기 */
+.listItem input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #FADADD;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;           /* 텍스트 길어져도 박스 크기 고정 */
+  margin-right: 8px;        /* 텍스트와 간격 */
+  border: 2px solid #FADADD;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;       /* ::after 위치 조정 기준 */
+}
+
+/* 검정 체크 모양 그리기 */
+.listItem input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  top: 2px; left: 5px;
+  width: 5px; height: 9px;
+  border: solid #000;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+/* 체크되었을 때만 표시 */
+.listItem input[type="checkbox"]:checked::after {
+  opacity: 1;
+}
+
+
+.addButton {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 25px;
+}
+
+.deleteItemBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: white;
+  font-weight: 900;
+  margin-left: 5px;
+}
+
+.deleteItemBtn:hover {
+  color: #aeaeae;
+}
+
+.planSection {
+  display: flex;
+  flex-direction: column;
+  background: #1f1f1f;
+  border-radius: 8px;
+  padding: 16px;
+  width: 40%;
+  height: 65vh;
+  box-shadow: 0 2px 6px rgba(255,255,255,0.05);
+  min-height: 0;
+}
+
+/* 스크롤 컨테이너에 높이+스크롤 */
+.scheduleGridContainer {
+  position: relative;
+  height: calc(100vh - 200px); /* 필요에 따라 조정 */
+  overflow-y: auto;
+}
+
+/* .scheduleGrid 는 기존 grid 레이아웃 유지 */
+.scheduleGrid {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  /* grid-template-rows: repeat(144, 1fr); 등 기존 설정 */
+}
+
+
+.scheduleGrid {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  grid-template-rows: repeat(1440, 1px);  /* 24시간 × 60분 = 1440개의 1px 행 */
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scheduleGrid::-webkit-scrollbar {
+  display: none;
+}
+
+.timeColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeCell {
+  height: 60px;
+  line-height: 60px;
+  padding-left: 8px;
+  border-top: 1px solid #333;
+  font-size: 12px;
+  color: #ccc;
+}
+
+.cells {
+  grid-column: 2;
+  grid-row: 1 / span 1440;
+}
+
+.planCard {
+  background-color: #FADADD;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  border-radius: 6px;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.2);
+}
+
+.planTitle {
+  padding: 3px;
+  flex: none;
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #333;
+}
+
+.planBody {
+  padding: 3px;
+  flex: 1;
+  overflow-y: auto;
+  /* 스크롤바 숨기기 */
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE 10+ */
+}
+.planBody::-webkit-scrollbar {
+  display: none;               /* Chrome, Safari */
+}
+
+.planDesc {
+  margin: 0;
+  font-size: 12px;
+  color: #555;
+  word-break: break-word;
+}
+
+.planTime {
+  padding: 3px;
+  flex: none;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #777;
+}
+
+.deletePlanBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000000;
+  font-weight: 900;
+}
+
+.deletePlanBtn:hover {
+  color: #585858;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.formColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formColumn label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.formColumn input[type="text"],
+.formColumn input[type="time"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.planTextarea {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.timeRange {
+  display: flex;
+  align-items: center;
+}
+
+.timeSeparator {
+  margin: 0 8px;
+  color: #666;
+}
+
+.weatherSection {
+  width: 25%;
+  height: 65vh;
+  /* background: #2a2a2a; */
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.character {
+  /* 1) 아래로 밀기 */
+  margin-top: auto;
+
+  /* 2) 가로축 오른쪽 끝으로 밀기 */
+  align-self: center;
+
+  /* 이미지 크기에 맞춰 박스 크기 조절 (옵션) */
+  width: 60%;
+}
+
+.character img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+

@@ -1,0 +1,169 @@
+/* ManagerNoticeWrite.module.css (상단 제목 스타일 변경) */
+
+/* === 전체 페이지 레이아웃 === */
+.container {
+    background-color: #f4f6f8; 
+    flex: 1;
+    display: flex; 
+    flex-direction: column; 
+    margin-top: 45px; 
+    min-height: calc(100vh - 45px);
+}
+
+.writeContentCard { 
+    flex: 1; 
+    margin: 20px; 
+    padding: 30px 35px; 
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+/* === 페이지 상단 제목 영역 수정 === */
+.pageHeader { 
+  margin-bottom: 35px; 
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dfe3e8;
+  text-align: center; 
+}
+/* .toListLink, .toListLink:hover, .toListLink h1 스타일은 제거 또는 주석 처리 */
+/* .toListLink { ... }
+.toListLink:hover { ... }
+.toListLink h1 { ... } 
+*/
+
+.pageTitleText { /* 새로운 클래스 또는 기존 .pageTitle을 이 이름으로 변경 */
+  font-size: 2.2em; 
+  font-weight: 600;
+  color: #2c3e50; 
+  margin: 0; 
+  /* 링크가 아니므로 text-decoration, transition 등은 필요 없음 */
+}
+
+
+/* === 작성 폼 전체 스타일 === */
+.writeForm { 
+  padding: 0; 
+  display: flex;
+  flex-direction: column;
+  gap: 25px; 
+  flex-grow: 1; 
+}
+
+.metadataSection {
+  display: flex;
+  align-items: center;
+  padding-bottom: 15px; 
+  border-bottom: 1px solid #e9ecef; 
+}
+
+.formGroup { /* 제목, 내용 입력 필드 그룹 */
+  /* gap으로 처리되므로 margin-bottom 불필요 */
+}
+
+.label { 
+  display: block;
+  font-size: 1em; 
+  font-weight: 600; 
+  color: #343a40; 
+  margin-bottom: 10px; 
+}
+
+.checkboxContainer { 
+  display: flex; 
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.95em; 
+  color: #333;
+}
+.checkboxInput { 
+  margin-right: 8px;
+  width: 16px; 
+  height: 16px;
+  cursor: pointer;
+  accent-color: #FF69B4; 
+}
+.checkboxLabel { 
+    font-weight: 500;
+}
+
+.titleInput {
+  width: 100%; 
+  padding: 12px 15px; 
+  border: 1px solid #ced4da; 
+  border-radius: 6px; 
+  background-color: #fff; 
+  font-size: 1.1em; 
+  color: #333;
+  box-sizing: border-box; 
+}
+.titleInput:focus {
+  border-color: #FF69B4; 
+  box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.25); 
+  outline: none;
+}
+
+.contentTextarea {
+  width: 100%;
+  flex-grow: 1; 
+  padding: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background-color: #fff; 
+  font-size: 1em; 
+  line-height: 1.6;
+  color: #333;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 300px; 
+}
+.contentTextarea:focus {
+  border-color: #FF69B4; 
+  box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.25);
+  outline: none;
+}
+
+.actionsBar { 
+  display: flex;
+  justify-content: flex-end; 
+  gap: 12px; 
+  margin-top: 20px; /* 내용과의 간격, 이전 10px에서 조정 */
+  padding-top: 20px; 
+  border-top: 1px solid #e9ecef; 
+}
+
+.actionButton { 
+    padding: 10px 25px;
+    font-size: 0.95em;
+    font-weight: 500;
+    border-radius: 5px; 
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid transparent; 
+}
+
+.submitButton { 
+  background-color: #000000; 
+  color: white;
+  border-color: #000000;
+}
+.submitButton:hover {
+  background-color: #333333; 
+  border-color: #333333;
+}
+
+.cancelButton { 
+  background-color: #6c757d; 
+  color: white;
+  border-color: #6c757d;
+}
+.cancelButton:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}

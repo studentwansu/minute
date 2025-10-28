@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  font-family: "Noto Sans", sans-serif;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%; 
+}
+.container {
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.mypage1 {
+  background-color: #535353;
+  height: 100vh;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.bookmark-wrapper {
+  background-color: #535353;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.search-wrapper {
+  background-color: #fff;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+.mainContentWithFixedHeader {
+  padding-top: 45px; /* 헤더 높이 + 여유 공간 */
+}

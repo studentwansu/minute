@@ -1,0 +1,298 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 4%;
+  width: 100%;
+}
+
+.searchbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.searchInput {
+  width: 500px;
+  height: 40px;
+  padding: 0 20px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background: #fff url('../../assets/images/searchIcon.png') no-repeat right 15px center;
+  background-size: 25px;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+
+.searchInput:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mainContent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.contentWrap {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.shortVideo {
+  width: 470px;
+  height: 720px;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  margin-bottom: 50px;
+}
+.searchCompact {
+  position: relative;
+  top: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+.textboxCompact {
+  border: 1px solid #ddd;
+  border-radius: 20px;
+}
+
+
+.reactionWrap {
+  position: absolute;
+  bottom: 100px;      
+  right: -80px;      
+  display: flex;
+  flex-direction: column;
+}
+
+.reactionWrap ul {
+  display: flex;
+  flex-direction: column;
+  gap: 40px; 
+}
+
+.reactionWrap li {
+  position: relative;     
+  width: 56px;
+  height: 56px;
+  background: #f5f5f5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  overflow: visible;
+}
+
+.reactionWrap li:hover {
+  background: #e0e0e0;
+}
+
+.reactionIcon {
+  width: 30px;
+  height: 30px;
+}
+
+.reactionLabel {
+  position: absolute;            
+  top: calc(56px + 5px);        
+  left: 50%;                     
+  transform: translateX(-50%);  
+  font-size: 12px;
+  font-weight: 700;
+  color: #333;
+  user-select: none;
+  white-space: nowrap;   
+  z-index: 10;        
+}
+
+.arrowWrap {
+  position: fixed;  
+  top: 50%;           
+  right: 50px;          
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.arrowWrap li {
+  width: 56px;
+  height: 56px;
+  background-color: #f5f5f5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 50px;
+}
+
+.arrowWrap li:hover {
+  background-color: #ddd;
+}
+
+.arrowTop,
+.arrowBottom {
+  width: 25px;
+  height: 25px;
+}
+
+/* 아래 화살표는 회전 제거하여 아래 방향 */
+.arrowBottom {
+  transform: rotate(180deg);
+}
+
+/* Folder modal */
+.folderModal {
+  position: fixed;
+  left: 1350px;
+  width: 290px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  transition: bottom 0.4s ease;
+  z-index: 20;
+}
+
+.folderInputWrap {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.folderInput {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px 0 0 6px;
+  font-size: 14px;
+}
+
+.folderBtn {
+  width: 48px;
+  height: 48px;
+  border: none;
+  background: #5b76f7;
+  color: #fff;
+  font-size: 24px;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.folderBtn:hover {
+  background: #4a5cd3;
+}
+
+.folderList {
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.emptyFolder {
+  text-align: center;
+  color: #999;
+  padding: 24px 0;
+}
+
+.folderItem {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.folderItem:hover {
+  background: #f5f7ff;
+}
+
+.folderIcon {
+  width: 20px;
+  margin-right: 8px;
+}
+
+.folderName {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+}
+
+.checkmark {
+  font-size: 14px;
+  color: #5b76f7;
+  margin-left: 6px;
+}
+
+/* 로그인 유도 모달 오버레이 */
+.loginModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+}
+
+/* 로그인 유도 모달 박스 */
+.loginModal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px 32px;
+  max-width: 320px;
+  width: 90%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.loginModal h2 {
+  margin-bottom: 12px;
+  font-size: 20px;
+  color: #333;
+}
+
+.loginModal p {
+  margin-bottom: 20px;
+  color: #666;
+  font-size: 14px;
+}
+
+.loginModal button {
+  background-color: #ff3366;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  
+}
+
+.loginModal button:hover {
+  background-color: #fb1f56;
+  color: white;
+}

@@ -1,0 +1,191 @@
+/* ManagerNoticeEdit.module.css (상단 제목 스타일 변경) */
+
+/* === 전체 페이지 레이아웃 (다른 관리자 페이지와 동일) === */
+.container {
+    background-color: #f4f6f8;
+    flex: 1;
+    display: flex; 
+    flex-direction: column;
+    margin-top: 45px; 
+    min-height: calc(100vh - 45px);
+}
+
+.editContentCard { 
+    flex: 1; 
+    margin: 20px; 
+    padding: 30px 35px; 
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+/* === 페이지 상단 "공지사항" 제목 영역 수정 === */
+.pageHeader { 
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dfe3e8;
+  text-align: center; 
+}
+/* .toListLink, .toListLink:hover, .toListLink h1 스타일은 제거 또는 주석 처리 */
+/* .toListLink { ... } */
+/* .toListLink:hover { ... } */
+/* .toListLink h1 { ... } */
+
+.pageTitleText { /* 새로운 클래스 또는 기존 .pageTitle을 이 이름으로 변경하여 사용 */
+  font-size: 2.2em; 
+  font-weight: 600;
+  color: #2c3e50; 
+  margin: 0; 
+  /* 링크가 아니므로 text-decoration, transition, Link 관련 호버 스타일 등은 필요 없음 */
+}
+
+/* === 수정 폼 전체 스타일 조정 === */
+.editForm {
+  padding: 0; 
+  display: flex;
+  flex-direction: column;
+  gap: 25px; 
+  flex-grow: 1; 
+}
+
+/* ... (metadataSection, leftMeta, checkboxContainer, titleInput, contentTextarea, actionsBar, actionButton, submitButton, cancelButton 등 나머지 스타일은 이전 답변의 최종본과 동일하게 유지) ... */
+
+.metadataSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px; 
+  border-bottom: 1px solid #e9ecef; 
+  gap: 20px; 
+  flex-wrap: wrap; 
+}
+
+.leftMeta {
+  display: flex;
+  align-items: center;
+  gap: 15px; 
+}
+
+.checkboxContainer {
+  display: flex; 
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.95em; 
+  color: #333;
+}
+.checkboxContainer input[type="checkbox"] { 
+  margin-right: 8px;
+  width: 16px; 
+  height: 16px;
+  cursor: pointer;
+  accent-color: #FF69B4; /* 중요: 기본 체크박스 색상 변경 (브라우저 지원 확인) */
+}
+.checkboxLabel { 
+    font-weight: 500;
+}
+
+.importantTag { 
+  background-color: #FF3366; 
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-left: 5px; 
+}
+
+.rightMeta {
+  display: flex;
+  align-items: center;
+  gap: 20px; 
+  font-size: 0.9em; 
+  color: #555;
+  white-space: nowrap; 
+  flex-shrink: 0; 
+}
+
+.titleInputSection { } /* 구조용 div, 별도 스타일 불필요 */
+
+.titleInput {
+  width: 100%; 
+  padding: 12px 15px; 
+  border: 1px solid #ced4da; 
+  border-radius: 6px; 
+  background-color: #fff; 
+  font-size: 1.1em; 
+  color: #333;
+  box-sizing: border-box; 
+}
+.titleInput:focus {
+  border-color: #FF69B4; 
+  box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.25); 
+  outline: none;
+}
+
+.contentSection {
+  flex-grow: 1; 
+  display: flex; 
+}
+
+.contentTextarea {
+  width: 100%;
+  flex-grow: 1; 
+  padding: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background-color: #fff; 
+  font-size: 1em; 
+  line-height: 1.6;
+  color: #333;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 250px; 
+}
+.contentTextarea:focus {
+  border-color: #FF69B4; 
+  box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.25);
+  outline: none;
+}
+
+.actionsBar {
+  display: flex;
+  justify-content: flex-end; 
+  gap: 12px; 
+  margin-top: 10px; 
+}
+
+.actionButton { 
+    padding: 10px 25px;
+    font-size: 0.95em;
+    font-weight: 500;
+    border-radius: 5px; 
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid transparent; 
+}
+
+.submitButton { 
+  background-color: #000000; 
+  color: white;
+  border-color: #000000;
+}
+.submitButton:hover {
+  background-color: #333333; 
+  border-color: #333333;
+}
+
+.cancelButton { 
+  background-color: #6c757d; 
+  color: white;
+  border-color: #6c757d;
+}
+.cancelButton:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}

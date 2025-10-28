@@ -1,0 +1,257 @@
+*,
+body {
+  font-family: "NotoSans-Medium";
+}
+
+.container {
+  padding-top: 104px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.formWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+.progressBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  background-color: #d1d5db;
+}
+
+.circleActive {
+  background-color: #FF3366;
+}
+
+.line {
+  width: 150px;
+  height: 1px;
+  background-color: #111;
+}
+
+.form {
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  margin: 14px;
+}
+
+.form2 {
+  flex-direction: row;
+  display: flex;
+}
+
+.label {
+  display: block;
+  margin-bottom: 4px;
+  color: #111;
+}
+
+.textBox {
+  width: 100%;
+  border: 1px solid #000;
+  border-radius: 4px;
+  padding: 8px 12px;
+  outline: none;
+  box-sizing: border-box;
+  margin-top: 3px;
+}
+
+.submitBtn {
+  width: 100%;
+  background-color: #b0b0b0;
+  color: white;
+  padding: 8px;
+  margin-top: 18px;
+  border-radius: 4px;
+  border: none;
+  box-sizing: border-box;
+  height: 38.72px;
+  font-size: 14px;
+}
+
+.modibtn {
+  width: 100px;
+  border: 1px solid #000;
+  background-color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #666666;
+  padding: 8px 12px;
+  margin-left: 50px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.active {
+  background-color:  #ff3366;
+  color: white;
+  cursor: pointer;
+}
+
+
+.genderGroup {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 7px;
+  }
+  
+  .genderOption {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: 8px;
+  }
+  
+  .hiddenRadio {
+    position: absolute;
+  opacity: 0;
+  width: 20px;    /* 클릭 가능한 영역 확보 */
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+  cursor: pointer;
+  }
+  
+  .genderIndicator {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+  }
+  
+  .genderIndicator.selected {
+    background-color: #FF3366;
+    border-color: #FF3366;
+  }
+  
+  
+
+.checkboxGroup {
+  font-size: 14px;
+}
+
+.agreebox {
+  background-color: #b0b0b0;
+  color: white;
+  padding: 8px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  cursor: default;
+  margin-top: 10px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.arrow {
+  font-size: 16px;
+  margin-left: auto;
+}
+
+.foottext {
+  font-size: 16px;
+  font-weight: normal;
+  color: #9E9E9E;
+  display: flex;
+  align-items: center;
+  margin-top: 80px;
+  margin-bottom: 20px;
+  text-decoration: underline;
+  text-decoration-color: #9E9E9E;
+  cursor: pointer;
+}
+
+.imgWrapper {
+  position: relative;
+  width: 120px;   /* img와 통일 */
+  height: 120px;
+}
+
+.img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+}
+
+.img2 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.defaultProfile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  flex-direction: column; /* 줄바꿈을 고려한 컬럼 플렉스 */
+  justify-content: center;
+  align-items: center;
+  color: #666;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.4; /* 줄간격 약간 조정 */
+  padding: 0 10px; /* 좌우 패딩만 줘서 높이 문제 해결 */
+  box-sizing: border-box;
+  white-space: pre-line;
+  user-select: none; /* 선택 방지 (선택가능하게 할거면 제거) */
+}
+
+
+
+
+.profileEdit {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 10;
+  cursor: pointer;
+}
+
+.profileEdit > img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}

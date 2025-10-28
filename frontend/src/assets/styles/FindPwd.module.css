@@ -1,0 +1,146 @@
+.pageWrapper {
+  /* min-height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  margin-top: 200px;
+}
+
+.container {
+  flex: 1;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.boxf {
+  border: 1px solid #000;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  width: 650px;
+  height: 600px;
+  margin: auto;
+}
+
+.titlef {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+.title2f {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 40px;
+}
+
+.title3f {
+  font-size: 17px;
+  font-weight: normal;
+  margin-bottom: 80px;
+  margin-top: 40px;
+}
+
+.formf {
+  width: 100%;
+  max-width: 430px;
+  display: flex;
+  flex-direction: column;
+}
+
+.labelf {
+  display: block;
+  margin-bottom: 4px;
+  color: #374151;
+}
+
+.text_boxf {
+  width: 100%;
+  border: 1px solid #9ca3af;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 30px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.submit_btnf {
+  width: 100%;
+  background-color: #b0b0b0;
+  color: white;
+  padding: 8px;
+  margin-top: 20px;
+  border-radius: 4px;
+  border: none;
+  box-sizing: border-box;
+  font-size: 18px;
+}
+
+.login_btn {
+  width: 100%;
+  background-color: #ff3366;
+  color: white;
+  padding: 10px;
+  margin-top: 30px;
+  border-radius: 5px;
+  border: none;
+  box-sizing: border-box;
+  font-size: 20px;
+  height: 43px;
+}
+
+.keyimgf {
+  width: 70px;
+  height: 70px;
+}
+
+.keyimg1f {
+  width: 70px;
+  height: 70px;
+}
+
+
+.submit_btnf {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.submit_btnf.active {
+  background-color: #ff3366;
+  color: white;
+  cursor: pointer;
+}
+
+.submit_btnf.disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.err {
+  color: red;
+  font-size: 12px;
+  text-align: right;
+  height: 18px;
+  margin-top: 4px;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease;
+  line-height: 18px; 
+}
+
+.err:empty {
+  opacity: 0;
+  visibility: hidden;
+  margin-top: 4px;
+  height: 18px;
+}
+

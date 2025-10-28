@@ -1,0 +1,271 @@
+/* ManagerNotice.module.css (필터 바 반응형 개선 및 체크박스 스타일 수정) */
+
+.container {
+    display: flex;
+    flex-direction: row; /* ManagerFreeboard와 동일한 구조 가정 */
+    margin-top: 45px;    /* 헤더와의 간격 */
+    background-color: #f4f6f8; /* 페이지 배경색 */
+    min-height: calc(100vh - 45px); /* 헤더 제외한 최소 높이 */
+}
+
+.managerContent { /* 흰색 카드 영역 */
+    flex: 1;
+    margin: 20px; /* .container 배경과의 여백 */
+    padding: 30px 35px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex; /* 내부 요소들을 flex로 관리 (선택적) */
+    flex-direction: column; /* 내부 요소들을 세로로 배치 */
+}
+
+.pageTitle {
+    font-size: 2.2em;
+    font-weight: 600;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #dfe3e8;
+}
+
+/* === 필터 바 및 내부 요소 스타일 수정 === */
+.filterBar {
+    display: flex;
+    align-items: center; /* 기본 세로 정렬 */
+    gap: 10px;
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #333;
+    border-radius: 6px;
+    flex-wrap: wrap; /* <<< 핵심: 요소들이 공간 부족 시 다음 줄로 넘어가도록 */
+}
+
+.filterElement { /* 날짜 input, select, 검색 input 공통 스타일 */
+    padding: 8px 12px;
+    border: 1px solid #555;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    height: 36px; /* 높이 통일 */
+}
+
+.dateSeparator {
+    color: #f0f0f0;
+    font-size: 14px;
+    line-height: 36px; /* filterElement 높이와 맞춤 */
+    flex-shrink: 0; /* 크기가 줄어들지 않도록 */
+    padding: 0 5px; /* 좌우 약간의 여백 */
+}
+
+/* 날짜 입력 필드 스타일 */
+input[type="date"].filterElement {
+    min-width: 130px; /* 날짜 입력 필드의 최소 너비 */
+    flex-grow: 1; /* 다른 요소들과 함께 늘어나도록 (선택적) */
+    flex-basis: 130px; /* 기본 너비 */
+}
+
+.filterSelect { /* 중요도 select 요소 */
+    min-width: 140px; /* 기존 값 유지 또는 필요시 조정 */
+    flex-basis: 140px; /* 기본 너비 */
+    flex-shrink: 0; /* 내용에 따라 너비가 결정되므로, 강제로 줄어들지 않도록 */
+}
+
+.filterSearchInput { /* 검색창 */
+    flex-grow: 1; /* 사용 가능한 공간을 최대한 차지 (기존에도 있었음) */
+    min-width: 180px; /* 검색창이 너무 작아지지 않도록 최소 너비 (중요) */
+    flex-basis: 200px; /* 화면이 충분할 때 가질 기본 너비 */
+}
+
+.filterSearchButton { /* 검색 버튼 */
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    background-color: #555;
+    border: 1px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0; /* 버튼 크기가 줄어들지 않도록 */
+}
+.filterSearchButton:hover {
+    background-color: #777;
+}
+.searchIcon {
+    width: 16px;
+    height: 16px;
+    display: block;
+    filter: brightness(0) invert(1);
+}
+/* === 필터 바 수정 끝 === */
+
+
+.subTitle {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.noticeTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em; /* 테이블 전체 폰트 크기 */
+}
+
+.noticeTable thead th {
+    background-color: #f8f9fa;
+    padding: 12px 10px;
+    text-align: center;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+    vertical-align: middle;
+    white-space: nowrap; /* 헤더 줄바꿈 방지 (필요시) */
+}
+
+.noticeTable th.titleHeaderColumn,
+.noticeTable td.titleDataColumn {
+    text-align: left;
+    padding-left: 15px;
+}
+
+/* 컬럼 너비 설정 (기존 값 유지) */
+.noticeTable th:nth-child(1) { width: 8%; }
+.noticeTable th:nth-child(2) { width: 12%; }
+.noticeTable th:nth-child(3) { width: 12%; }
+.noticeTable th:nth-child(4) { width: auto; } /* 제목 컬럼은 자동 너비 */
+.noticeTable th:nth-child(5) { width: 12%; }
+.noticeTable th:nth-child(6) { width: 8%; }
+.noticeTable th:nth-child(7) { width: 8%; }
+.noticeTable th:nth-child(8) { width: 8%; }
+
+
+.noticeTable tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: middle;
+    text-align: center;
+    /* word-break: break-all; /* 필요에 따라 설정, 제목은 keep-all이 좋을 수 있음 */
+}
+
+.noticeTable tbody tr:hover td {
+    background-color: #f1f9ff; /* 호버 시 연한 파란색 계열 */
+}
+
+.importantRow {
+    background-color: #fff5f5; /* 중요 공지 행 배경색 */
+}
+.importantRow td {
+    font-weight: 500; /* 중요 공지 행 텍스트 약간 굵게 */
+}
+.importantRow .titleLink { /* 중요 공지 제목 링크 */
+    font-weight: bold;
+}
+
+.importantTag {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 0.85em;
+    font-weight: 600;
+    color: white;
+    background-color: #dc3545; /* 빨간색 계열 */
+    border-radius: 12px;
+    line-height: 1.3;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.titleLink {
+    text-decoration: none;
+    color: #333;
+    font-weight: normal;
+}
+.titleLink:hover {
+    text-decoration: underline;
+    color: #000;
+}
+
+.checkboxCell, .actionCell {
+    text-align: center;
+}
+
+/* === 체크박스 스타일 수정 시작 === */
+.headerCheckbox { /* 테이블 헤더의 전체 선택 체크박스 */
+    vertical-align: middle;
+    margin-right: 4px;
+    width: 16px; /* 수정 페이지와 동일하게 크기 설정 */
+    height: 16px; /* 수정 페이지와 동일하게 크기 설정 */
+    cursor: pointer; /* 커서 모양 변경 */
+    accent-color: #FF69B4; /* 체크 시 색상 변경 */
+}
+
+.checkboxCell input[type="checkbox"] { /* 테이블 각 행의 중요도 체크박스 */
+    vertical-align: middle;
+    width: 16px; /* 수정 페이지와 동일하게 크기 설정 */
+    height: 16px; /* 수정 페이지와 동일하게 크기 설정 */
+    cursor: pointer; /* 커서 모양 변경 */
+    accent-color: #FF69B4; /* 체크 시 색상 변경 */
+}
+/* === 체크박스 스타일 수정 끝 === */
+
+.actionButton {
+    padding: 5px 10px;
+    font-size: 0.85em;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 3px;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    border: 1px solid transparent;
+    min-width: 50px;
+}
+
+.editButton {
+    background-color: #6c757d; /* 회색 계열 */
+    color: white;
+    border-color: #6c757d;
+}
+.editButton:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.deleteButton {
+    background-color: #dc3545; /* 빨간색 계열 */
+    color: white;
+    border-color: #dc3545;
+}
+.deleteButton:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.bottomActions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.writeButton {
+    background-color: #000000; /* 검은색 */
+    color: white;
+    border-color: #000000;
+    font-weight: 500;
+}
+.writeButton:hover {
+    background-color: #333333;
+    border-color: #333333;
+}
+
+.pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

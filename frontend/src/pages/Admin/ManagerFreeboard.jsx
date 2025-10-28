@@ -1,0 +1,366 @@
+// src/pages/Admin/ManagerFreeboard.jsx
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // Link가 import 되어 있는지 확인
+import reportOffIcon from "../../assets/images/able-alarm.png";
+import likeOffIcon from "../../assets/images/b_thumbup.png";
+import reportOnIcon from "../../assets/images/disable-alarm.png";
+import searchButtonIcon from "../../assets/images/search_icon.png";
+import likeOnIcon from "../../assets/images/thumbup.png";
+import styles from '../../assets/styles/ManagerFreeboard.module.css';
+import Modal from '../../components/Modal/Modal';
+import Pagination from '../../components/Pagination/Pagination';
+
+const API_BASE_URL = "http://localhost:8080/api/v1";
+
+function ManagerFreeboard() {
+    const navigate = useNavigate();
+    
+    const [activeTab, setActiveTab] = useState('all'); 
+    const [items, setItems] = useState([]); 
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const [dateRange, setDateRange] = useState({ start: '', end: '' });
+    const [searchTerm, setSearchTerm] = useState(''); 
+    const [currentSearch, setCurrentSearch] = useState(''); 
+    const [sortOrder, setSortOrder] = useState('latest'); 
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const itemsPerPage = 10;
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalProps, setModalProps] = useState({
+        title: '', message: '', onConfirm: null, confirmText: '확인',
+        cancelText: null, type: 'default', confirmButtonType: 'primary',
+        cancelButtonType: 'secondary', onCancel: () => setIsModalOpen(false)
+    });
+
+    const getToken = () => localStorage.getItem("token");
+    // const getLoggedInUserId = () => localStorage.getItem("userId"); // 이 페이지에서는 직접 사용 안 함
+
+    const formatDate = (dateString) => {
+        if (!dateString) return "N/A";
+        try {
+            const date = new Date(dateString);
+            return `${date.getFullYear().toString().slice(-2)}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}`;
+        } catch (e) { return "N/A"; }
+    };
+
+    const fetchItems = useCallback(async () => {
+        setIsLoading(true);
+        setError(null);
+        let url = "";
+        const params = {
+            page: currentPage - 1,
+            size: itemsPerPage,
+        };
+        // 날짜 필터는 모든 탭에 적용 가능하도록 params에 미리 할당
+        if (dateRange.start) params.startDate = dateRange.start;
+        if (dateRange.end) params.endDate = dateRange.end;
+        
+        let defaultSortField;
+
+        const headers = {};
+        const token = getToken();
+        if (!token) {
+            setIsLoading(false);
+            setModalProps({ title: "인증 오류", message: "로그인이 필요합니다.", onConfirm: () => navigate("/login"), type: 'error' });
+            setIsModalOpen(true);
+            return;
+        }
+        headers.Authorization = `Bearer ${token}`;
+
+        if (activeTab === 'all') { 
+            url = `${API_BASE_URL}/board/free`;
+            if (currentSearch) params.searchKeyword = currentSearch;
+            defaultSortField = "postId,desc";
+            params.sort = sortOrder === 'latest' ? "postId,desc" :
+                          sortOrder === 'views' ? "postViewCount,desc" :
+                          sortOrder === 'likes' ? "postLikeCount,desc" : defaultSortField;
+        } else if (activeTab === 'myComments') { 
+            url = `${API_BASE_URL}/board/free/comments/by-user`; 
+            defaultSortField = "commentCreatedAt,desc";
+            params.sort = sortOrder === 'latest' ? "commentCreatedAt,desc" :
+                          sortOrder === 'likes' ? "commentLikeCount,desc" : defaultSortField;
+            
+            // "관리자 작성 댓글" 탭에서 댓글 내용 검색 지원
+            if (currentSearch) {
+                params.searchKeyword = currentSearch;
+            }
+        } else {
+            setIsLoading(false); setError("알 수 없는 탭입니다."); return;
+        }
+        
+        if (!url) { 
+            setIsLoading(false); setItems([]); setTotalPages(0); setCurrentPage(1);
+            setError("잘못된 접근입니다."); return;
+        }
+
+        try {
+            console.log(`[Admin] Fetching from URL: ${url}`, "Params:", params); // 요청 정보 로깅
+            const response = await axios.get(url, { params, headers });
+            const data = response.data;
+            console.log("[Admin] Received data:", data); // 응답 데이터 로깅
+
+            if (data && data.content) {
+                // 👇 이 로그를 통해 API가 실제 어떤 데이터를 보내주는지 확인합니다.
+            console.log("[Admin] Received data.content (아이템 목록):", JSON.parse(JSON.stringify(data.content))); 
+                setItems(data.content);
+                setTotalPages(data.totalPages || 0);
+                // API 응답의 currentPage가 0-based이면 +1, 1-based이면 그대로 사용
+                // 백엔드 PageResponseDTO의 currentPage는 1부터 시작하는 것으로 통일했으므로, data.currentPage를 그대로 사용하거나 null/undefined일 때 1로.
+                setCurrentPage(data.currentPage !== undefined ? data.currentPage : 1);
+            } else {
+                setItems([]); setTotalPages(0); setCurrentPage(1);
+            }
+        } catch (err) {
+            console.error("Error fetching items for admin:", err);
+            const errorMsg = err.response?.data?.message || "데이터를 불러오는 데 실패했습니다.";
+            setError(errorMsg);
+            setItems([]); setTotalPages(0); setCurrentPage(1);
+            if (err.response?.status === 401) {
+                 setModalProps({ title: "인증 오류", message: "세션이 만료되었거나 인증에 실패했습니다.", onConfirm: () => navigate("/login"), type: 'error' });
+                 setIsModalOpen(true);
+            } else if (err.response?.status === 403) {
+                 setModalProps({ title: "권한 없음", message: "이 페이지에 접근할 권한이 없습니다.", type: 'error' });
+                 setIsModalOpen(true);
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    }, [currentPage, activeTab, dateRange, currentSearch, sortOrder, navigate]);
+
+    useEffect(() => {
+        fetchItems();
+    }, [fetchItems]);
+
+    const handlePageChange = (pageNumber) => { setCurrentPage(pageNumber); };
+
+    const handleTabClick = (tab) => {
+        setActiveTab(tab);
+        setCurrentPage(1); // 페이지, 검색어, 정렬, 날짜 초기화
+        setCurrentSearch(''); 
+        setSearchTerm(''); 
+        setSortOrder('latest'); 
+        setDateRange({ start: '', end: '' }); 
+        setItems([]); // <<<--- 탭 변경 시 items 배열을 비워줍니다!
+        setError(null); // 에러 상태도 초기화
+    };
+    
+    const handleSearch = (e) => {
+        e.preventDefault(); // <form>의 onSubmit으로 호출되므로 기본 동작 방지
+        setCurrentPage(1);
+        setCurrentSearch(searchTerm);
+    };
+    
+    const handleItemLikeToggle = async (e, itemId, itemType) => {
+        e.stopPropagation();
+        const endpoint = itemType === "comment"
+            ? `${API_BASE_URL}/board/free/comments/${itemId}/like`
+            : `${API_BASE_URL}/board/free/${itemId}/like`;
+        try {
+            const token = getToken();
+            const response = await axios.post(endpoint, {}, { headers: { Authorization: `Bearer ${token}` }});
+            const data = response.data;
+            setItems(prevItems => prevItems.map(item => {
+                const currentItemIdField = itemType === "comment" ? "commentId" : "postId";
+                if (item[currentItemIdField] === itemId) {
+                    return {
+                        ...item,
+                        likedByCurrentUser: data.likedByCurrentUser,
+                        ...(itemType === "comment" 
+                            ? { commentLikeCount: data.currentLikeCount } 
+                            : { postLikeCount: data.currentLikeCount })
+                    };
+                }
+                return item;
+            }));
+        } catch (err) { 
+            setModalProps({ title: "오류", message: err.response?.data?.message || "좋아요 처리에 실패했습니다.", type: 'error' });
+            setIsModalOpen(true);
+        }
+    };
+
+    const processPostReport = async (postIdToReport) => {
+        try {
+            const token = getToken();
+            await axios.post(`${API_BASE_URL}/board/free/${postIdToReport}/report`, {}, { headers: { Authorization: `Bearer ${token}` }});
+            setItems(prevItems => prevItems.map(p => 
+                p.postId === postIdToReport 
+                ? { ...p, reportedByCurrentUser: true } 
+                : p
+            ));
+            setModalProps({ title: '신고 접수', message: `게시물 ID ${postIdToReport}을(를) 신고 접수했습니다.`, type: 'success' });
+        } catch (err) {
+             if (err.response && (err.response.status === 409 || err.response.status === 400) ) { // GlobalExceptionHandler가 보낸 상태 코드에 맞춰 수정
+                setModalProps({ title: '알림', message: err.response.data.message || "이미 신고한 게시글입니다.", type: 'warning'});
+            } else {
+                setModalProps({ title: '오류', message: err.response?.data?.message || "신고 처리에 실패했습니다.", type: 'error' });
+            }
+        } finally {
+            setIsModalOpen(true);
+        }
+    };
+
+    const handlePostReportClick = (e, post) => {
+        e.stopPropagation();
+        if (post.reportedByCurrentUser) { 
+            setModalProps({ title: '알림', message: '이미 관리자님께서 신고한 게시글입니다.', type: 'info' });
+            setIsModalOpen(true);
+            return;
+        }
+        setModalProps({
+            title: '게시글 신고 (관리자)',
+            message: `"${post.postTitle}" (ID: ${post.postId}) 게시글을 신고 시스템에 등록하시겠습니까?`,
+            onConfirm: () => processPostReport(post.postId),
+            confirmText: '신고 등록', cancelText: '취소', type: 'warning', confirmButtonType: 'danger'
+        });
+        setIsModalOpen(true);
+    };
+
+    const handleRowClick = (item) => {
+        const isCommentView = activeTab === 'myComments';
+        if (isCommentView) {
+            // item은 FreeboardCommentResponseDTO. DTO의 postId가 댓글의 원본 게시글 ID.
+            if (item.postId && item.commentId) { 
+                 navigate(`/admin/managerFreeboardDetail/${item.postId}?highlightCommentId=${item.commentId}`);
+            } else {
+                console.warn("Cannot navigate: item.postId (originalPostId) or item.commentId is missing for comment item", item);
+                setModalProps({ title: "오류", message: "상세 페이지로 이동하기 위한 정보가 부족합니다. (댓글 또는 원본 게시글 ID 누락)", type: 'error' });
+                setIsModalOpen(true);
+            }
+        } else { 
+            // item은 FreeboardPostSimpleResponseDTO
+            if (item.postId) {
+                navigate(`/admin/managerFreeboardDetail/${item.postId}`);
+            } else {
+                console.warn("Cannot navigate: item.postId is missing for post item", item);
+                 setModalProps({ title: "오류", message: "상세 페이지로 이동하기 위한 게시글 ID가 없습니다.", type: 'error' });
+                setIsModalOpen(true);
+            }
+        }
+    };
+
+    return (
+        <>
+            <div className={styles.container}>
+                <main className={styles.managerFreeboardContent}>
+                    <h1 className={styles.pageTitle}>자유게시판 관리</h1>
+                    <div className={styles.tabContainer}>
+                        <button className={`${styles.tabButton} ${activeTab === 'all' ? styles.activeTab : ''}`} onClick={() => handleTabClick('all')}>전체 게시물</button>
+                        <button className={`${styles.tabButton} ${activeTab === 'myComments' ? styles.activeTab : ''}`} onClick={() => handleTabClick('myComments')}>관리자 작성 댓글</button>
+                    </div>
+                    <div className={styles.filterBar}>
+                        <input type="date" className={styles.filterElement} value={dateRange.start} onChange={(e) => setDateRange(prev => ({ ...prev, start: e.target.value }))}/>
+                        <span className={styles.dateSeparator}>~</span>
+                        <input type="date" className={styles.filterElement} value={dateRange.end} onChange={(e) => setDateRange(prev => ({ ...prev, end: e.target.value }))}/>
+                        <select className={`${styles.filterElement} ${styles.filterSelect}`} value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                            <option value="latest">최신순</option>
+                            {activeTab !== 'myComments' && <option value="views">조회순</option>}
+                            <option value="likes">좋아요순</option>
+                        </select>
+                        {/* 검색창: form으로 감싸서 Enter키로도 검색 가능하게 */}
+                        <form onSubmit={handleSearch} className={styles.searchForm}> 
+                            <input 
+                                type="text" 
+                                placeholder={activeTab === 'myComments' ? "댓글 내용 검색" : "닉네임, 제목 검색"} 
+                                className={`${styles.filterElement} ${styles.filterSearchInput}`} 
+                                value={searchTerm} 
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                // disabled 속성 제거하여 댓글 탭에서도 검색 가능하도록 함
+                            />
+                            <button 
+                                type="submit" 
+                                className={styles.filterSearchButton}
+                                // disabled 속성 제거
+                            >
+                                <img src={searchButtonIcon} alt="검색" className={styles.searchIcon} />
+                            </button>
+                        </form>
+                    </div>
+                    <table className={styles.boardTable} id="boardTableAnchor">
+                        <thead>
+                            <tr>
+                                <th>NO</th>
+                                {activeTab === 'myComments' ? <th>댓글 내용 (원본글)</th> : <th>제목/내용일부</th>}
+                                <th>닉네임(작성자)</th>
+                                <th>작성일</th>
+                                {activeTab !== 'myComments' && <th>조회수</th>}
+                                <th>좋아요수</th>
+                                <th>신고</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {isLoading ? (
+                                <tr><td colSpan={activeTab === 'myComments' ? 6 : 7}>로딩 중...</td></tr>
+                            ) : error ? (
+                                <tr><td colSpan={activeTab === 'myComments' ? 6 : 7}>{error}</td></tr>
+                            ) : items.length > 0 ? (
+                                items.map(item => { // item이 게시글 또는 댓글 객체
+                                    const isCommentView = activeTab === 'myComments';
+                                    const itemId = isCommentView ? item.commentId : item.postId;
+                                    const displayContent = isCommentView 
+                                        ? (item.commentContent?.length > 20 ? `${item.commentContent.substring(0,20)}...` : item.commentContent)
+                                        : (item.postTitle?.length > 30 ? `${item.postTitle.substring(0,30)}...` : item.postTitle);
+                                    
+                                    const isLikedByAdmin = item.likedByCurrentUser || false; 
+                                    const isReportedByAdmin = item.reportedByCurrentUser || false; // 백엔드 DTO 필드명 reportedByCurrentUser 가정
+
+                                    return (
+                                        <tr key={isCommentView ? `comment-${itemId}` : `post-${itemId}`} onClick={() => handleRowClick(item)} className={styles.clickableRow}>
+                                            <td>{itemId}</td>
+                                            <td className={styles.postTitleCell} onClick={(e) => { e.stopPropagation(); handleRowClick(item); }}>
+                                                <Link 
+                                                    to={isCommentView 
+                                                        ? `/admin/managerFreeboardDetail/${item.postId}?highlightCommentId=${item.commentId}` // 댓글: 원본게시글ID(item.postId)와 댓글ID(item.commentId) 사용
+                                                        : `/admin/managerFreeboardDetail/${item.postId}` // 게시글: 게시글ID(item.postId) 사용
+                                                    }
+                                                >
+                                                    {displayContent}
+                                                    {isCommentView && item.originalPostTitle && 
+                                                        <span className={styles.commentOriginalPost}> (원본: {item.originalPostTitle?.length > 10 ? item.originalPostTitle.substring(0,10)+"..." : item.originalPostTitle})</span>
+                                                    }
+                                                </Link>
+                                            </td>
+                                            <td>{item.userNickName || 'N/A'}</td>
+                                            <td>{formatDate(isCommentView ? item.commentCreatedAt : item.postCreatedAt)}</td>
+                                            {!isCommentView && <td>{item.postViewCount !== undefined ? item.postViewCount : '-'}</td>}
+                                            <td>
+                                                <button onClick={(e) => {e.stopPropagation(); handleItemLikeToggle(e, itemId, isCommentView ? "comment" : "post");}} className={`${styles.iconButton} ${isLikedByAdmin ? styles.liked : ''}`} title="관리자 좋아요 토글">
+                                                    <img src={isLikedByAdmin ? likeOnIcon : likeOffIcon} alt="좋아요" className={styles.buttonIcon}/>
+                                                </button>
+                                                <span className={styles.countText}>{isCommentView ? item.commentLikeCount : item.postLikeCount}</span>
+                                            </td>
+                                            <td>
+                                                {!isCommentView ? ( // 게시글인 경우에만 관리자 신고 버튼 표시
+                                                    <button
+                                                        onClick={(e) => handlePostReportClick(e, item)}
+                                                        className={`${styles.iconButton} ${isReportedByAdmin ? styles.reportActioned : ''}`}
+                                                        title={isReportedByAdmin ? "관리자가 신고함" : "관리자가 신고하기"}
+                                                        disabled={isReportedByAdmin}
+                                                    >
+                                                        <img src={isReportedByAdmin ? reportOnIcon : reportOffIcon} alt="신고" className={styles.buttonIcon}/>
+                                                    </button>
+                                                ) : (
+                                                    <span>-</span> // 관리자 본인 댓글에는 신고 버튼 없음
+                                                )}
+                                            </td>
+                                        </tr>
+                                    );
+                                })
+                            ) : (<tr><td colSpan={activeTab === 'myComments' ? 6 : 7}>표시할 항목이 없습니다.</td></tr>)}
+                        </tbody>
+                    </table>
+                    <div className={styles.pagination}>
+                        {totalPages > 0 && ( <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange}/> )}
+                    </div>
+                </main>
+            </div>
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} {...modalProps} />
+        </>
+    );
+}
+
+export default ManagerFreeboard;

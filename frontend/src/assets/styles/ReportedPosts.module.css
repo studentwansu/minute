@@ -1,0 +1,221 @@
+/* ReportedPosts.module.css (테이블 헤더 th 상단에 선 추가) */
+
+.container {
+    background-color: #f4f6f8;
+    flex: 1;
+    display: flex; 
+    flex-direction: column; 
+    margin-top: 45px; 
+    min-height: calc(100vh - 45px); 
+}
+
+.reportedPostsContentCard {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 30px 35px;
+    margin: 20px; 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.pageTitle {
+    font-size: 2.2em;
+    font-weight: 600;
+    color: #2c3e50;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #dfe3e8;
+}
+
+.tabContainer {
+    margin-bottom: 20px;
+    display: flex;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.tabButton {
+    padding: 10px 20px;
+    font-size: 0.95em;
+    font-weight: 500;
+    border: none;
+    border-bottom: 3px solid transparent;
+    background-color: transparent;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    margin-right: 8px;
+}
+.tabButton:last-child {
+    margin-right: 0;
+}
+.tabButton:hover {
+    color: #000;
+}
+.tabButton.activeTab {
+    color: #FF3366;
+    border-bottom-color: #FF3366;
+    font-weight: 600;
+}
+
+.filterBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #333;
+    border-radius: 6px;
+    flex-wrap: wrap; 
+}
+
+.filterElement {
+    padding: 8px 12px;
+    border: 1px solid #555;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    height: 36px;
+}
+
+.dateSeparator {
+    color: #f0f0f0;
+    font-size: 14px;
+    line-height: 36px; 
+    flex-shrink: 0; 
+    padding: 0 5px; 
+}
+
+input[type="date"].filterElement {
+    min-width: 130px; 
+    flex-grow: 1; 
+    flex-basis: 130px; 
+}
+
+.filterSelect {
+    min-width: 150px; 
+    flex-basis: 150px; 
+    flex-shrink: 0; 
+}
+
+.filterSearchInput {
+    flex-grow: 1; 
+    min-width: 180px; 
+    flex-basis: 200px; 
+}
+
+.filterSearchButton {
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    background-color: #555;
+    border: 1px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0; 
+}
+.filterSearchButton:hover {
+    background-color: #777;
+}
+.searchIcon {
+    width: 16px;
+    height: 16px;
+    display: block;
+    filter: brightness(0) invert(1);
+}
+
+.reportsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px; 
+    /* border-top: 2px solid #343a40;  /* <<< 테이블 전체 상단선 제거 또는 주석 */
+    margin-bottom: 25px;
+}
+
+.reportsTable th,
+.reportsTable td {
+    border-bottom: 1px solid #dee2e6; 
+    padding: 10px 8px; 
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.88em; 
+    word-break: break-word; 
+}
+
+.reportsTable th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+    white-space: nowrap;
+    /* === 헤더 셀(th) 상단에 선 추가 === */
+    border-top: 1px solid #dee2e6; 
+}
+
+/* 컬럼 너비 조정 예시 (현재 8개 컬럼 기준) */
+/*
+.reportsTable th:nth-child(1) { width: 5%; }  /* NO */
+/* .reportsTable th:nth-child(2) { width: 10%; } /* 콘텐츠유형 */
+/* .reportsTable th:nth-child(3) { width: 10%; } /* ID (작성자) */
+/* .reportsTable th:nth-child(4) { width: 13%; } /* 닉네임 */
+/* .reportsTable th:nth-child(5) { width: auto; }  /* 제목/내용일부 (신고 사유) - 가변 */
+/* .reportsTable th:nth-child(6) { width: 10%; } /* 작성일 */
+/* .reportsTable th:nth-child(7) { width: 8%; }  /* 신고누적 */
+/* .reportsTable th:nth-child(8) { width: 10%; } /* 숨김상태 */
+
+
+.reportsTable .titleColumn, 
+.reportsTable .contentSnippetCell { 
+    text-align: left; 
+    padding-left: 15px; 
+}
+
+.reportsTable tbody tr.clickableRow:hover td { 
+    background-color: #f0f4f8; 
+    cursor: pointer;
+}
+
+.status { 
+    display: inline-block;
+    padding: 5px 12px;
+    border: none;
+    border-radius: 12px; 
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff; 
+    text-align: center;
+    min-width: 60px; 
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    line-height: 1.5;
+    vertical-align: middle;
+}
+
+.activeStatus { 
+    background-color: #28a745;
+}
+.activeStatus:hover {
+    background-color: #218838;
+}
+
+.inactiveStatus { 
+    background-color: #6c757d;
+}
+.inactiveStatus:hover {
+    background-color: #5a6268;
+}
+
+.pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

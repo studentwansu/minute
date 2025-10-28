@@ -1,0 +1,81 @@
+.pageWrapper {
+  /* min-height: 100vh; */
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  margin: 150px auto 0;
+}
+
+.box {
+  background-color: white;
+  width: 720px;
+  padding: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.main-text {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.redtext {
+  color: #ff3366;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.box1 {
+  background-color: #fff1f1;
+  border: 1px solid #ffd6d6;
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.body-text {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.box2 {
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.text_box {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+.da_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d9d9d9;
+  color: #000;
+  font-weight: bold;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  margin: 20px auto 0; /* 여기 핵심: 가운데 정렬 */
+  display: block;
+}

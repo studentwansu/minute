@@ -1,0 +1,64 @@
+/* 🔁 기존 그대로 유지 */
+.slider {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    width: 750px;
+    cursor: grab;
+    scroll-behavior: smooth;
+    position: relative; /* ✅ 추가 필요: 자식인 .arrowGroup의 기준 */
+  }
+  
+  .slider::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .sliderTrack {
+    display: flex;
+    gap: 10px;
+    width: max-content;
+    padding: 10px 0;
+  }
+  
+  .card {
+    flex: 0 0 170px;
+    height: 250px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    text-align: center;
+    line-height: 250px;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    user-select: none;
+    display: flex;                /* ✅ 추가 */
+    flex-direction: column;       /* ✅ 세로 정렬(선택) */
+    align-items: center;          /* ✅ 가로 중앙 */
+    justify-content: center;      /* ✅ 세로 중앙 */
+    text-align: center;           /* ✅ 내용 중앙 */
+    line-height: normal;          /* ✅ 기존 250px 삭제! */
+  }
+  
+  .arrowGroup {
+    position: absolute;
+    top: -20px;      /* 카드 위에서 15px 떨어지게 (카드 높이 기준 + 내부 간격 고려) */
+    right: 25px;     /* 오른쪽에서 20px 떨어짐 */
+    display: flex;
+    gap: 30px;
+    z-index: 10;
+    width: 20;
+  }
+  
+  .navButton {
+    background: none;         /* ✅ 배경 제거 */
+    border: none;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    width: auto;              /* ✅ 크기 고정 해제 */
+    height: auto;
+    border-radius: 0;         /* ✅ 원형 제거 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;               /* ✅ 여백 제거 */
+  }

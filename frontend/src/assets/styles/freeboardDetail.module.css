@@ -1,0 +1,402 @@
+/* freeboardDetail.module.css */
+
+.loadingContainer,
+.errorContainer {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2em;
+  color: #555;
+}
+
+.pageContainer {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  background-color: #f4f6f8;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.boardLinkContainer {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dfe3e8;
+  text-align: center;
+}
+
+.boardLinkContainer a {
+  text-decoration: none;
+  color: #2c3e50;
+  transition: color 0.2s ease-in-out;
+}
+.boardLinkContainer a:hover {
+  color: #FF69B4;
+}
+
+.boardLinkContainer h2 {
+  margin: 0;
+  font-size: 2em;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.imageBannerContainer {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.bannerImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-height: 215px;
+}
+
+.postContentContainer {
+  border: 1px solid #dfe3e8;
+  padding: 30px 35px;
+  margin-bottom: 35px;
+  border-radius: 8px;
+  background-color: #fff;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+}
+
+.postTitle {
+  font-size: 2.2em;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #1c2833;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.postMeta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  color: #525f6b;
+  font-size: 0.9em;
+}
+
+.postMeta > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.postAuthor {
+  font-weight: 600;
+  color: #34495e;
+}
+
+.postCreatedAt {
+  color: #7f8c8d;
+  font-size: 0.9em;
+}
+
+.postSubMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ecf0f1;
+  font-size: 0.9em;
+}
+
+.postStats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #525f6b;
+}
+.postStats span {
+  margin-right: 10px;
+}
+.postStats span:last-child {
+  margin-right: 0;
+}
+
+.iconButton {
+  background: none; border: none; cursor: pointer; padding: 0;
+  vertical-align: middle;
+  transition: transform 0.2s ease;
+  width: 24px;
+  height: 24px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.iconButton:hover:not(:disabled) {
+  transform: scale(1.15);
+}
+.iconButton:disabled {
+    cursor: not-allowed;
+}
+.iconButton:disabled .buttonIcon {
+}
+.buttonIcon {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+.countText {
+  font-size: 0.9em;
+  color: #666;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+.iconButton.liked .buttonIcon { }
+.iconButton.reported .buttonIcon { }
+
+
+.postBody {
+  min-height: 180px;
+  line-height: 1.75;
+  color: #34495e;
+  font-size: 1.05em;
+  margin-bottom: 25px;
+  white-space: pre-wrap;
+}
+.postBody br {
+  display: block;
+  margin-bottom: 0.6em;
+}
+
+.postActions {
+  position: absolute;
+  bottom: 25px;
+  right: 35px;
+  display: flex;
+  gap: 12px;
+}
+
+.actionButton {
+  padding: 7px 15px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  background-color: #000000;
+  color: white;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  margin-left: 8px;
+}
+.actionButton:first-child {
+    margin-left: 0;
+}
+.actionButton:hover {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  background-color: #333333;
+  border-color: #333333;
+}
+
+.commentInputContainer {
+  display: flex;
+  margin-bottom: 35px;
+  margin-top: 25px;
+  gap: 12px;
+}
+
+.commentTextarea {
+  flex-grow: 1;
+  min-height: 75px;
+  padding: 12px 15px;
+  border: 1px solid #d1d8e0;
+  border-radius: 6px;
+  resize: vertical;
+  font-size: 0.98em;
+  line-height: 1.6;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.commentTextarea:focus {
+  border-color: #FF69B4;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.25);
+}
+
+.commentSubmitButton {
+  padding: 0 22px;
+  align-self: stretch;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.98em;
+  transition: background-color 0.2s ease-in-out;
+}
+.commentSubmitButton:hover {
+  background-color: #333333;
+}
+.commentSubmitButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+
+.commentListContainer {
+  margin-top: 35px;
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+}
+.commentListContainer h3 {
+  font-size: 1.4em;
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ecf0f1;
+  font-weight: 600;
+}
+
+.commentItem {
+  border-bottom: 1px solid #f1f3f5;
+  padding: 18px 0;
+}
+.commentItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.commentItem:first-child {
+  padding-top: 0;
+}
+
+.commentMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.commentMeta > div:first-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.commentAuthor {
+  font-weight: 600;
+  color: #34495e;
+  font-size: 0.98em;
+  margin-bottom: 4px;
+}
+
+.commentCreatedAt {
+  color: #95a5a6;
+  font-size: 0.82em;
+}
+
+.commentContent {
+  margin-bottom: 15px;
+  line-height: 1.65;
+  color: #4a6177;
+  font-size: 0.98em;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+.commentContent br {
+  display: block;
+  margin-bottom: 0.5em;
+}
+.commentContent[title="더블클릭하여 수정"] {
+    cursor: pointer;
+}
+
+.commentEditTextarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d8e0;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 0.98em;
+  line-height: 1.65;
+  resize: vertical;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.commentEditTextarea:focus {
+  outline: none;
+  border-color: #FF69B4;
+  box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.25);
+}
+
+.commentEditForm {
+}
+.editActionsContainer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+}
+
+.saveCommentButton,
+.cancelEditButton,
+.commentDeleteButton {
+    padding: 6px 12px !important;
+    font-size: 0.85em !important;
+}
+
+.commentUserActions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.commentActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9em;
+}
+.commentActions > div:first-child {
+  display: flex;
+  align-items: center;
+}
+
+.commentLikeCount {
+  margin-left: 4px;
+  color: #525f6b;
+  font-size: 0.9em;
+  vertical-align: middle;
+}
+
+.noComments {
+  text-align: center;
+  color: #7f8c8d;
+  padding: 30px 0;
+  font-size: 0.98em;
+}
+
+.commentPaginationContainer {
+  text-align: center;
+  margin-top: 35px;
+  padding-bottom: 15px;
+}
+
+/* === 추가된 관리자 댓글 스타일 === */
+.adminAuthor {
+  color: #FF3366 !important; /* 관리자 닉네임 강조 색상 */
+  font-weight: bold;
+}
+
+.adminBadge {
+  font-size: 0.75em;
+  font-weight: bold;
+  color: #fff;
+  background-color: #FF3366;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+}

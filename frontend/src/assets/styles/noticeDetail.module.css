@@ -1,0 +1,170 @@
+/* noticeDetail.module.css */
+
+.loadingMessage,
+.errorMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 45px); /* 헤더 높이만큼 빼고 전체 화면 사용 */
+    font-size: 1.2em;
+    color: #555;
+    padding-top: 45px; /* 이것도 헤더 공간 확보 */
+    box-sizing: border-box;
+}
+.errorMessage {
+    color: #d9534f; /* 에러 메시지는 붉은 계열 */
+}
+
+.background {
+    background-color: #f4f6f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    /* === 헤더 높이(45px)만큼 상단 패딩 추가 === */
+    padding-top: 45px; 
+    box-sizing: border-box;
+}
+
+.title { /* "공지사항" 제목을 감싸는 div */
+    width: 100%;
+    max-width: 1200px; 
+    text-align: center;
+    margin-bottom: 15px; 
+    padding-bottom: 15px;
+    border-bottom: 1px solid #dfe3e8; 
+}
+
+.titleLink { /* "공지사항" 텍스트 링크 */
+    text-decoration: none;
+    color: #2c3e50; 
+    transition: color 0.2s ease-in-out;
+}
+.titleLink:hover {
+    color: #FF69B4; 
+    text-decoration: none;
+}
+.titleLink h1 { /* 실제 "공지사항" 텍스트 */
+    font-size: 2.2em; 
+    font-weight: 600;
+    margin: 0;
+}
+
+.contentArea {
+    background-color: #EDEDED;
+    width: 100%; 
+    max-width: 1200px; 
+    display: flex; 
+    flex-direction: column;
+    border-top: 3px solid #FF3366; 
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07); 
+}
+
+.content {
+    width: 100%; 
+    margin: 0; 
+    background-color: #ffffff; 
+    border: 1px solid #d1d5db; 
+    border-radius: 6px;       
+    padding: 25px 30px;       
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05); 
+}
+
+.info {
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start; 
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0; 
+    gap: 15px; 
+}
+
+.infoLeft {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start;
+    gap: 8px; 
+}
+
+.importantTag { 
+    display: inline-block;
+    background-color: #FF3366;
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 12px; 
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.postTitleText { 
+    font-size: 1.6em; 
+    font-weight: 600;
+    color: #333;
+    line-height: 1.3;
+}
+
+.infoRight {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-end; 
+    gap: 5px; 
+    font-size: 0.85em;
+    color: #555;
+    flex-shrink: 0; /* 오른쪽 정보가 줄어들지 않도록 */
+}
+.infoRight span { 
+    white-space: nowrap;
+}
+.author { }
+.views { }
+.createdAt { }
+
+.textbox {
+    background-color: transparent; 
+    padding: 0; 
+    margin-top: 10px; 
+    min-height: 200px; 
+    line-height: 1.7;  
+    font-size: 1em;
+    color: #343a40;
+    word-break: break-word; /* 긴 단어 자동 줄바꿈 */
+}
+
+.textbox p { 
+    margin: 0 0 1em 0; 
+}
+.textbox p:last-child {
+    margin-bottom: 0;
+}
+.textbox br { 
+    content: "";
+    display: block;
+    margin-bottom: 0.6em;
+}
+
+.actionsContainer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+}
+
+.toListButton {
+    display: inline-block;
+    padding: 8px 18px;
+    background-color: #555;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+.toListButton:hover {
+    background-color: #333;
+}

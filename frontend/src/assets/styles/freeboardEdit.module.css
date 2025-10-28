@@ -1,0 +1,159 @@
+/* freeboardEdit.module.css */
+
+/* 전체 페이지 배경 */
+.background {
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f4f6f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 페이지 제목 ("자유게시판 (게시물 수정)") */
+.title {
+    width: 100%;
+    max-width: 1200px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.titleLink {
+    text-decoration: none;
+    color: #2c3e50; /* 이전 페이지와 일관성을 위해 기본 색상 변경 */
+    transition: color 0.2s ease-in-out; /* 색상 변경 시 부드러운 전환 효과 추가 */
+}
+
+/* .titleLink에 마우스를 올렸을 때의 스타일 */
+.titleLink:hover {
+  text-decoration: none; /* 호버 시에도 밑줄이 생기지 않도록 명시 */
+  color: #FF69B4; /* "자유게시판" 문구 호버 시 핑크색으로 변경 */
+}
+
+.titleLink h1 {
+    margin: 0;
+    font-size: 2em;
+    font-weight: 600;
+}
+
+/* 배너 이미지와 내용 영역을 감싸는 컨테이너 */
+.contentArea {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #ffffff;
+    padding: 20px 30px 30px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 배너 이미지를 감싸는 div */
+.img {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.img img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    max-height: 215px;
+}
+
+/* 실제 입력 폼 내용을 감싸는 div */
+.content {
+    /* 추가 스타일 필요시 여기에 작성 */
+}
+
+/* Label 스타일 */
+.label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+    font-weight: 500;
+    color: #333;
+}
+
+.contentLabel { /* 내용 레이블 위쪽 여백 추가 */
+    margin-top: 20px;
+}
+
+/* 제목 입력 input */
+.info {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1em;
+    margin-bottom: 15px;
+}
+
+/* === 제목 입력칸 포커스 스타일 수정 === */
+.info:focus {
+    border-color: #FF69B4; /* 핑크색 테두리로 변경 */
+    box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.25); /* 핑크색 그림자 효과로 변경 */
+    outline: none;
+}
+/* === 제목 입력칸 포커스 스타일 수정 끝 === */
+
+/* 내용 입력 textarea */
+.textbox {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1em;
+    line-height: 1.6;
+    resize: vertical;
+    min-height: 150px;
+}
+
+/* === 내용 입력칸 포커스 스타일 수정 === */
+.textbox:focus {
+    border-color: #FF69B4; /* 핑크색 테두리로 변경 */
+    box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.25); /* 핑크색 그림자 효과로 변경 */
+    outline: none;
+}
+/* === 내용 입력칸 포커스 스타일 수정 끝 === */
+
+/* 수정 버튼을 감싸는 div */
+.edit { /* 클래스명 변경됨 */
+    text-align: right;
+    margin-top: 25px;
+}
+
+/* 수정 버튼 (작성 버튼과 동일한 스타일 재사용 가능) */
+.submitButton {
+    padding: 10px 25px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.submitButton:hover {
+    background-color: #333333;
+}
+
+/* 모바일 등 작은 화면 반응형 (선택적 예시) */
+@media (max-width: 768px) {
+    .title h1 {
+        font-size: 2em;
+    }
+    .contentArea {
+        padding: 15px 20px 20px 20px;
+    }
+    .info, .textbox, .submitButton {
+        font-size: 0.95em;
+    }
+    .submitButton {
+        padding: 10px 20px;
+    }
+}

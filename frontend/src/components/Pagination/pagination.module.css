@@ -1,0 +1,91 @@
+/* pagination.module.css (Monochrome Theme) */
+.paginationContainer {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+  border-radius: 0.25rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+.pageItem {
+  margin: 0 2px;
+}
+
+/* 비활성화된 아이템 스타일 */
+.pageItem.disabled .pageLink {
+  color: #6c757d; /* 회색 글자 */
+  pointer-events: none;
+  cursor: default;
+  background-color: #fff; /* 흰색 배경 */
+  border-color: #dee2e6; /* 밝은 회색 테두리 */
+}
+
+/* 활성화된(현재 페이지) 아이템 스타일 */
+.pageItem.active .pageLink {
+  z-index: 1;
+  color: #fff; /* 흰색 글자 */
+  background-color: #212529; /* 진한 회색 (거의 검은색) 배경 */
+  border-color: #212529; /* 진한 회색 테두리 */
+}
+
+/* 기본 페이지 링크 스타일 */
+.pageLink {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  line-height: 1.25;
+  color: #495057; /* 기본 회색 글자 */
+  background-color: #fff; /* 흰색 배경 */
+  border: 1px solid #ced4da; /* 회색 테두리 */
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+/* 페이지 링크 호버 스타일 (활성화되지 않은 아이템) */
+.pageLink:hover {
+  color: #212529; /* 호버 시 좀 더 진한 회색 글자 */
+  background-color: #e9ecef; /* 밝은 회색 배경 */
+  border-color: #adb5bd; /* 약간 더 진한 회색 테두리 */
+}
+
+/* 비활성화된 아이템의 링크는 호버 스타일 변경 없음 (필요시 아래 주석 해제 후 조정) */
+.pageItem.disabled .pageLink:hover {
+  color: #6c757d;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+
+.srOnly { /* 스크린 리더 전용 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.dots { /* '...' 스타일 */
+  display: block;
+  padding: 0.5rem 0.75rem;
+  line-height: 1.25;
+  color: #6c757d; /* 회색 글자 */
+  cursor: default;
+}
+
+/* 첫번째/마지막 자식 아이템 모서리 둥글기 (선택사항) */
+.pageItem:first-child .pageLink {
+  border-top-left-radius: 0.35rem;
+  border-bottom-left-radius: 0.35rem;
+}
+
+.pageItem:last-child .pageLink {
+  border-top-right-radius: 0.35rem;
+  border-bottom-right-radius: 0.35rem;
+}

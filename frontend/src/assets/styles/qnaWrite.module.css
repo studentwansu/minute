@@ -1,0 +1,217 @@
+/* qnaWrite.module.css */
+.layout {
+  display: flex;
+}
+
+.container {
+  display: flex;
+  background-color: #fff;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  margin-left: 100px;
+  width: calc(100% - 120px);
+  height: calc(100vh - 41px);
+  box-sizing: border-box;
+  scrollbar-width: none;
+  padding-left: 30px; /* 이 패딩은 .background 에 주는것이 나을 수 있습니다. */
+  border-radius: 0 10px 10px 0;
+  overflow-y: auto; /* 내용이 길어지면 스크롤 */
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.background {
+  padding: 20px 30px; /* 좌우 패딩 추가 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto; /* 상하 마진 제거, 좌우는 auto */
+  width: 100%;
+  box-sizing: border-box; /* .background 에 box-sizing 추가 */
+}
+
+.title {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.pageTitleLink {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.2s ease-in-out;
+  display: inline-block;
+}
+
+.pageTitleLink:hover {
+  color: #FF69B4;
+}
+
+.title h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.contentArea {
+  padding: 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+  max-width: 1000px;
+  background-color: #ffffff; /* contentArea 배경색 흰색으로 명시 */
+  border-radius: 8px; /* contentArea 모서리 둥글게 */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* contentArea 그림자 */
+}
+
+.label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.inputField,
+.textareaField {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  color: #333;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.textareaField {
+  min-height: 180px;
+  resize: vertical;
+}
+
+.inputField:focus,
+.textareaField:focus {
+  border-color: #FF69B4;
+  background-color: #fff;
+  box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.25);
+  outline: none;
+}
+
+/* 이미지 첨부 섹션 스타일 */
+.imgSection { /* 기존 .img 클래스명 변경 */
+  /* 특별한 스타일이 필요하면 여기에 추가 */
+}
+
+.imagePreviewContainer {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 10px; /* 라벨과의 간격 */
+}
+
+.imagePreviewItem {
+  position: relative; /* X 버튼 절대 위치의 기준점 */
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden; /* X 버튼이 이미지를 벗어나지 않도록 */
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지가 비율을 유지하며 꽉 차도록 */
+}
+
+.removeImageButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은 배경 */
+  border: none;
+  border-radius: 50%; /* 원형 버튼 */
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.removeImageButton:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.removeIcon {
+  width: 10px; /* X 아이콘 크기 조절 */
+  height: 10px;
+  display: block;
+  /* filter: brightness(0) invert(1); */ /* 아이콘이 어두운 색이면 흰색으로 보이게 (선택사항) */
+}
+
+.imagePlaceholder {
+  width: 100px;
+  height: 100px;
+  background-color: #f0f0f0;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column; /* 텍스트를 세로로 배치 */
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #777;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  text-align: center; /* 텍스트 중앙 정렬 */
+  line-height: 1.3;
+}
+
+.imagePlaceholder:hover {
+  background-color: #e9e9e9;
+  border-color: #bbb;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px; /* 여백 조정 */
+}
+
+.buttons button, /* 모든 버튼에 적용될 기본 스타일 */
+.submitButton { /* 추가: 작성 버튼에도 일관된 스타일 적용 */
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1px solid transparent; /* 테두리 투명하게 시작 */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  background-color: #333A40;
+  color: #ffffff;
+}
+
+.buttons button:hover,
+.submitButton:hover { /* 호버 효과도 통일 */
+  background-color: #4a545c; /* 약간 밝은 색으로 변경 */
+  border-color: #4a545c;
+  opacity: 1; /* 기존 opacity 제거 또는 조정 */
+}
+
+
+.inputField::placeholder,
+.textareaField::placeholder {
+  color: #999;
+  font-style: italic;
+}

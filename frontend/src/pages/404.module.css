@@ -1,0 +1,94 @@
+/* 404.module.css 또는 NotFound.module.css */
+
+.notFoundPage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    color: #343a40; /* 기본 텍스트 색상, 배경에 따라 조절 필요 */
+
+    /* --- 배경 이미지 관련 스타일 추가 --- */
+    background-size: cover;       /* 이미지가 div를 꽉 채우도록 (잘릴 수 있음) */
+    /* 또는 background-size: contain; 이미지가 잘리지 않고 모두 보이도록 (빈 공간 생길 수 있음) */
+    background-position: center center; /* 이미지를 중앙에 위치 */
+    background-repeat: no-repeat;   /* 이미지 반복 없음 */
+    /* background-color: #f8f9fa; */ /* 이미지가 로드되지 않을 경우를 위한 대비 배경색 또는 이미지와 어울리는 색 */
+}
+
+.notFoundPage {
+    /* ... 기존 배경 이미지 url ... */
+    background-color: #8b8b8b; /* 예: 어두운 회색 배경 */
+    background-blend-mode: multiply; /* 예: 이미지를 아래 배경색과 곱하여 어둡게 만듦 */
+                                    /* 다른 값: overlay, darken, lighten 등 */
+    /* ... filter 속성은 이 방법과 함께 사용하거나 단독으로 사용 ... */
+}
+
+/* 내용 가독성을 위한 오버레이 (선택 사항) */
+.contentOverlay {
+    background-color: rgba(255, 255, 255, 0.5); /* 흰색 반투명 오버레이 (0.8은 투명도) */
+                                            /* 또는 rgba(0, 0, 0, 0.5); 검은색 반투명 오버레이 */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 600px; /* 내부 콘텐츠 최대 너비는 유지 */
+    width: 100%;
+}
+
+.container {
+    /* .contentOverlay가 이제 컨테이너 역할을 하므로, 기존 .container의 스타일 일부는
+       .contentOverlay로 옮겨가거나, .container는 단순 구조용으로 남을 수 있습니다. */
+    /* 여기서는 .contentOverlay가 max-width를 가지므로 .container의 max-width는 제거해도 됩니다. */
+}
+
+/* ... (기존 .errorCode, .title, .message, .homeButton 스타일은 유지하되,
+       배경 이미지 위에 잘 보이도록 색상 등 미세 조정이 필요할 수 있습니다.) ... */
+
+.errorCode {
+    font-size: 8rem;
+    font-weight: 700;
+    color: #dc3545; /* 배경 이미지와 어울리는 강조 색상 (예시: 빨간색 계열) */
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #343a40; /* 오버레이 위에서는 어두운 색이 잘 보일 수 있음 */
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.message {
+    font-size: 1rem;
+    color: #495057; /* 오버레이 위에서는 어두운 색이 잘 보일 수 있음 */
+    line-height: 1.7;
+    margin-bottom: 35px;
+}
+
+.homeButton {
+    display: inline-block;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #dc3545;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+    /* box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); */
+}
+
+.homeButton:hover {
+    background-color: #bd2c3b;
+    transform: translateY(-1px);
+}
+.homeButton:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 5px rgba(29, 29, 29, 0.2);
+}

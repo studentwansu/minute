@@ -1,0 +1,84 @@
+.hamburgerContainer {
+  position: relative;
+}
+
+.hamburgerIcon {
+  width: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.bar {
+  height: 3px;
+  background-color: #000;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  z-index: 30;
+}
+.bar:nth-child(1).open {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.bar:nth-child(2).open {
+  opacity: 0;
+}
+.bar:nth-child(3).open {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(8px);
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 20;
+  padding-top: 65px;
+  text-align: center;
+}
+
+.menu.show {
+  display: flex;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.menuItem {
+  position: relative;
+  cursor: pointer;
+}
+.submenu {
+  flex-direction: column;
+  border-bottom: 1px solid #333;
+  margin: auto;
+  width: 80%;
+  font-size: 14px;
+}
+
+.submenu a {
+  padding: 10px 0;
+  text-decoration: none;
+  color: #333;
+  display: block;
+}
+
+.submenu a:hover {
+  color: #ff3366;
+}
+
+.menuItem:hover .submenu {
+  display: flex;
+}
+
+.menuItem a {
+  padding: 10px 0;
+  display: block;
+}

@@ -1,0 +1,145 @@
+.loginWrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  background-color: #000;
+}
+
+.backImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  filter: brightness(0.6);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: auto;
+}
+
+.img1 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.loginBox {
+  position: relative;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 40px 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+.formGroup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+.btn {
+  width: 100%;
+  box-sizing: border-box;
+  height: 38px;
+  padding: 0 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-top: 10px;
+  
+}
+
+.err {
+  color: red;
+  font-size: 12px;
+  text-align: right;
+  min-height: 16px;
+  margin-top: 2px;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+.err:empty {
+  opacity: 0;
+}
+
+.input {
+  width: 100%;
+  height: 42px;
+  margin-bottom: 25px;
+  padding: 0 12px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: border-color 0.3s ease;
+}
+
+.input1 {
+  width: 100%;
+  height: 42px;
+  margin-bottom: 0px;
+  padding: 0 12px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: border-color 0.3s ease;
+}
+
+.btn {
+  height: 42px;
+  background-color: #ff3366;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #e62e5c;
+  transform: translateY(-2px);
+}
+
+.links {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #fff;
+  text-align: center;
+}
+
+.links a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 6px;
+  transition: color 0.3s;
+}
+
+.links a:hover {
+  color: #ffccdd;
+  text-decoration: underline;
+}

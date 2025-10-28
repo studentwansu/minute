@@ -1,0 +1,577 @@
+.layout {
+  display: flex;
+}
+
+.container {
+  display: flex;
+  background-color: #fff;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  margin-left: 100px;
+  width: calc(100% - 120px);
+  height: calc(100vh - 41px);
+  box-sizing: border-box;
+  scrollbar-width: none;
+  padding-left: 30px;
+  border-radius: 0 10px 10px 0;
+  overflow-y: auto;
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari 스크롤바 숨김 */
+}
+
+.leftWrap {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 60%;
+  min-width: 300px;
+  height: 100%;
+  margin-top: 20px;
+  margin-left: 30px;
+}
+
+.profileWrap {
+  background-color: #f6f6f6;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.profileContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.profileNickName {
+  font-size: 16px;
+  color: #000;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+}
+
+.profileImg {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background-color: #000;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileImg > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.profileInfo {
+  text-align: right;
+}
+
+.profileInfo > p {
+  margin-top: 10px;
+  color: #000;
+}
+
+.profileNavbar {
+  width: 80%;
+  background-color: #1f1f1f;
+  color: #fff;
+  border-radius: 10px;
+  margin: 20px auto;
+  padding: 15px 10px;
+}
+
+.profileNavbar > ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 70px;
+}
+
+.profileNavbar > ul > li {
+  white-space: nowrap;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.defaultProfile {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #666;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.4;
+  padding: 0 10px;
+  box-sizing: border-box;
+  white-space: pre-line;
+  user-select: none;
+}
+
+
+.planWrap {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.planLeftWrap {
+  width: 60%;
+  min-width: 300px;
+}
+
+.calendar {
+  width: 100%;
+  height: 232px;
+  /* background-color: #f3c6e6; */
+  border-radius: 10px;
+  /* padding: 20px; */
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.planList {
+  width: 100%;
+  height: 200px;
+  background-color: #1f1f1f;
+  border-radius: 10px;
+  margin-top: 75px;
+  font-size: 20px;
+}
+
+.planRightWrap {
+  width: 40%;
+  background-color: #1f1f1f;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+
+.rightWrap {
+  flex: 0 0 30%;
+  background-color: #f6f6f6;
+  margin-left: 75px;
+  margin-top: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 875px;
+  position: relative;
+}
+.plan {
+  max-height: calc(7 * 60px + 6 * 8px);
+  padding-top: 40px;
+  overflow-y: auto;
+  scrollbar-width: none;   /* Firefox */
+  -ms-overflow-style: none;/* IE 10+ */
+}
+.plan p {
+  color: white;
+}
+.plan::-webkit-scrollbar {
+  display: none;           /* Chrome, Safari */
+}
+.editButton{
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  position: absolute;
+  width: 25px;
+  right: 20px;
+}
+
+.planContext {
+  font-size: 15px;
+}
+
+.mapWrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  width: 100%;
+  position: relative;
+  min-height: 600px;
+  margin-top: -114px;
+  margin-left: 14px;
+}
+
+.linkStyle {
+  text-decoration: none; 
+  display: block;
+}
+
+.mapWrap > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.mapWrap > ul >  li  {
+  max-width: 250px;
+  width: 100%;
+  position: relative;
+}
+
+
+.mapWrap > ul > li > a {
+  display: block; 
+  text-decoration: none; 
+}
+
+.mapWrap > ul >li> a > img {
+  width: 100%;
+  height: auto;
+}
+
+/* 지도 조각 위에 투명 버튼 */
+.mapButton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); 
+  cursor: pointer;
+  border: none;
+}
+
+/* 지도 위치는 이미지와 동일하게 유지 */
+.mapWrap > ul > li:nth-child(1) {
+  position: absolute;
+  left: 50px;
+  top: 23px;
+}
+
+.mapWrap > ul > li:nth-child(2) {
+  position: absolute;
+  left: 177px;
+  top: -18px;
+}
+
+.mapWrap > ul > li:nth-child(3) {
+  position: absolute;
+  left: 247px;
+  top: 190px;
+}
+
+.mapWrap > ul > li:nth-child(4) {
+  position: absolute;
+  left: 150px;
+  top: 145px;
+}
+
+.mapWrap > ul > li:nth-child(5) {
+  position: absolute;
+  left: 18px;
+  top: 168px;
+}
+
+.mapWrap > ul > li:nth-child(6) {
+  position: absolute;
+  left: 56px;
+  top: 278px;
+}
+
+.mapWrap > ul > li:nth-child(7) {
+  position: absolute;
+  left: 306px;
+  top: 317px;
+}
+
+.mapWrap > ul > li:nth-child(8) {
+  position: absolute;
+  left: 200px;
+  top: 324px;
+}
+
+.mapWrap > ul > li:nth-child(9) {
+  position: absolute;
+  left: 32px;
+  top: 398px;
+}
+
+.mapWrap > ul > li:nth-child(10) {
+  position: absolute;
+  left: 0px;
+  top: 565px;
+}
+
+
+@media (max-width: 1919px) {
+  .container {
+    overflow-y: auto;
+  }
+  .mapWrap {
+    margin-left: -90px;
+  }
+}
+@media (min-width: 1401px) and (max-width: 1600px) {
+  .leftWrap {
+    margin-left: 0px;
+    flex: 0 0 55%;
+  }
+  .rightWrap {
+    margin-left: 30px;
+    flex: 00 40%;
+  }
+  .mapWrap {
+    margin-left: -26px;
+  }
+}
+@media (min-width: 1201px) and (max-width: 1400px) {
+  .leftWrap {
+    margin-left: 0px;
+    flex: 0 0 55%;
+  }
+  .rightWrap {
+    margin-left: 30px;
+    flex: 00 40%;
+  }
+  .mapWrap {
+    margin-left: -115px;
+  }
+  .profileNavbar > ul {
+    gap: 50px;
+  }
+}
+@media (min-width: 1101px) and (max-width: 1200px) {
+  .container {
+    overflow-y: auto;
+  }
+  .leftWrap {
+    margin-left: 0;
+    flex: 0 0 50%;
+  }
+  .rightWrap {
+    flex: 00 44%;
+    margin-left: 28px;
+  }
+  .mapWrap {
+    margin-left: -114px;
+  }
+  .profileNavbar > ul {
+    gap: 36px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1100px) {
+  .layout {
+    display: flex;
+    flex-direction: column;
+  }
+  .container {
+    margin-left: 60px;
+    margin-right: 0;
+    width: 90%;
+    margin-top: 20px;
+    height: calc(100vh - 41px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .leftWrap {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+  .profileWrap {
+    display: flex;
+    flex-direction: row;
+    width: 97%;
+  }
+  .profileNavbar {
+    height: 60px;
+    margin-top: 50px;
+    margin-left: 20px;
+  }
+  .profileContent {
+    flex-direction: row;
+    align-items: center;
+  }
+  .profileNickName {
+    margin-left: 0;
+    text-align: center;
+  }
+  .profileImg {
+    margin-left: 0;
+    width: 120px;
+    height: 120px;
+  }
+  .profile {
+    min-width: 100px;
+  }
+  .profileInfo {
+    text-align: right;
+    margin-top: 50px;
+    margin-right: 18px;
+  }
+
+  .profileNavbar > ul {
+    gap: 15px;
+  }
+  .planWrap {
+    display: flex;
+    width: 97%;
+  }
+  .planleftWrap {
+    display: flex;
+    flex-direction: column;
+  }
+  .planRightWrap {
+    width: 40%;
+    display: flex;
+  }
+  .rightWrap {
+    flex: 0 0 100%;
+    margin-left: 30px;
+    min-height: auto;
+    width: 93%;
+    margin-top: -170px;
+  }
+  .mapWrap {
+    margin-left: 200px;
+  }
+  .mapWrap > ul {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  .layout {
+    display: flex;
+    flex-direction: column;
+  }
+  .container {
+    margin-left: 60px;
+    margin-right: 0;
+    width: 90%;
+    margin-top: 20px;
+    height: calc(100vh - 41px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .leftWrap {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+  .profileWrap {
+    display: flex;
+    flex-direction: row;
+    width: 97%;
+  }
+  .profileNavbar {
+    height: 60px;
+    margin-right: 20px;
+    margin-top: 50px;
+  }
+  .profileContent {
+    flex-direction: row;
+    align-items: center;
+  }
+  .profileNickName {
+    margin-left: 0;
+    text-align: center;
+  }
+  .profileImg {
+    margin-left: 0;
+    width: 120px;
+    height: 120px;
+  }
+  .profileEdit {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ddd;
+    position: absolute;
+    bottom: -2px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 20;
+    cursor: pointer;
+  }
+  .profileEdit > img {
+    width: 15px;
+    object-fit: cover;
+  }
+  .profile {
+    min-width: 100px;
+  }
+  .profileInfo {
+    text-align: right;
+    margin-top: 50px;
+    margin-right: 18px;
+  }
+
+  .profileNavbar > ul {
+    gap: 15px;
+  }
+  .planWrap {
+    display: flex;
+    width: 97%;
+  }
+
+  .planleftWrap {
+    display: flex;
+    flex-direction: column;
+  }
+  .planRightWrap {
+    width: 40%;
+    display: flex;
+  }
+  .rightWrap {
+    flex: 0 0 100%;
+    margin-left: 30px;
+    min-height: auto;
+    width: 93%;
+    margin-top: -170px;
+  }
+  .mapWrap {
+    margin-left: 78px;
+  }
+  .mapWrap > ul {
+    gap: 8px;
+  }
+}

@@ -1,0 +1,211 @@
+/* ManagerQna.module.css (필터 바 반응형 개선) */
+
+.container {
+    display: flex;
+    /* flex-direction: row; /* 이전 페이지들과 동일한 구조 가정 */
+    margin-top: 45px;    /* 헤더와의 간격 */
+    min-height: calc(100vh - 45px); /* 헤더 제외한 최소 높이 */
+    background-color: #f4f6f8; /* 페이지 배경색 */
+}
+
+.qnaContent { /* 흰색 카드 영역 */
+    flex: 1;
+    margin: 20px; /* .container 배경과의 여백 */
+    padding: 30px 35px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex; /* 내부 요소들을 flex로 관리 (선택적) */
+    flex-direction: column; /* 내부 요소들을 세로로 배치 */
+}
+
+.pageTitle {
+    font-size: 2.2em;
+    font-weight: 600;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px; /* 기존 값 유지 */
+    padding-bottom: 15px;
+    border-bottom: 1px solid #dfe3e8;
+}
+
+/* === 필터 바 및 내부 요소 스타일 수정 === */
+.filterBar {
+    display: flex;
+    align-items: center; /* 기본 세로 정렬 */
+    gap: 10px;
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #333;
+    border-radius: 6px;
+    flex-wrap: wrap; /* <<< 핵심: 요소들이 공간 부족 시 다음 줄로 넘어가도록 */
+}
+
+.filterElement { /* 날짜 input, select, 검색 input 공통 스타일 */
+    padding: 8px 12px;
+    border: 1px solid #555;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    height: 36px; /* 높이 통일 */
+}
+
+.dateSeparator {
+    color: #f0f0f0;
+    font-size: 14px;
+    line-height: 36px; /* filterElement 높이와 맞춤 */
+    flex-shrink: 0; /* 크기가 줄어들지 않도록 */
+    padding: 0 5px; /* 좌우 약간의 여백 */
+}
+
+/* 날짜 입력 필드 스타일 */
+input[type="date"].filterElement {
+    min-width: 130px; /* 날짜 입력 필드의 최소 너비 */
+    flex-grow: 1; /* 다른 요소들과 함께 늘어나도록 (선택적) */
+    flex-basis: 130px; /* 기본 너비 */
+}
+
+.filterSelect { /* 답변상태 select 요소 */
+    min-width: 150px; /* 기존 값 유지 또는 필요시 조정 */
+    flex-basis: 150px; /* 기본 너비 */
+    flex-shrink: 0; /* 내용에 따라 너비가 결정되므로, 강제로 줄어들지 않도록 */
+}
+
+.filterSearchInput { /* 검색창 */
+    flex-grow: 1; /* 사용 가능한 공간을 최대한 차지 (기존에도 있었음) */
+    min-width: 180px; /* 검색창이 너무 작아지지 않도록 최소 너비 (중요) */
+    flex-basis: 200px; /* 화면이 충분할 때 가질 기본 너비 */
+}
+
+.filterSearchButton { /* 검색 버튼 */
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    background-color: #555;
+    border: 1px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0; /* 버튼 크기가 줄어들지 않도록 */
+}
+.filterSearchButton:hover {
+    background-color: #777;
+}
+.searchIcon {
+    width: 16px;
+    height: 16px;
+    display: block;
+    filter: brightness(0) invert(1);
+}
+/* === 필터 바 수정 끝 === */
+
+
+.qnaTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+}
+
+.qnaTable th,
+.qnaTable td {
+    border-bottom: 1px solid #e9ecef;
+    padding: 12px 10px;
+    text-align: center;
+    font-size: 0.9em;
+    vertical-align: middle;
+    word-break: keep-all; /* 기존 설정 유지 */
+}
+
+.qnaTable th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+    border-top: 1px solid #dee2e6; /* 기존 설정 유지 */
+    white-space: nowrap; /* 헤더 줄바꿈 방지 (필요시) */
+}
+
+.qnaTable th.titleHeaderColumn, /* th에 적용 */
+.qnaTable td.titleDataColumn { /* td에 적용 */
+    text-align: left;
+    padding-left: 15px;
+    /* min-width 등은 테이블 내용에 따라 조절 */
+}
+
+.titleLink {
+    text-decoration: none;
+    color: #333;
+    font-weight: normal;
+}
+.titleLink:hover {
+    text-decoration: underline;
+    color: #000;
+}
+
+.statusButton {
+    display: inline-block;
+    padding: 5px 12px;
+    border: none;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    min-width: 70px; /* 기존 값 유지 */
+    cursor: default;
+    opacity: 1;
+    line-height: 1.5; /* 버튼 내부 텍스트 수직 정렬 개선 */
+    vertical-align: middle; /* 다른 인라인 요소와 정렬 맞춤 */
+}
+
+.statusButton.answeredStatus {
+    background-color: #28a745;
+}
+.statusButton.answeredStatus:hover {
+    background-color: #218838;
+}
+
+.statusButton.unansweredStatus {
+    background-color: #6c757d;
+}
+.statusButton.unansweredStatus:hover {
+    background-color: #5a6268;
+}
+
+.iconButton {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+.buttonIcon {
+    width: 16px;
+    height: 16px;
+}
+.reportedButton .buttonIcon {
+    /* filter: grayscale(50%) opacity(0.7); */
+}
+
+.clickableRow:hover td {
+    background-color: #f0f2f5; /* 기존 값 유지 */
+}
+.clickableRow {
+    cursor: pointer; /* 기존 값 유지 */
+}
+
+.pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

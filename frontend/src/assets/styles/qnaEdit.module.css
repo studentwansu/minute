@@ -1,0 +1,238 @@
+/* qnaEdit.module.css */
+.layout {
+  display: flex;
+}
+
+.container {
+  display: flex;
+  background-color: #fff;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  margin-left: 100px;
+  width: calc(100% - 120px);
+  height: calc(100vh - 41px);
+  box-sizing: border-box;
+  scrollbar-width: none;
+  padding-left: 30px; /* .background 로 옮기는 것 고려 */
+  border-radius: 0 10px 10px 0;
+  overflow-y: auto;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.background {
+  padding: 20px 30px; /* 좌우 패딩 추가 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.title {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.pageTitleLink {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.2s ease-in-out;
+  display: inline-block;
+}
+
+.pageTitleLink:hover {
+  color: #FF69B4;
+}
+
+.title h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.contentArea {
+  padding: 30px;
+  width: 100%;
+  max-width: 1000px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.inputField,
+.textareaField {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  color: #333;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.textareaField {
+  min-height: 180px;
+  resize: vertical;
+}
+
+.inputField:focus,
+.textareaField:focus {
+  border-color: #FF69B4;
+  background-color: #fff;
+  box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.25);
+  outline: none;
+}
+
+/* === 이미지 첨부 섹션 스타일 === */
+.imgSection { /* 기존 .img 클래스명 변경 또는 새롭게 정의 */
+  /* 필요한 경우 추가 스타일 */
+}
+
+.imagePreviewContainer {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.imagePreviewItem { /* 미리보기 이미지 + X버튼 컨테이너 */
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.previewImage { /* 미리보기 이미지 자체 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.removeImageButton { /* X 아이콘 버튼 */
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.removeImageButton:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.removeIcon { /* X 아이콘 이미지 */
+  width: 10px;
+  height: 10px;
+  display: block;
+  /* filter: brightness(0) invert(1); */ /* 아이콘이 어두운 색이면 흰색으로 보이게 */
+}
+
+.imagePlaceholder { /* 이미지 추가 플레이스홀더 */
+  width: 100px;
+  height: 100px;
+  background-color: #f0f0f0;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #777;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.imagePlaceholder:hover {
+  background-color: #e9e9e9;
+  border-color: #bbb;
+}
+/* === 이미지 첨부 섹션 스타일 끝 === */
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* '이미지 파일 선택' 버튼과 '수정 완료' 버튼 공통 스타일 */
+.buttons button,
+.submitButton, /* 작성 페이지와 일관성을 위해 추가 */
+.triggerButton { /* '이미지 파일 선택' 버튼에 적용할 클래스 */
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  color: #ffffff;
+}
+
+/* '이미지 파일 선택' 버튼 - 회색 계열 */
+.triggerButton {
+  background-color: #6c757d; /* 회색 계열 */
+  border-color: #6c757d;
+}
+.triggerButton:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+  opacity: 1;
+}
+.triggerButton:disabled {
+  background-color: #adb5bd;
+  border-color: #adb5bd;
+  cursor: not-allowed;
+}
+
+
+/* '수정 완료' 버튼 - 기존 스타일 유지 또는 필요시 qnaWrite와 통일 */
+.submitButton {
+  background-color: #333A40;
+}
+.submitButton:hover {
+  background-color: #4a545c;
+  opacity: 1;
+}
+
+
+.inputField::placeholder,
+.textareaField::placeholder {
+  color: #999;
+  font-style: italic;
+}

@@ -1,0 +1,56 @@
+.header {
+  position: fixed;
+  width: 100%;
+  height: 45px;
+  top: 0;
+  background-color: rgba(116, 116, 116, 1);
+  z-index: 10;
+}
+.container {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+}
+.icons {
+  display: flex;
+  margin-top: 12px;
+}
+.logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
+  position: relative;
+  z-index: 30;
+}
+
+.auth {
+  display: flex;
+  margin-top: 12px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.auth {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #fff;
+}
+
+.welcomeMessage { /* "닉네임관리자님 환영합니다!" 스타일 */
+  margin: 0;
+  margin-right: 15px; /* 로그아웃 링크와의 간격 */
+}
+
+.logoutLink { /* "로그아웃" 링크 스타일 */
+  margin: 0; /* p 태그 기본 마진 제거 */
+  color: #fff; /* 링크 색상 (기존 .auth 색상과 동일하거나 원하는 색으로) */
+  cursor: pointer; /* 마우스 오버 시 손가락 모양 커서 */
+  text-decoration: none; /* 기본 밑줄 제거 (선택 사항) */
+}
+
+.logoutLink:hover,
+.logoutLink:focus { /* 마우스 오버 또는 키보드 포커스 시 */
+  outline: none; /* 포커스 시 기본 outline 제거 (커스텀 포커스 스타일을 원할 경우) */
+}

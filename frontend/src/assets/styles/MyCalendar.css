@@ -1,0 +1,116 @@
+.react-calendar{
+  width: 100%;
+  border-radius: 10px;
+}
+
+.react-calendar__navigation {
+    display: flex;
+    height: 40px;
+    margin-bottom: 0;
+    span {
+      font-size: 15px;
+      font-weight: 600;
+    }
+}  
+
+.react-calendar__navigation button:disabled {
+  border-radius: 10px;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  border-radius: 10px;
+  margin: auto;
+}
+
+.react-calendar__month-view {
+  padding: 2px;
+  abbr {
+    font-size: 13px;
+    font-weight: 500;
+  }
+}
+
+.react-calendar__month-view__weekdays {
+  abbr {
+    font-size: 12px;
+    font-weight: 900;
+  }
+}
+
+.react-calendar__tile {
+  text-align: center;
+  height: 37px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 5px;
+
+}
+
+/*hover, focus, 선택됐을 시 */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus,
+.react-calendar__tile--active {
+  border-radius: 14px;
+  background-color: #ddd;
+  color: black;
+}
+
+.react-calendar__tile--now {
+  border-radius: 14px;
+  background-color: #ff3366;
+}
+
+/*hover, focus 시 */
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  border-radius: 14px;
+  background: #f87e9c;
+}
+
+.react-calendar__year-view__months {
+  abbr {
+    text-align: center;
+  }
+}
+
+.react-calendar__tile--active:not(.react-calendar__tile--now) {
+  background-color: black;
+  color: white;
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus:not(.react-calendar__tile--now) {
+  background-color: black;
+  color: white;
+} 
+
+.react-calendar__year-view .react-calendar__tile, .react-calendar__decade-view .react-calendar__tile, .react-calendar__century-view .react-calendar__tile {
+  padding: 10px;
+}
+
+.dot-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 12px;           /* dot이 찰칵 보일 높이 */
+  margin-top: 2px;
+  gap: 2px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.plan-dot {
+  background-color: pink;
+}
+
+.checklist-dot {
+  background-color: #f5e286;
+}
+

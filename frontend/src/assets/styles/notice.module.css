@@ -1,0 +1,141 @@
+/* notice.module.css */
+
+/* 페이지 전체를 감싸는 배경 및 기본 레이아웃 */
+.background {
+    background-color: #ffffff; /* 다른 '보드'들과 같이 흰색 배경 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 내부 .title, .contentArea 중앙 정렬을 위해 */
+    max-width: 1200px;   /* 다른 페이지들과 통일된 최대 너비 (예시) */
+    margin: 20px auto;   /* 페이지 중앙 정렬 */
+    padding: 20px;       /* 내부 여백 */
+    box-sizing: border-box;
+    border: 1px solid #dee2e6; /* 옅은 회색 테두리 */
+    border-radius: 8px;       /* 모서리 둥글게 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 그림자 효과 */
+}
+
+/* 페이지 제목 ("공지사항") 영역 */
+.title {
+    text-align: center;
+    margin-bottom: 25px; /* 콘텐츠 영역과의 간격 */
+    width: 100%; /* .background 너비에 맞춤 */
+    padding-bottom: 15px; /* 제목과 하단 선 사이의 여백 */
+    border-bottom: 1px solid #eee; /* 자유게시판 헤더의 선과 유사하게 */
+}
+
+/* 페이지 제목 링크 (h1을 감싸는 Link) */
+.pageTitleLink {
+  text-decoration: none;
+  color: #2c3e50; /* .title h1의 기본 색상과 동일하게 */
+  transition: color 0.2s ease-in-out;
+  display: inline-block; /* 링크 영역을 h1에 맞춤 */
+}
+
+.pageTitleLink:hover {
+  color: #FF69B4; /* 호버 시 핑크색으로 변경 */
+}
+
+.title h1 { /* Link로 감싸져도 h1 스타일은 유지 */
+    font-size: 2.2em;   /* 다른 페이지 제목들과 통일성 있는 크기 */
+    font-weight: 600;
+    /* color: #2c3e50; */ /* 이제 .pageTitleLink 에서 색상 관리 */
+    margin: 0;
+}
+
+/* 실제 콘텐츠 영역 (테이블을 감쌈) */
+.contentArea {
+    width: 100%; /* .background 내부에서 전체 너비 사용 */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 공지사항 목록 테이블 */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.table thead th {
+    border-top: 2px solid #FF3366;
+    border-bottom: 2px solid #DDDDDD;
+    padding: 12px 10px;
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.table thead th:nth-child(2) { /* 제목(th)은 왼쪽 정렬 */
+    text-align: left;
+}
+
+.table tbody td {
+    text-align: center;
+    border-bottom: 1px solid #EAEAEA;
+    padding: 12px 10px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.table tbody td:nth-child(2) { /* 제목(td)은 왼쪽 정렬 */
+    text-align: left;
+}
+
+.tableTitle {
+    /* 제목 셀에 특별한 스타일이 필요하다면 여기에 추가 */
+}
+
+.titleLink { /* 공지사항 제목 링크 스타일 (테이블 내부용) */
+    text-decoration: none;
+    color: #333; /* 링크 기본 색상 */
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.titleLink:hover {
+    color: #FF3366;
+    text-decoration: underline;
+}
+
+/* "중요" 공지 관련 스타일 */
+.important {
+    background-color: #fff8fa;
+}
+
+.important td {
+    /* font-weight: 500; */
+}
+
+.important td:first-child {
+    /* text-align: center; */
+}
+
+.importantTag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75em;
+  font-weight: bold;
+  background-color: #FF3366;
+  color: #FFFFFF;
+  line-height: 1.4;
+}
+
+.table tbody tr:not(.important):hover td {
+    background-color: #FFF0F5;
+    cursor: pointer;       
+}
+
+.important:hover td {
+    background-color: #ffe0e9;
+    cursor: pointer;
+}
+
+.paginationWrapper {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
