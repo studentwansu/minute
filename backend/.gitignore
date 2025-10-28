@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# 로컬 환경 설정 파일 (비밀 정보 포함)
+application.yml
