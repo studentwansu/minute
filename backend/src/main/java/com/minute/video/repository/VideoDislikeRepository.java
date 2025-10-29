@@ -1,6 +1,6 @@
 package com.minute.video.repository;
 
-import com.minute.video.Entity.VideoDislike;
+import com.minute.video.entity.VideoDislike;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

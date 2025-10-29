@@ -37,8 +37,8 @@ public class UserServiceImpl implements UserService {
     @PersistenceContext
     private EntityManager em;
     private final UserRepository userRepository;
-    String uploadDir = "C:/upload/profile/";
-
+//    String uploadDir = "C:/upload/profile/";
+    String uploadDir = "C:/minute-uploads/profile";
 
     //프론트용 사용자 조회
     @Override
@@ -167,6 +167,7 @@ public class UserServiceImpl implements UserService {
             // 파일 저장
             String originalFilename = file.getOriginalFilename();
             String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+//            String newFileName = userId + "_profile" + fileExtension;
             String newFileName = userId + "_profile" + fileExtension;
             Path savePath = Paths.get(uploadDir, newFileName);
             Files.createDirectories(savePath.getParent());
@@ -174,7 +175,8 @@ public class UserServiceImpl implements UserService {
 
             // DB에 경로 저장
             User user = optionalUser.get(); // ✅ 여기서 객체 꺼냄
-            user.setProfileImage("/upload/" + newFileName);
+//            user.setProfileImage("/upload/" + newFileName);
+            user.setProfileImage("/profile/" + newFileName);
             userRepository.save(user);
 
             return ResponseEntity.ok(new ResponseDto("SU", "프로필 이미지가 성공적으로 업로드되었습니다.", newFileName));

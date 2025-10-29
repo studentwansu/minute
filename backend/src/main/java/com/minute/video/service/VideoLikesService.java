@@ -2,8 +2,8 @@ package com.minute.video.service;
 
 import com.minute.user.entity.User;
 import com.minute.user.repository.UserRepository;
-import com.minute.video.Entity.Video;
-import com.minute.video.Entity.VideoLikes;
+import com.minute.video.entity.Video;
+import com.minute.video.entity.VideoLikes;
 import com.minute.video.dto.VideoLikesResponseDTO;
 import com.minute.video.repository.VideoLikesRepository;
 import com.minute.video.repository.VideoRepository;
@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 

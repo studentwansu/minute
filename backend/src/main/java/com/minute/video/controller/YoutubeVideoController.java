@@ -1,6 +1,6 @@
 package com.minute.video.controller;
 
-import com.minute.video.Entity.Video;
+import com.minute.video.entity.Video;
 import com.minute.video.service.VideoService;
 import com.minute.video.service.YoutubeApiService;
 import lombok.RequiredArgsConstructor;

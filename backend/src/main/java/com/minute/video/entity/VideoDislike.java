@@ -1,4 +1,4 @@
-package com.minute.video.Entity;
+package com.minute.video.entity;
 
 import com.minute.user.entity.User;
 import jakarta.persistence.*;

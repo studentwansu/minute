@@ -1,7 +1,6 @@
 package com.minute.video.repository;
 
-import com.minute.video.Entity.Category;
-import com.minute.video.Entity.Video;
+import com.minute.video.entity.Video;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

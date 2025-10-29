@@ -1,13 +1,11 @@
 package com.minute.video.service;
 
-import com.minute.video.Entity.Video;
+import com.minute.video.entity.Video;
 import com.minute.video.dto.TagResponseDTO;
-import com.minute.video.dto.VideoResponseDTO;
 import com.minute.video.mapper.VideoMapper;
 import com.minute.video.repository.TagRepository;
 import com.minute.video.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

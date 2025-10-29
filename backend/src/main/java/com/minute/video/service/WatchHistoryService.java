@@ -2,16 +2,14 @@ package com.minute.video.service;
 
 import com.minute.user.entity.User;
 import com.minute.user.repository.UserRepository;
-import com.minute.video.Entity.Video;
-import com.minute.video.Entity.WatchHistory;
-import com.minute.video.dto.VideoResponseDTO;
+import com.minute.video.entity.Video;
+import com.minute.video.entity.WatchHistory;
 import com.minute.video.dto.WatchHistoryRequestDTO;
 import com.minute.video.dto.WatchHistoryResponseDTO;
 import com.minute.video.mapper.VideoMapper;
 import com.minute.video.repository.VideoRepository;
 import com.minute.video.repository.WatchHistoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

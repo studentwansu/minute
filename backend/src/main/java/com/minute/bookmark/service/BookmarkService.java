@@ -6,7 +6,7 @@ import com.minute.bookmark.entity.Bookmark;
 import com.minute.bookmark.repository.BookmarkRepository;
 import com.minute.folder.entity.Folder;
 import com.minute.folder.repository.FolderRepository;
-import com.minute.video.Entity.Video;
+import com.minute.video.entity.Video;
 import com.minute.video.dto.VideoResponseDTO;
 import com.minute.video.repository.VideoRepository; // VideoRepository 임포트
 import org.slf4j.Logger;

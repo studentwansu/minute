@@ -1,8 +1,8 @@
 package com.minute.video.repository;
 
-import com.minute.video.Entity.Tag;
-import com.minute.video.Entity.Video;
-import com.minute.video.Entity.VideoTag;
+import com.minute.video.entity.Tag;
+import com.minute.video.entity.Video;
+import com.minute.video.entity.VideoTag;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface VideoTagRepository extends JpaRepository<VideoTag, VideoTag.VideoTagId> {

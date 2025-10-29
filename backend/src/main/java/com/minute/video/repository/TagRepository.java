@@ -1,6 +1,6 @@
 package com.minute.video.repository;
 
-import com.minute.video.Entity.Tag;
+import com.minute.video.entity.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.minute.video.Entity;
+package com.minute.video.entity;
 
 import com.minute.user.entity.User;
 import jakarta.persistence.*;
@@ -10,22 +10,16 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "recommendation_log")
+@Table(name = "watch_history")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RecommendationLog {
+public class WatchHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer recommendationId;
-
-    @Column(nullable = false)
-    private LocalDateTime recommendedAt;
-
-    @Column(length = 50)
-    private String algorithmType;
+    private Integer watchId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -34,4 +28,12 @@ public class RecommendationLog {
     @ManyToOne
     @JoinColumn(name = "video_id")
     private Video video;
+
+    @Column(nullable = false)
+    private LocalDateTime watchedAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.watchedAt = LocalDateTime.now();
+    }
 }

@@ -2,8 +2,8 @@ package com.minute.video.service;
 
 import com.minute.user.entity.User;
 import com.minute.user.repository.UserRepository;
-import com.minute.video.Entity.PopularSearch;
-import com.minute.video.Entity.SearchHistory;
+import com.minute.video.entity.PopularSearch;
+import com.minute.video.entity.SearchHistory;
 import com.minute.video.dto.SearchHistoryRequestDTO;
 import com.minute.video.dto.SearchHistoryResponseDTO;
 import com.minute.video.dto.SearchSuggestionsDTO;
@@ -11,7 +11,6 @@ import com.minute.video.repository.PopularSearchRepository;
 import com.minute.video.repository.SearchHistoryRepository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
