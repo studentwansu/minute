@@ -1,6 +1,6 @@
 package com.minute.video.service;
 
-import com.minute.video.Entity.Video;
+import com.minute.video.entity.Video;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 

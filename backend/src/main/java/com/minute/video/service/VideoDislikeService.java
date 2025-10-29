@@ -2,8 +2,8 @@ package com.minute.video.service;
 
 import com.minute.user.entity.User;
 import com.minute.user.repository.UserRepository;
-import com.minute.video.Entity.Video;
-import com.minute.video.Entity.VideoDislike;
+import com.minute.video.entity.Video;
+import com.minute.video.entity.VideoDislike;
 import com.minute.video.dto.VideoDislikesResponseDTO;
 import com.minute.video.repository.VideoDislikeRepository;
 import com.minute.video.repository.VideoLikesRepository;

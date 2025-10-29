@@ -165,6 +165,18 @@ function QnaDetail() {
     
     const canEdit = userQuestion.inquiryStatus === 'PENDING' && !isLoading;
 
+    // 상대/이상한 경로를 백엔드 절대 URL로 보정
+    const toBackendUrl = (p) => {
+    if (!p) return '';
+    if (p.startsWith('http')) return p;
+    // 'qna/파일.webp', '/qna/파일.webp', '파일.webp' 모두 처리
+    const path =
+        p.startsWith('/qna/') || p.startsWith('qna/')
+        ? (p.startsWith('/') ? p : `/${p}`)
+        : `/qna/${p}`;
+    return `http://localhost:8080${path}`;
+    };
+
     return (
         <>
            <MypageNav/>
@@ -192,21 +204,26 @@ function QnaDetail() {
                             </div>
 
                             {userQuestion.attachments && userQuestion.attachments.length > 0 && (
-                                <div className={qnaDetailStyle.imgSection}>
-                                    <p className={qnaDetailStyle.attachmentTitle}>첨부 이미지:</p>
-                                    <div className={qnaDetailStyle.img}> 
-                                        {userQuestion.attachments.map((att, index) => (
-                                            <a href={att.fileUrl} key={att.imgId || `img-${index}`} target="_blank" rel="noopener noreferrer" className={qnaDetailStyle.imageLink}>
-                                                <img 
-                                                    src={att.fileUrl} 
-                                                    alt={att.originalFilename || `첨부이미지 ${index + 1}`} 
-                                                />
-                                            </a>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                            
+  <div className={qnaDetailStyle.imgSection}>
+    <p className={qnaDetailStyle.attachmentTitle}>첨부 이미지:</p>
+    <div className={qnaDetailStyle.img}>
+      {userQuestion.attachments.map((att, index) => {
+        const imgUrl = toBackendUrl(att.fileUrl || att.storedFilename);
+        return (
+          <a
+            href={imgUrl}
+            key={att.imgId || `img-${index}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={qnaDetailStyle.imageLink}
+          >
+            <img src={`${imgUrl}?t=${Date.now()}`} alt={att.originalFilename || `첨부이미지 ${index + 1}`} />
+          </a>
+        );
+      })}
+    </div>
+  </div>
+)}
                             {canEdit && (
                                 <div className={qnaDetailStyle.qnaMainActions}>
                                     <button

@@ -1,6 +1,6 @@
 package com.minute.video.repository;
 
-import com.minute.video.Entity.PopularSearch;
+import com.minute.video.entity.PopularSearch;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

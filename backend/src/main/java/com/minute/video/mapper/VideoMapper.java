@@ -1,6 +1,6 @@
 package com.minute.video.mapper;
 
-import com.minute.video.Entity.Video;
+import com.minute.video.entity.Video;
 import com.minute.video.dto.VideoResponseDTO;
 import org.springframework.stereotype.Component;
 

@@ -1,10 +1,8 @@
 package com.minute.video.service;
 
-import com.minute.bookmark.entity.Bookmark;
 import com.minute.bookmark.repository.BookmarkRepository;
-import com.minute.user.entity.User;
 import com.minute.user.repository.UserRepository;
-import com.minute.video.Entity.*;
+import com.minute.video.entity.*;
 import com.minute.video.dto.VideoResponseDTO;
 import com.minute.video.mapper.VideoResponseMapper;
 import com.minute.video.repository.*;

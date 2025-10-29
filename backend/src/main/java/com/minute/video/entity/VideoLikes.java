@@ -1,4 +1,4 @@
-package com.minute.video.Entity;
+package com.minute.video.entity;
 
 import com.minute.user.entity.User;
 import jakarta.persistence.*;
@@ -10,17 +10,20 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "search_history")
+@Table(name = "video_likes")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SearchHistory {
+public class VideoLikes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "search_id")
-    private int searchId;
+    @Column(name = "id")
+    private int LikesId;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "video_id")
@@ -30,10 +33,9 @@ public class SearchHistory {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(length = 100,nullable = false)
-    private String keyword;
-
-    @Column(nullable = false)
-    private LocalDateTime searchedAt;
-
+    // save() 호출 시점에 createdAt이 자동으로 현재 시간으로 반영
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

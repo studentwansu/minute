@@ -81,13 +81,19 @@ public class WebSecurityConfig {
                                 "/webjars/**"
                         ).permitAll()
 
+                        // ✅ 추가: 정적 파일 경로는 별도 묶음으로 분리
+                        .requestMatchers(
+                                "/profile/**",
+                                "/qna/**"
+                        ).permitAll()
+
                         // 2. 회원가입 및 인증 관련 API (로그인, 회원가입 검증 등)
                         .requestMatchers("/api/v1/auth/sign-up/validate").permitAll()
                         // .requestMatchers("/api/v1/auth/sign-up").permitAll() // 아래 /api/v1/auth/** 에 포함됨
                         .requestMatchers("/api/v1/auth/**").permitAll() // /api/v1/auth/ 하위의 모든 요청 허용
 
                         // 3. 파일 업로드/다운로드 관련 (필요한 경우)
-                        .requestMatchers("/upload/**").permitAll() // 파일 업로드 경로
+//                        .requestMatchers("/upload/**").permitAll() // 파일 업로드 경로
                         .requestMatchers("/file/**").permitAll() // 파일 다운로드/조회 경로
 
                         // 4. 비디오, 검색, 유튜브, 시청 기록 관련 (모두 permitAll)

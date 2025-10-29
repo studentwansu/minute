@@ -1,10 +1,8 @@
 package com.minute.video.repository;
 
-import com.minute.user.entity.User;
-import com.minute.video.Entity.SearchHistory;
+import com.minute.video.entity.SearchHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

@@ -51,14 +51,28 @@ function CheckInfo() {
       if (response.data.code === "SU") {
         // const fileName = response.data.fileName;
         const fileName = response.data.data;
-        const imageUrl = `http://localhost:8080/upload/${fileName}?t=${Date.now()}`;
-        setProfileImage(imageUrl);
-        // setUserInfo(prev => ({ ...prev, profileImage: `/upload/${fileName}` }));
-         // ✅ userInfo 갱신
-          setUserInfo((prev) => ({
-            ...prev,
-            profileImage: `/upload/${fileName}`, // DB에 저장된 경로 (t=... 은 붙이지 않음)
-          }));
+        // const imageUrl = `http://localhost:8080/upload/${fileName}?t=${Date.now()}`;
+        // setProfileImage(imageUrl);
+        // // setUserInfo(prev => ({ ...prev, profileImage: `/upload/${fileName}` }));
+        //  // ✅ userInfo 갱신
+        //   setUserInfo((prev) => ({
+        //     ...prev,
+        //     profileImage: `/upload/${fileName}`, // DB에 저장된 경로 (t=... 은 붙이지 않음)
+        //   }));
+        // 서버가 주는 값 (예: "/profile/abcd1234.png")
+const imagePath = response.data.data;
+
+// 혹시 서버가 "profile/..."만 주면 앞에 / 붙이기
+const fixedPath = imagePath?.startsWith("/") ? imagePath : `/${imagePath}`;
+
+// 최종 표시용 URL (Spring이 static-locations로 매핑함)
+const fullUrl = `http://localhost:8080${fixedPath}?t=${Date.now()}`;
+
+setProfileImage(fullUrl);
+setUserInfo((prev) => ({
+  ...prev,
+  profileImage: fixedPath, // DB에 저장된 실제 상대경로
+}));
           setImgError(false);
         alert("프로필 이미지가 업데이트되었습니다!");
       } else {
@@ -80,6 +94,14 @@ function CheckInfo() {
       .then(res => {
         const data = res.data;
         if (data.code === "SU") {
+
+          // ✅ 추가: profileImage 경로 보정 함수 선언
+      const fixPath = (p) => (!p ? "" : p.startsWith("/") ? p : `/${p}`);
+
+       // ✅ 보정 적용
+      const fixedProfile = fixPath(data.profileImage);
+
+
           setUserInfo({
             userName: data.userName,
             userGender: data.userGender || 'MALE',
@@ -88,7 +110,8 @@ function CheckInfo() {
             userEmail: data.userEmail,
             userId: data.userId,
             createdAt: data.createdAt,
-            profileImage: data.profileImage,
+            // profileImage: data.profileImage,
+            profileImage: fixedProfile,  // ← 여기서 수정
           });
 
           setId(data.userId);

@@ -3,7 +3,7 @@ package com.minute.video.dto;
 // Channel, Category, Tag, VideoCategory, VideoTag 엔티티는 Video 엔티티 내에서 getter를 통해 접근하므로,
 // 이 DTO 파일에서 직접 임포트할 필요는 없습니다.
 // 단, Video 엔티티 및 연관 엔티티들에 해당 정보를 가져올 수 있는 getter 메소드가 있어야 합니다.
-import com.minute.video.Entity.Video;
+import com.minute.video.entity.Video;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 

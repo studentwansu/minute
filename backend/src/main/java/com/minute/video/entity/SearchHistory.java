@@ -1,4 +1,4 @@
-package com.minute.video.Entity;
+package com.minute.video.entity;
 
 import com.minute.user.entity.User;
 import jakarta.persistence.*;
@@ -6,35 +6,34 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.sql.Update;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "watch_history")
+@Table(name = "search_history")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class WatchHistory {
+public class SearchHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer watchId;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "search_id")
+    private int searchId;
 
     @ManyToOne
     @JoinColumn(name = "video_id")
     private Video video;
 
-    @Column(nullable = false)
-    private LocalDateTime watchedAt;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @PrePersist
-    public void prePersist() {
-        this.watchedAt = LocalDateTime.now();
-    }
+    @Column(length = 100,nullable = false)
+    private String keyword;
+
+    @Column(nullable = false)
+    private LocalDateTime searchedAt;
+
 }

@@ -64,7 +64,7 @@ public class QnaServiceImpl implements QnaService {
     private final QnaReplyRepository qnaReplyRepository; // 추가
     private final QnaReportRepository qnaReportRepository; // 추가
 
-    @Qualifier("s3FileStorageService") // 특정 빈 이름 지정 (S3FileStorageService에 @Service("s3FileStorageService") 설정 필요)
+    @Qualifier("localFileStorageService") // 특정 빈 이름 지정 (S3FileStorageService에 @Service("s3FileStorageService") 설정 필요)
     private final FileStorageService fileStorageService; // S3 서비스 주입
 
     private static final String QNA_FILE_SUBDIRECTORY = "qna"; // S3 내 QnA 파일 저장 경로

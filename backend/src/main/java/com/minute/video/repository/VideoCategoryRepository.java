@@ -1,11 +1,10 @@
 package com.minute.video.repository;
 
-import com.minute.video.Entity.Category;
-import com.minute.video.Entity.Video;
-import com.minute.video.Entity.VideoCategory;
+import com.minute.video.entity.Category;
+import com.minute.video.entity.Video;
+import com.minute.video.entity.VideoCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface VideoCategoryRepository extends JpaRepository<VideoCategory, Integer> {
