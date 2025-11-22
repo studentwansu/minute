@@ -50,5 +50,5 @@
 
 <img src="./images/23.png" width="900">
 
-## 24.png
+## 프로젝트 회고
 <img src="./images/24.png" width="900">
