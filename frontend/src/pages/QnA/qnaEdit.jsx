@@ -1,4 +1,3 @@
-// src/pages/QnA/QnaEdit.jsx
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -7,37 +6,31 @@ import qnaEditStyle from '../../assets/styles/qnaEdit.module.css';
 import Modal from '../../components/Modal/Modal';
 import MypageNav from '../../components/MypageNavBar/MypageNav';
 
-const API_BASE_URL = "/api/v1"; // 프록시 설정을 활용하기 위해 상대 경로로 변경
+const API_BASE_URL = "/api/v1"; 
 
 const EMPTY_QNA_FOR_EDIT = {
     title: '',
     content: '',
-    attachments: [] // API 응답의 attachments 필드를 따름
+    attachments: [] 
 };
 
 function QnaEdit() {
-    const { qnaId } = useParams(); // URL 파라미터에서 qnaId 가져오기
+    const { qnaId } = useParams(); 
     const navigate = useNavigate();
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     
-    // 기존 첨부파일 상태 (API에서 받아온 형태 유지 또는 프론트엔드 UI용으로 가공)
-    // API 응답의 attachments: [{ imgId: 1, fileUrl: '...', originalFilename: '...' }, ...]
     const [existingAttachments, setExistingAttachments] = useState([]); 
     
-    // 삭제할 기존 첨부파일의 ID 목록
     const [attachmentIdsToDelete, setAttachmentIdsToDelete] = useState([]); 
     
-    // 새로 추가할 파일 객체 목록
     const [newSelectedFiles, setNewSelectedFiles] = useState([]); 
-    // 새로 추가할 파일의 미리보기 URL 목록
     const [newPreviewImages, setNewPreviewImages] = useState([]); 
 
-    // 원본 데이터 (취소 시 변경 여부 확인용)
     const [originalData, setOriginalData] = useState(EMPTY_QNA_FOR_EDIT);
     const [isLoading, setIsLoading] = useState(true);
-    const [isSubmitting, setIsSubmitting] = useState(false); // 제출 중 로딩 상태
+    const [isSubmitting, setIsSubmitting] = useState(false); 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalProps, setModalProps] = useState({
@@ -46,7 +39,6 @@ function QnaEdit() {
         cancelButtonType: 'secondary', onCancel: () => setIsModalOpen(false)
     });
 
-    // 기존 QnA 데이터 로드 함수
     const fetchQnaDataForEdit = useCallback(async (id) => {
         console.log("[QnaEdit fetchQnaDataForEdit] Called with qnaId:", id);
         setIsLoading(true);
@@ -60,7 +52,7 @@ function QnaEdit() {
                 onConfirm: () => { setIsModalOpen(false); navigate('/login'); }
             });
             setIsModalOpen(true);
-            return null; // 데이터 로드 실패 시 null 반환
+            return null; 
         }
 
         if (!id || id === "undefined" || id === "null") {
@@ -75,13 +67,11 @@ function QnaEdit() {
         }
 
         try {
-            // ⭐ 수정: QnA 상세 조회 API 엔드포인트로 변경
             const response = await axios.get(`${API_BASE_URL}/qna/${id}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             console.log("[QnaEdit fetchQnaDataForEdit] API Response:", response.data);
             
-            // 답변 완료된 문의는 수정 불가
             if (response.data && response.data.inquiryStatus === 'ANSWERED') {
                 setIsLoading(false);
                 setModalProps({
@@ -90,9 +80,9 @@ function QnaEdit() {
                     onConfirm: () => { setIsModalOpen(false); navigate(`/qnaDetail/${id}`); }
                 });
                 setIsModalOpen(true);
-                return null; // 수정 페이지 로드 중단
+                return null; 
             }
-            return response.data; // 성공 시 데이터 반환
+            return response.data; 
         } catch (err) {
             console.error("[QnaEdit fetchQnaDataForEdit] Failed to fetch QnA for edit:", err);
             let errorMessage = "문의 정보를 불러오는 중 문제가 발생했습니다.";
@@ -113,15 +103,13 @@ function QnaEdit() {
                 onConfirm: () => { setIsModalOpen(false); navigate(navigatePath); }
             });
             setIsModalOpen(true);
-            return null; // 데이터 로드 실패 시 null 반환
+            return null; 
         } finally {
-            // setIsLoading(false); // fetchQnaDataForEdit를 호출하는 useEffect에서 최종적으로 처리
         }
     }, [navigate]);
 
 
     useEffect(() => {
-        // 상태 초기화
         setTitle(''); setContent(''); 
         setExistingAttachments([]); 
         setAttachmentIdsToDelete([]); 
@@ -131,23 +119,19 @@ function QnaEdit() {
 
         if (qnaId) {
             fetchQnaDataForEdit(qnaId).then(data => {
-                if (data) { // 데이터 로드 성공 시 (수정 불가가 아닌 경우 포함)
+                if (data) { 
                     setTitle(data.inquiryTitle);
                     setContent(data.inquiryContent);
-                    // API 응답의 attachments는 { imgId, fileUrl, originalFilename, createdAt } 형태
                     setExistingAttachments(data.attachments || []); 
                     setOriginalData({ 
                         title: data.inquiryTitle,
                         content: data.inquiryContent,
-                        attachments: data.attachments || [] // 원본 첨부파일 정보 저장
+                        attachments: data.attachments || [] 
                     });
                 } else {
-                    // fetchQnaDataForEdit 내부에서 이미 모달 처리 및 네비게이션이 되었을 수 있음
-                    // 빈 양식으로 남겨두거나, 혹은 여기서도 목록으로 보낼 수 있음
-                    // navigate('/qna'); // 예를 들어, 데이터 로드 실패 시 무조건 목록으로 보낸다면
                 }
             }).finally(() => {
-                setIsLoading(false); // 모든 API 호출 및 상태 설정 후 로딩 종료
+                setIsLoading(false); 
             });
         } else {
             setIsLoading(false);
@@ -164,9 +148,8 @@ function QnaEdit() {
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
         
-        // --- 프론트엔드 개별 파일 크기 제한 로직 (예: 5MB) --- START
-        const MAX_INDIVIDUAL_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-        for (const file of files) { // 새로 선택된 파일들에 대해서만 검사
+        const MAX_INDIVIDUAL_FILE_SIZE = 5 * 1024 * 1024; 
+        for (const file of files) { 
             if (file.size > MAX_INDIVIDUAL_FILE_SIZE) {
                 setModalProps({
                     title: '파일 크기 초과',
@@ -175,11 +158,10 @@ function QnaEdit() {
                     onConfirm: () => setIsModalOpen(false)
                 });
                 setIsModalOpen(true);
-                event.target.value = null; // 파일 입력 초기화
-                return; // 함수 종료
+                event.target.value = null; 
+                return; 
             }
         }
-        // --- 프론트엔드 개별 파일 크기 제한 로직 --- END
 
         const currentVisibleExistingCount = existingAttachments.filter(att => !attachmentIdsToDelete.includes(att.imgId)).length;
         const totalCurrentImages = currentVisibleExistingCount + newSelectedFiles.length;
@@ -203,18 +185,17 @@ function QnaEdit() {
             const newUrls = filesToAdd.map(file => URL.createObjectURL(file));
             setNewPreviewImages(prevPreviews => [...prevPreviews, ...newUrls]);
         }
-        event.target.value = null; // 같은 파일 재선택 가능하도록
+        event.target.value = null; 
     };
 
     const handleRemoveExistingImage = (imageIdToRemove) => {
-        // 이미 삭제 목록에 있는지 확인 (중복 추가 방지)
         if (!attachmentIdsToDelete.includes(imageIdToRemove)) {
             setAttachmentIdsToDelete(prevDeleted => [...prevDeleted, imageIdToRemove]);
         }
     };
 
     const handleRemoveNewImage = (indexToRemove) => {
-        URL.revokeObjectURL(newPreviewImages[indexToRemove]); // 메모리 해제
+        URL.revokeObjectURL(newPreviewImages[indexToRemove]); 
         setNewSelectedFiles(prevFiles => prevFiles.filter((_, index) => index !== indexToRemove));
         setNewPreviewImages(prevPreviews => prevPreviews.filter((_, index) => index !== indexToRemove));
     };
@@ -230,7 +211,7 @@ function QnaEdit() {
             setIsModalOpen(true); return;
         }
         
-        setIsSubmitting(true); // 제출 시작
+        setIsSubmitting(true); 
         const token = localStorage.getItem('token');
 
         if (!token) {
@@ -247,7 +228,7 @@ function QnaEdit() {
         const qnaUpdateRequestData = {
             inquiryTitle: title,
             inquiryContent: content,
-            attachmentIdsToDelete: attachmentIdsToDelete, // 삭제할 기존 첨부파일 ID 목록
+            attachmentIdsToDelete: attachmentIdsToDelete, 
         };
 
         const formData = new FormData();
@@ -257,15 +238,13 @@ function QnaEdit() {
         );
 
         newSelectedFiles.forEach(file => {
-            formData.append('newFiles', file); // 백엔드 컨트롤러의 @RequestPart("newFiles")와 일치
+            formData.append('newFiles', file); 
         });
 
         try {
-            // ⭐ 수정: QnA 수정 API 엔드포인트로 변경
             const response = await axios.put(`${API_BASE_URL}/qna/${qnaId}`, formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
-                    // Content-Type은 FormData 사용 시 axios가 자동으로 설정
                 }
             });
 
@@ -290,7 +269,7 @@ function QnaEdit() {
                     errorMessage = "해당 문의를 수정할 권한이 없습니다.";
                 } else if (err.response.status === 404) {
                     errorMessage = "수정할 문의를 찾을 수 없습니다.";
-                } else if (err.response.status === 409) { // 예: 답변완료된 문의 수정 시도 (백엔드에서 IllegalStateException 발생 시)
+                } else if (err.response.status === 409) { 
                     errorMessage = err.response.data.message || "이미 답변이 완료된 문의는 수정할 수 없습니다.";
                 }
                  else if (err.response.data && err.response.data.message) {
@@ -302,12 +281,11 @@ function QnaEdit() {
                 onConfirm: () => {
                     setIsModalOpen(false);
                     if (err.response && err.response.status === 401) navigate('/login');
-                    // 403, 404의 경우 현재 페이지에 머무르거나, 목록으로 보낼 수 있음 (현재는 머무름)
                 }
             });
             setIsModalOpen(true);
         } finally {
-            setIsSubmitting(false); // 제출 종료
+            setIsSubmitting(false); 
         }
     };
 
@@ -315,7 +293,6 @@ function QnaEdit() {
         const titleChanged = title !== originalData.title;
         const contentChanged = content !== originalData.content;
         
-        // 기존 첨부파일 변경 여부 확인
         const originalAttachmentIds = (originalData.attachments || []).map(att => att.imgId).sort();
         const currentVisibleExistingAttachmentIds = existingAttachments
             .filter(att => !attachmentIdsToDelete.includes(att.imgId))
@@ -345,13 +322,11 @@ function QnaEdit() {
     };
 
     useEffect(() => {
-        // 컴포넌트 언마운트 시 새 이미지 미리보기 URL 해제
         return () => {
             newPreviewImages.forEach(url => URL.revokeObjectURL(url));
         };
     }, [newPreviewImages]);
 
-    // 현재 화면에 보여질 기존 첨부파일 목록
     const visibleExistingAttachments = existingAttachments.filter(att => !attachmentIdsToDelete.includes(att.imgId));
     const totalCurrentImageCount = visibleExistingAttachments.length + newPreviewImages.length;
 
@@ -363,18 +338,6 @@ function QnaEdit() {
             </>
         );
     }
-    
-    // qnaId는 있지만 데이터 로드에 실패하여 title 등이 비어있는 경우 (fetchQnaDataForEdit에서 에러 처리 후 null 반환 시)
-    // 또는 qnaId 자체가 없는 경우 (useEffect에서 초기화 후 로딩 종료)
-    // 이 부분은 useEffect 내부의 navigate 로직으로 대부분 커버될 수 있음.
-    // if (!title && qnaId && !isModalOpen) { // 데이터 로드 실패했으나 모달이 아직 안 뜬 극히 짧은 순간 방지
-    //     return (
-    //         <>
-    //             <MypageNav />
-    //             <div className={qnaEditStyle.layout}><div className={qnaEditStyle.container}><div className={qnaEditStyle.background} style={{padding: "50px", textAlign: "center"}}>문의 정보를 표시할 수 없습니다.</div></div></div>
-    //         </>
-    //     );
-    // }
 
 
     return (
@@ -396,7 +359,7 @@ function QnaEdit() {
                                     type="text" id="qnaEditFormTitle" value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                     placeholder="제목을 입력해주세요" className={qnaEditStyle.inputField}
-                                    disabled={isSubmitting} // 제출 중 비활성화
+                                    disabled={isSubmitting} 
                                 />
                             </div>
                             <div className={qnaEditStyle.textbox}>
@@ -406,7 +369,7 @@ function QnaEdit() {
                                     onChange={(e) => setContent(e.target.value)}
                                     placeholder="내용을 입력해주세요." className={qnaEditStyle.textareaField}
                                     rows={10}
-                                    disabled={isSubmitting} // 제출 중 비활성화
+                                    disabled={isSubmitting} 
                                 ></textarea>
                             </div>
                             <div className={qnaEditStyle.imgSection}>
@@ -416,10 +379,9 @@ function QnaEdit() {
                                 <input
                                     type="file" id="qnaEditFormImages" multiple accept="image/*"
                                     onChange={handleFileChange} style={{ display: 'none' }}
-                                    disabled={totalCurrentImageCount >= 3 || isSubmitting} // 제출 중 또는 개수 초과 시 비활성화
+                                    disabled={totalCurrentImageCount >= 3 || isSubmitting} 
                                 />
                                 <div className={qnaEditStyle.imagePreviewContainer}>
-                                    {/* 기존 첨부파일 중 삭제되지 않은 것들 표시 */}
                                     {visibleExistingAttachments.map((attachment) => (
                                         <div key={`existing-${attachment.imgId}`} className={qnaEditStyle.imagePreviewItem}>
                                             <img src={attachment.fileUrl} alt={attachment.originalFilename || `기존 이미지 ${attachment.imgId}`} className={qnaEditStyle.previewImage} />
@@ -434,7 +396,6 @@ function QnaEdit() {
                                             </button>
                                         </div>
                                     ))}
-                                    {/* 새로 추가된 이미지 미리보기 */}
                                     {newPreviewImages.map((previewUrl, index) => (
                                         <div key={`new-${index}-${previewUrl}`} className={qnaEditStyle.imagePreviewItem}>
                                             <img src={previewUrl} alt={`새 미리보기 ${index + 1}`} className={qnaEditStyle.previewImage} />
@@ -449,7 +410,6 @@ function QnaEdit() {
                                             </button>
                                         </div>
                                     ))}
-                                    {/* 이미지 추가 플레이스홀더 */}
                                     {totalCurrentImageCount < 3 && (
                                         <div 
                                             className={`${qnaEditStyle.imagePlaceholder} ${isSubmitting ? qnaEditStyle.disabledPlaceholder : ''}`} 
@@ -475,7 +435,7 @@ function QnaEdit() {
                                 <button 
                                     type="submit" 
                                     className={`${qnaEditStyle.actionButton} ${qnaEditStyle.submitButton}`} 
-                                    disabled={isSubmitting || isLoading} // 초기 로딩 중에도 비활성화
+                                    disabled={isSubmitting || isLoading} 
                                 >
                                     {isSubmitting ? "수정 중..." : "수정 완료"}
                                 </button>
@@ -487,13 +447,9 @@ function QnaEdit() {
             <Modal 
                 isOpen={isModalOpen} 
                 onClose={() => {
-                    // 모달의 onConfirm/onCancel 핸들러가 있으면 그것들이 setIsModalOpen(false)를 호출
-                    // 사용자가 X 버튼 등으로 닫는 경우 대비
-                    if (modalProps.onConfirm && !modalProps.cancelText) { // 확인 버튼만 있는 경우
-                        // modalProps.onConfirm(); // X 눌렀을 때 확인 동작을 실행할지 여부 결정
+                    if (modalProps.onConfirm && !modalProps.cancelText) { 
                         setIsModalOpen(false); 
-                    } else if (modalProps.onConfirm && modalProps.onCancel) { // 확인/취소 모두 있는 경우
-                        // modalProps.onCancel(); // X 눌렀을 때 취소 동작을 실행할지 여부 결정
+                    } else if (modalProps.onConfirm && modalProps.onCancel) { 
                          setIsModalOpen(false);
                     }
                      else {

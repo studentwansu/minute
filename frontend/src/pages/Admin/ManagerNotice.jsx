@@ -1,13 +1,10 @@
-// src/pages/Admin/Notice/ManagerNotice.jsx
-
 import axios from 'axios';
-import qs from 'qs'; // qs 라이브러리 임포트
+import qs from 'qs';
 
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// 이미지 경로와 CSS 모듈 경로는 실제 프로젝트 구조에 맞게 확인 및 수정해주세요.
-import searchButtonIcon from "../../assets/images/search_icon.png"; 
-import styles from '../../assets/styles/ManagerNotice.module.css'; 
+import searchButtonIcon from "../../assets/images/search_icon.png";
+import styles from '../../assets/styles/ManagerNotice.module.css';
 import Modal from '../../components/Modal/Modal';
 import Pagination from '../../components/Pagination/Pagination';
 
@@ -16,28 +13,23 @@ const API_BASE_URL = "/api/v1";
 function ManagerNotice() {
     const navigate = useNavigate();
 
-    // --- UI 입력용 상태 ---
     const [inputSearchTerm, setInputSearchTerm] = useState('');
     const [inputDateRange, setInputDateRange] = useState({ start: '', end: '' });
     const [inputImportanceFilter, setInputImportanceFilter] = useState('all');
 
-    // --- API 요청용 상태 ---
     const [appliedSearchTerm, setAppliedSearchTerm] = useState('');
     const [appliedDateRange, setAppliedDateRange] = useState({ start: '', end: '' });
     const [appliedImportanceFilter, setAppliedImportanceFilter] = useState('all');
 
-    // --- 데이터 및 페이징 상태 ---
     const [noticesToDisplay, setNoticesToDisplay] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
     const itemsPerPage = 10;
 
-    // --- 로딩 상태 ---
     const [isLoading, setIsLoading] = useState(false);
     const [isActionLoading, setIsActionLoading] = useState(false);
 
-    // --- 모달 상태 ---
     const [isModalOpen, setIsModalOpen] = useState({ state: false, config: {} });
 
     const getToken = () => localStorage.getItem("token");
@@ -96,9 +88,6 @@ function ManagerNotice() {
             });
             const data = response.data;
 
-            // 일반 공지 번호는 API에서 반환된 현재 페이지를 기준으로 계산하거나,
-            // 요청 시 사용한 currentPage를 기준으로 계산할 수 있습니다.
-            // 여기서는 요청 시 사용한 currentPage(1-based)를 기준으로 합니다.
             let generalNoticeCounter = (currentPage - 1) * itemsPerPage;
             
             const mappedNotices = data.content.map(notice => {
@@ -128,8 +117,6 @@ function ManagerNotice() {
             setNoticesToDisplay(mappedNotices);
             setTotalPages(data.totalPages);
             setTotalElements(data.totalElements);
-            // API 응답의 currentPage가 0-based이면 data.number + 1 등으로 변환 필요
-            // 현재는 API 응답의 currentPage가 1-based라고 가정
             setCurrentPage(data.currentPage); 
 
         } catch (error) {
@@ -156,7 +143,7 @@ function ManagerNotice() {
         } finally {
             setIsLoading(false);
         }
-    }, [currentPage, appliedSearchTerm, appliedImportanceFilter, appliedDateRange, navigate, itemsPerPage]); // itemsPerPage는 상수지만 명시적으로 포함
+    }, [currentPage, appliedSearchTerm, appliedImportanceFilter, appliedDateRange, navigate, itemsPerPage]); 
 
     useEffect(() => {
         fetchAdminNotices();
@@ -242,9 +229,6 @@ function ManagerNotice() {
                 title: `공지사항 삭제 확인`,
                 message: `공지사항 "${noticeTitle}" (ID: ${id})을(를) 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`,
                 onConfirm: () => { 
-                    // processDeleteNotice 내부에서 최종 모달을 띄우므로, 여기서는 바로 닫지 않아도 됨.
-                    // 또는 여기서 닫고 processDeleteNotice에서 다시 띄우도록 명확히 구분.
-                    // setIsModalOpen({ state: false, config: {} }); // <--- 필요시 이 줄의 주석 해제
                     processDeleteNotice(id); 
                 },
                 confirmText: '삭제', 

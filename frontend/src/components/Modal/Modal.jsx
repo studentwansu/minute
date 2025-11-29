@@ -1,6 +1,5 @@
-// src/components/Modal/Modal.jsx
 import { useEffect } from 'react';
-import styles from './Modal.module.css'; // 사용자님이 지정하신 경로
+import styles from './Modal.module.css';
 
 function Modal({
   isOpen,
@@ -25,7 +24,7 @@ function Modal({
     };
 
     if (isOpen) {
-      document.body.style.overflow = 'hidden'; // 스크롤 방지
+      document.body.style.overflow = 'hidden'; 
       document.addEventListener('keydown', handleEscKey);
     } else {
       document.body.style.overflow = 'unset';
@@ -53,19 +52,19 @@ function Modal({
     if (onConfirm) {
       onConfirm();
     }
-    onClose(); // 확인 후 기본적으로 모달 닫힘
+    onClose(); 
   };
 
   const handleInternalCancel = () => {
     if (onCancel) {
       onCancel();
     }
-    onClose(); // 취소 시 항상 모달 닫힘
+    onClose(); 
   };
 
   return (
     <div
-      className={`${styles.modalOverlay} ${styles[type] || ''}`} // 타입별 오버레이 스타일도 가능하도록
+      className={`${styles.modalOverlay} ${styles[type] || ''}`} 
       onClick={handleOverlayClick}
       role="dialog"
       aria-modal="true"

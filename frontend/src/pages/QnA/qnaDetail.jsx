@@ -1,4 +1,3 @@
-// src/pages/QnA/qnaDetail.jsx
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -6,7 +5,7 @@ import qnaDetailStyle from '../../assets/styles/qnaDetail.module.css';
 import Modal from '../../components/Modal/Modal';
 import MypageNav from '../../components/MypageNavBar/MypageNav';
 
-const API_BASE_URL = "/api/v1"; // 프록시 설정을 활용하기 위해 상대 경로로 변경
+const API_BASE_URL = "/api/v1"; 
 
 function QnaDetail() {
     const { id: qnaId } = useParams();
@@ -52,7 +51,6 @@ function QnaDetail() {
         }
         
         try {
-            // ⭐ 수정: QnA 상세 조회 API 엔드포인트로 변경
             const response = await axios.get(`${API_BASE_URL}/qna/${qnaId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -165,11 +163,9 @@ function QnaDetail() {
     
     const canEdit = userQuestion.inquiryStatus === 'PENDING' && !isLoading;
 
-    // 상대/이상한 경로를 백엔드 절대 URL로 보정
     const toBackendUrl = (p) => {
     if (!p) return '';
     if (p.startsWith('http')) return p;
-    // 'qna/파일.webp', '/qna/파일.webp', '파일.webp' 모두 처리
     const path =
         p.startsWith('/qna/') || p.startsWith('qna/')
         ? (p.startsWith('/') ? p : `/${p}`)

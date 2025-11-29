@@ -1,6 +1,5 @@
-// src/pages/Board/FreeboardEdit.jsx
-import axios from 'axios'; // axios import
-import { useCallback, useEffect, useState } from 'react'; // useCallback 추가
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import banner from "../../assets/images/banner.png";
 import freeboardEditStyle from '../../assets/styles/freeboardEdit.module.css';
@@ -12,14 +11,13 @@ function FreeboardEdit() {
     const { postId } = useParams();
     const navigate = useNavigate();
     const freeboardPath = '/freeboard';
-    // 상세 페이지 경로는 postId가 유효할 때만 설정, 아니면 목록으로
     const freeboardDetailPath = postId ? `/freeboardDetail/${postId}` : freeboardPath;
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [originalData, setOriginalData] = useState(null); // 원본 데이터 보관용
+    const [originalData, setOriginalData] = useState(null); 
     const [isLoading, setIsLoading] = useState(true);
-    const [isSubmitting, setIsSubmitting] = useState(false); // 제출 중 상태
+    const [isSubmitting, setIsSubmitting] = useState(false); 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalProps, setModalProps] = useState({
@@ -30,14 +28,12 @@ function FreeboardEdit() {
 
     const getToken = () => localStorage.getItem("token");
     const getLoggedInUserId = () => localStorage.getItem("userId");
-    // const isUserLoggedIn = () => !!getToken(); // ProtectedRoute에서 처리 가정
 
-    // 게시글 데이터 불러오기
     const fetchPostData = useCallback(async () => {
         if (!postId || postId === "undefined" || postId === "null") {
             setModalProps({
                 title: "잘못된 접근", message: "수정할 게시물 ID가 유효하지 않습니다. 목록으로 돌아갑니다.",
-                confirmText: "확인", type: "error", confirmButtonType: 'primary', // 'blackButton'은 CSS에 정의 필요
+                confirmText: "확인", type: "error", confirmButtonType: 'primary', 
                 onConfirm: () => { setIsModalOpen(false); navigate(freeboardPath); }
             });
             setIsModalOpen(true);
@@ -47,7 +43,7 @@ function FreeboardEdit() {
 
         setIsLoading(true);
         const token = getToken();
-        if (!token) { // 수정 페이지는 로그인이 필수
+        if (!token) { 
             setModalProps({ title: "로그인 필요", message: "게시글을 수정하려면 로그인이 필요합니다.", type: 'warning', onConfirm: () => navigate('/login') });
             setIsModalOpen(true);
             setIsLoading(false);
@@ -58,9 +54,8 @@ function FreeboardEdit() {
             const response = await axios.get(`${API_BASE_URL}/board/free/${postId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            const postData = response.data; // FreeboardPostResponseDTO
+            const postData = response.data; 
 
-            // 작성자 확인
             if (postData.userId !== getLoggedInUserId()) {
                 setModalProps({
                     title: "권한 없음", message: "본인이 작성한 글만 수정할 수 있습니다. 상세 페이지로 돌아갑니다.",
@@ -74,7 +69,7 @@ function FreeboardEdit() {
 
             setTitle(postData.postTitle);
             setContent(postData.postContent);
-            setOriginalData({ title: postData.postTitle, content: postData.postContent }); // 원본 데이터 저장
+            setOriginalData({ title: postData.postTitle, content: postData.postContent }); 
             setIsLoading(false);
         } catch (error) {
             console.error("게시물 데이터를 불러오는 데 실패했습니다.", error);
@@ -87,8 +82,7 @@ function FreeboardEdit() {
             });
             setIsModalOpen(true);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [postId, navigate, freeboardPath, freeboardDetailPath]); // getLoggedInUserId는 변경되지 않는다고 가정
+    }, [postId, navigate, freeboardPath, freeboardDetailPath]); 
 
     useEffect(() => {
         fetchPostData();
@@ -97,10 +91,9 @@ function FreeboardEdit() {
 
     const handleEditSubmit = async (event) => {
         event.preventDefault();
-        if (!title.trim()) { /* ... 제목 입력 오류 모달 ... */ return; }
-        if (!content.trim()) { /* ... 내용 입력 오류 모달 ... */ return; }
+        if (!title.trim()) {  return; }
+        if (!content.trim()) {  return; }
 
-        // 변경 사항이 있는지 확인 (선택적)
         if (originalData && title === originalData.title && content === originalData.content) {
             setModalProps({ title: '변경 없음', message: '수정된 내용이 없습니다.', type: 'info' });
             setIsModalOpen(true);
@@ -109,19 +102,18 @@ function FreeboardEdit() {
 
         setIsSubmitting(true);
         const token = getToken();
-        // ProtectedRoute에서 이미 로그인 확인을 하지만, 여기서 한 번 더 토큰 유무 확인 가능
-        if (!token) { /* ... 인증 오류 모달 (fetchPostData에서 이미 처리) ... */ setIsSubmitting(false); return; }
+        if (!token) {  setIsSubmitting(false); return; }
 
         try {
             await axios.put(
                 `${API_BASE_URL}/board/free/${postId}`,
-                { postTitle: title, postContent: content }, // FreeboardPostRequestDTO 형식
+                { postTitle: title, postContent: content }, 
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setModalProps({
                 title: '수정 완료', message: '게시글이 성공적으로 수정되었습니다.',
                 confirmText: '확인', type: 'success', confirmButtonType: 'primary',
-                onConfirm: () => { setIsModalOpen(false); navigate(freeboardDetailPath); } // 수정 후 상세 페이지로
+                onConfirm: () => { setIsModalOpen(false); navigate(freeboardDetailPath); } 
             });
             setIsModalOpen(true);
         } catch (error) {
@@ -139,7 +131,6 @@ function FreeboardEdit() {
 
     const handleCancel = () => {
         const hasChanges = originalData && (title !== originalData.title || content !== originalData.content);
-        // 상세 페이지로 돌아가거나, postId가 없다면 목록으로
         const navigateTo = postId ? freeboardDetailPath : freeboardPath; 
 
         if (hasChanges) {
@@ -157,14 +148,8 @@ function FreeboardEdit() {
     };
     
     if (isLoading) return <div className={freeboardEditStyle.loadingState}>게시물 정보를 불러오는 중...</div>;
-    // postId가 없거나, fetchPostData에서 권한 없음 등으로 인해 originalData가 설정되지 않은 경우 (이미 모달이 떠있을 수 있음)
-    // 또는 로딩 후에도 originalData가 여전히 null이면 (오류로 인해) 폼을 보여주지 않음.
     if (!originalData && !isLoading) { 
-        // useEffect에서 이미 모달을 띄우고 리다이렉션 처리를 하므로, 
-        // 이 부분은 모달이 닫힌 후의 fallback UI 또는 null을 반환할 수 있습니다.
-        // 아니면 로딩 중과 동일한 메시지를 보여줄 수도 있습니다.
-        // return <div className={freeboardEditStyle.loadingState}>게시물 정보를 설정할 수 없습니다.</div>;
-        return null; // 모달이 모든 안내를 담당하도록 함
+        return null; 
     }
 
 
@@ -205,12 +190,12 @@ function FreeboardEdit() {
                             disabled={isSubmitting}
                         ></textarea>
 
-                        <div className={freeboardEditStyle.edit}> {/* CSS 클래스명 확인 */}
+                        <div className={freeboardEditStyle.edit}> 
                             <button 
                                 type="button"
                                 onClick={handleCancel}
-                                className={`${freeboardEditStyle.submitButton} ${freeboardEditStyle.cancelButton || ''}`} // cancelButton CSS 정의 필요
-                                style={{ marginRight: '10px', backgroundColor: '#6c757d', borderColor: '#6c757d' }} // CSS로 옮기는 것 권장
+                                className={`${freeboardEditStyle.submitButton} ${freeboardEditStyle.cancelButton || ''}`} 
+                                style={{ marginRight: '10px', backgroundColor: '#6c757d', borderColor: '#6c757d' }} 
                                 disabled={isSubmitting}
                             >
                                 취소
@@ -230,7 +215,6 @@ function FreeboardEdit() {
                 isOpen={isModalOpen}
                 onClose={() => {
                     setIsModalOpen(false);
-                    // 특정 모달 확인 후 자동 이동이 필요 없다면 onConfirm에서 처리
                 }}
                 {...modalProps}
             />

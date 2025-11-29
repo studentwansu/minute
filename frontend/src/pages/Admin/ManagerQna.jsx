@@ -1,9 +1,8 @@
-// src/pages/Admin/Qna/ManagerQna.jsx
-import axios from 'axios'; // axios import
+import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom'; // useSearchParams 추가
-import reportOffIcon from '../../assets/images/able-alarm.png'; // 신고 없음 또는 조치 가능
-import reportOnIcon from '../../assets/images/disable-alarm.png'; // 신고 있음 또는 조치 완료
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import reportOffIcon from '../../assets/images/able-alarm.png';
+import reportOnIcon from '../../assets/images/disable-alarm.png';
 import searchButtonIcon from '../../assets/images/search_icon.png';
 import styles from '../../assets/styles/ManagerQna.module.css';
 import Modal from '../../components/Modal/Modal';
@@ -11,22 +10,20 @@ import Pagination from '../../components/Pagination/Pagination';
 
 function ManagerQna() {
     const navigate = useNavigate();
-    const [searchParams, setSearchParams] = useSearchParams(); // URL 쿼리 파라미터 사용
+    const [searchParams, setSearchParams] = useSearchParams(); 
 
-    const [qnaPage, setQnaPage] = useState(null); // API 응답 Page 객체 전체를 저장
+    const [qnaPage, setQnaPage] = useState(null); 
     const [isLoading, setIsLoading] = useState(true);
     
-    // 필터 상태: URL 쿼리 파라미터에서 초기값 가져오기
     const [filters, setFilters] = useState({
         startDate: searchParams.get('startDate') || '',
         endDate: searchParams.get('endDate') || '',
-        statusFilter: searchParams.get('statusFilter') || 'all', // 백엔드는 PENDING, ANSWERED
+        statusFilter: searchParams.get('statusFilter') || 'all', 
         searchTerm: searchParams.get('searchTerm') || ''
     });
-    const currentPageForApi = parseInt(searchParams.get('page') || '0', 10); // API는 0-indexed
+    const currentPageForApi = parseInt(searchParams.get('page') || '0', 10); 
     const itemsPerPage = 10;
 
-    // 모달 상태 관리
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalProps, setModalProps] = useState({
         title: '', message: '', onConfirm: null, confirmText: '확인',
@@ -43,27 +40,26 @@ function ManagerQna() {
             setModalProps({
                 title: "인증 오류", message: "관리자 로그인이 필요합니다.",
                 confirmText: "확인", type: "adminError", confirmButtonType: 'primary',
-                onConfirm: () => { setIsModalOpen(false); navigate('/login'); } // 관리자 로그인 페이지로?
+                onConfirm: () => { setIsModalOpen(false); navigate('/login'); } 
             });
             setIsModalOpen(true);
             return;
         }
         
-        // 프론트 필터 값을 API 요청 파라미터로 변환
         const apiStatusFilter = currentFilters.statusFilter === 'all' ? undefined : currentFilters.statusFilter;
 
         try {
             const params = {
                 page: page,
                 size: itemsPerPage,
-                sort: 'inquiryCreatedAt,desc', // 기본 정렬
+                sort: 'inquiryCreatedAt,desc', 
                 searchTerm: currentFilters.searchTerm || undefined,
                 statusFilter: apiStatusFilter,
                 startDate: currentFilters.startDate || undefined,
                 endDate: currentFilters.endDate || undefined,
             };
 
-            const response = await axios.get('/api/v1/admin/qna', { // 관리자 API 경로
+            const response = await axios.get('/api/v1/admin/qna', { 
                 headers: { 'Authorization': `Bearer ${token}` },
                 params
             });
@@ -115,21 +111,19 @@ function ManagerQna() {
         if (filters.endDate) newSearchParams.set('endDate', filters.endDate);
         if (filters.statusFilter && filters.statusFilter !== 'all') newSearchParams.set('statusFilter', filters.statusFilter);
         if (filters.searchTerm) newSearchParams.set('searchTerm', filters.searchTerm);
-        newSearchParams.set('page', '0'); // 검색 시 항상 첫 페이지로
+        newSearchParams.set('page', '0'); 
         setSearchParams(newSearchParams);
     };
 
-    // [수정 1] UI에서 받은 페이지 번호(1-indexed)에서 1을 빼서 URL 파라미터(0-indexed)로 설정합니다.
     const handlePageChange = (pageNumber) => {
         const newSearchParams = new URLSearchParams(searchParams);
         newSearchParams.set('page', (pageNumber - 1).toString());
         setSearchParams(newSearchParams);
     };
     
-    // 관리자가 QnA 신고 생성/접수 처리
     const handleAdminReportQna = async (qnaIdToReport) => {
         const token = localStorage.getItem('token');
-        if (!token) { /* 인증 오류 처리 */ return; }
+        if (!token) {  return; }
 
         try {
             await axios.post(`/api/v1/admin/qna/${qnaIdToReport}/reports`, {}, {
@@ -141,7 +135,7 @@ function ManagerQna() {
                 confirmText: '확인', type: 'adminSuccess', confirmButtonType: 'primary',
                 onConfirm: () => {
                     setIsModalOpen(false);
-                    fetchManagerQnaData(filters, currentPageForApi); // 목록 새로고침
+                    fetchManagerQnaData(filters, currentPageForApi); 
                 }
             });
             setIsModalOpen(true);
@@ -151,7 +145,7 @@ function ManagerQna() {
             if (error.response) {
                 if (error.response.status === 401 || error.response.status === 403) errorMessage = "권한이 없습니다.";
                 else if (error.response.status === 404) errorMessage = "해당 문의를 찾을 수 없습니다.";
-                else if (error.response.status === 409) errorMessage = "이미 관리자가 신고한 문의입니다."; // IllegalStateException
+                else if (error.response.status === 409) errorMessage = "이미 관리자가 신고한 문의입니다."; 
                 else if (error.response.data && error.response.data.message) errorMessage = error.response.data.message;
             }
             setModalProps({
@@ -193,7 +187,7 @@ function ManagerQna() {
         navigate(`/admin/managerQnaDetail/${qnaId}`);
     };
     
-    const getStatusText = (status) => { // API 응답의 PENDING, ANSWERED 사용
+    const getStatusText = (status) => { 
         if (status === 'PENDING') return '미답변';
         if (status === 'ANSWERED') return '답변완료';
         return status;
@@ -201,7 +195,7 @@ function ManagerQna() {
 
     const formatDate = (dateString) => {
         if (!dateString) return '';
-        return new Date(dateString).toLocaleDateString('ko-KR'); // 시간 제외 날짜만
+        return new Date(dateString).toLocaleDateString('ko-KR'); 
     };
 
     return (
@@ -295,7 +289,6 @@ function ManagerQna() {
                     <div className={styles.pagination}>
                          {!isModalOpen && qnaPage && qnaPage.totalPages > 0 && qnaPage.content?.length > 0 && (
                             <Pagination
-                                // [수정 2] API에서 받은 0-indexed 페이지 번호에 1을 더해서 UI에 표시합니다.
                                 currentPage={qnaPage.number + 1}
                                 totalPages={qnaPage.totalPages}
                                 onPageChange={handlePageChange}

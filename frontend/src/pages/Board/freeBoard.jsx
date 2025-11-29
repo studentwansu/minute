@@ -1,4 +1,3 @@
-// src/pages/FreeBoard/FreeBoard.jsx
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -17,10 +16,9 @@ import likeOnIcon from "../../assets/images/thumbup.png";
 const API_BASE_URL = "http://localhost:8080/api/v1";
 
 function FreeBoard() {
-    const [searchParams] = useSearchParams(); // URL 파라미터를 읽기 위한 Hook
+    const [searchParams] = useSearchParams(); 
 
     const [activeTab, setActiveTab] = useState(() => {
-        // URL에 'tab' 파라미터가 'myActivity'이면 'myActivity'를, 아니면 'all'을 기본값으로 설정
         return searchParams.get('tab') === 'myActivity' ? 'myActivity' : 'all';
     });
 
@@ -61,7 +59,7 @@ function FreeBoard() {
             return `${year}.${month}.${day}`;
         } catch (e) {
             console.warn("Error formatting date:", dateString, e);
-            return "N/A"; // 날짜 파싱 오류 시 대체 텍스트
+            return "N/A"; 
         }
     };
 
@@ -106,18 +104,16 @@ function FreeBoard() {
                     sortOption === "views" ? "postViewCount,desc" :
                         sortOption === "likes" ? "postLikeCount,desc" : defaultSortField;
             } else if (myContentType === "myComments") {
-                url = `${API_BASE_URL}/board/free/comments/by-user`; // 이 API는 @AuthenticationPrincipal을 사용합니다.
+                url = `${API_BASE_URL}/board/free/comments/by-user`; 
                 defaultSortField = "commentCreatedAt,desc";
                 params.sort = sortOption === "latest" ? "commentCreatedAt,desc" :
                     sortOption === "likes" ? "commentLikeCount,desc" : defaultSortField;
-                // "내 댓글"의 경우, 백엔드 AdminMyCommentFilterDTO와 연동하여 검색 기능 추가 가능
-                // if (currentSearch) params.searchKeyword = currentSearch; // 예시: 필터 DTO에 맞게 전달
             }
         } else {
             setIsLoading(false); return;
         }
 
-        if (!url) { // url이 설정되지 않은 경우 (예: activeTab이 예상치 못한 값)
+        if (!url) { 
             setIsLoading(false); setItems([]); setTotalPages(0); setCurrentPage(1);
             setError("잘못된 접근입니다.");
             return;
@@ -129,7 +125,7 @@ function FreeBoard() {
             if (data && data.content) {
                 setItems(data.content);
                 setTotalPages(data.totalPages || 0);
-                setCurrentPage(data.currentPage ? data.currentPage : 1); // 백엔드가 1-based currentPage
+                setCurrentPage(data.currentPage ? data.currentPage : 1); 
             } else {
                 setItems([]); setTotalPages(0); setCurrentPage(1);
             }
@@ -138,7 +134,7 @@ function FreeBoard() {
             const errorMsg = err.response?.data?.message || "데이터를 불러오는 데 실패했습니다.";
             setError(errorMsg);
             setItems([]); setTotalPages(0); setCurrentPage(1);
-            if (err.response?.status === 401 && activeTab === "myActivity") { // 내 활동 조회 시 토큰 만료 등
+            if (err.response?.status === 401 && activeTab === "myActivity") { 
                 setModalProps({
                     title: "인증 오류", message: "세션이 만료되었거나 인증에 실패했습니다. 다시 로그인해주세요.",
                     confirmText: "로그인", onConfirm: () => navigate("/login"), type: 'error'
@@ -168,8 +164,8 @@ function FreeBoard() {
             return;
         }
         setActiveTab(tabName); setCurrentPage(1);
-        setMyContentType(tabName === "myActivity" ? "myPosts" : "myPosts"); // 기본값 myPosts
-        setSortOption("latest"); // 탭 변경 시 정렬 초기화
+        setMyContentType(tabName === "myActivity" ? "myPosts" : "myPosts"); 
+        setSortOption("latest"); 
         setCurrentSearch(""); setSearchQuery("");
     };
 
@@ -244,7 +240,7 @@ function FreeBoard() {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setItems(prevItems => prevItems.map(p =>
-                p.postId === postIdToReport // 게시글 신고만 처리
+                p.postId === postIdToReport 
                     ? { ...p, reportedByCurrentUser: true }
                     : p
             ));
@@ -296,7 +292,7 @@ function FreeBoard() {
             } else {
                 console.warn("Original post ID not found for this comment, cannot navigate.");
             }
-        } else { // 게시글 클릭 시
+        } else { 
             navigate(`/freeboardDetail/${item.postId}`);
         }
     };
@@ -316,7 +312,6 @@ function FreeBoard() {
     return (
         <>
             <div className={FreeBoardStyle["board-container"]}>
-                {/* Header, Banner, Controls 등 이전과 동일 */}
                 <div className={FreeBoardStyle["board-header"]}>
                     <Link to="/freeboard" className={FreeBoardStyle["board-title-link"]}><h1>자유게시판</h1></Link>
                     <nav className={FreeBoardStyle["board-navigation"]}>
@@ -356,7 +351,6 @@ function FreeBoard() {
                                 <th scope="col">제목/내용</th>
                                 <th scope="col">작성자</th>
                                 <th scope="col">날짜</th>
-                                {/* "내 활동" 탭에서 "내 댓글" 보기 시 조회수 컬럼 숨김 */}
                                 {!(activeTab === "myActivity" && myContentType === "myComments") && <th scope="col">조회수</th>}
                                 <th scope="col">좋아요</th>
                                 <th scope="col">신고</th>
@@ -383,27 +377,25 @@ function FreeBoard() {
                                     const likes = isCommentViewInMyActivity ? (item.commentLikeCount || 0) : (item.postLikeCount || 0);
                                     const isLiked = item.likedByCurrentUser || false;
 
-                                    // 신고 가능 여부 및 상태 결정
                                     let canReport = false;
                                     let isAlreadyReportedByMe = false;
                                     let isMyOwnItem = false;
 
                                     if (isUserLoggedIn()) {
                                         const loggedInUserId = getUserId();
-                                        isMyOwnItem = item.userId === loggedInUserId; // item.userId는 게시글/댓글 작성자 ID
+                                        isMyOwnItem = item.userId === loggedInUserId; 
                                     }
 
-                                    if (!isCommentViewInMyActivity) { // 게시글인 경우 (전체목록 탭 또는 내 활동-내 게시글 탭)
-                                        if (isMyActivityTab) { // 내 활동 - 내 게시글 탭: 내 글이므로 신고 불가
+                                    if (!isCommentViewInMyActivity) { 
+                                        if (isMyActivityTab) { 
                                             canReport = false;
-                                        } else { // 전체 목록 탭
-                                            canReport = !isMyOwnItem; // 내 글이 아니면 신고 가능
+                                        } else { 
+                                            canReport = !isMyOwnItem; 
                                             if (canReport) {
                                                 isAlreadyReportedByMe = item.reportedByCurrentUser || false;
                                             }
                                         }
                                     }
-                                    // isCommentViewInMyActivity (내 활동 - 내 댓글)의 경우 canReport는 false로 유지 (신고 버튼 없음)
 
 
                                     return (
@@ -418,7 +410,6 @@ function FreeBoard() {
                                             </td>
                                             <td>{author}</td>
                                             <td>{date}</td>
-                                            {/* "내 활동" 탭에서 "내 댓글" 보기 시 조회수 컬럼 숨김 */}
                                             {!(isCommentViewInMyActivity) && <td>{views}</td>}
                                             <td>
                                                 <button
@@ -432,21 +423,12 @@ function FreeBoard() {
                                                 <span className={FreeBoardStyle["like-count"]}>{likes}</span>
                                             </td>
                                             <td>
-                                                {/* 신고 버튼 렌더링 조건:
-                                                    1. "내 활동" 탭이 아닐 때 (즉, "전체 목록" 탭일 때)
-                                                        AND 내 글이 아닐 때 신고 버튼을 보여준다.
-                                                    2. "내 활동" 탭의 "내 게시글" 보기일 때는 내 글이므로 신고 버튼을 보여주지 않는다. (canReport = false)
-                                                    3. "내 활동" 탭의 "내 댓글" 보기일 때는 신고 버튼을 보여주지 않는다. (canReport = false)
-                                                */}
-                                                {/* "전체 목록" 탭이고, "게시글"이며, "내 글"이 아닐 때만 신고 버튼을 활성화된 형태로 고려.
-                                                   그 외 (내 활동 탭 전체, 전체 목록 탭의 내 글)는 "-" 표시.
-                                                */}
                                                 {(canReport && !isMyActivityTab && !isCommentViewInMyActivity) ? (
                                                     <button
                                                         className={`${FreeBoardStyle["report-button"]} ${isAlreadyReportedByMe ? FreeBoardStyle.toggled : ""}`}
                                                         onClick={(e) => handlePostReportToggle(e, itemId, itemTitleOrContent)}
                                                         aria-pressed={isAlreadyReportedByMe}
-                                                        disabled={isAlreadyReportedByMe} // 내가 이미 신고했으면 비활성화
+                                                        disabled={isAlreadyReportedByMe} 
                                                         aria-label={isAlreadyReportedByMe ? "신고됨" : "신고하기"}
                                                     >
                                                         <img src={isAlreadyReportedByMe ? reportOnIcon : reportOffIcon} alt={isAlreadyReportedByMe ? "신고 된 상태" : "신고 안된 상태"} className={FreeBoardStyle["button-icon"]} />
@@ -465,7 +447,6 @@ function FreeBoard() {
                     </table>
                 </div>
 
-                {/* Footer (Pagination, Write Button) - 이전과 동일 */}
                 <div className={FreeBoardStyle["board-footer"]}>
                     <div className={FreeBoardStyle["pagination-wrapper"]}>
                         {totalPages > 0 && (<Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />)}

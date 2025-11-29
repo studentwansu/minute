@@ -1,29 +1,25 @@
-// src/pages/Admin/Notice/ManagerNoticeDetail.jsx
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-// 경로 확인: 실제 프로젝트 구조에 맞게 ../../../assets/... 등으로 변경될 수 있습니다.
 import styles from '../../assets/styles/ManagerNoticeDetail.module.css';
-import Modal from '../../components/Modal/Modal'; // Modal 컴포넌트 import
+import Modal from '../../components/Modal/Modal';
 
 const API_BASE_URL = "/api/v1";
 
 function ManagerNoticeDetail() {
-    const { id: noticeId } = useParams(); // URL 파라미터 'id'를 noticeId로 사용
+    const { id: noticeId } = useParams(); 
     const navigate = useNavigate();
     
     const [notice, setNotice] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [isActionLoading, setIsActionLoading] = useState(false); // 수정/삭제 액션 로딩 상태
-
-    // 모달 상태 관리 (view/문의-백엔드-연동 방식 채택)
+    const [isActionLoading, setIsActionLoading] = useState(false); 
     const [isModalOpen, setIsModalOpen] = useState({ state: false, config: {} });
 
     const getToken = () => localStorage.getItem("token");
 
     const fetchNoticeByIdFromAPI = useCallback(async (idToFetch) => {
         setIsLoading(true);
-        setNotice(null); // 새로운 데이터 로딩 전 기존 데이터 초기화
+        setNotice(null); 
 
         const token = getToken();
         if (!token) {
@@ -69,11 +65,11 @@ function ManagerNoticeDetail() {
                 id: data.noticeId,
                 isImportant: data.noticeIsImportant,
                 title: data.noticeTitle,
-                author: data.authorNickname, // API 응답에 따라 authorId 또는 authorNickname 사용
+                author: data.authorNickname, 
                 views: data.noticeViewCount,
                 createdAt: formattedDate,
                 content: data.noticeContent,
-                rawCreatedAt: data.noticeCreatedAt // 수정 페이지 전달용 (main 브랜치 아이디어)
+                rawCreatedAt: data.noticeCreatedAt 
             });
 
         } catch (err) {
@@ -89,7 +85,7 @@ function ManagerNoticeDetail() {
                     onConfirm: () => { setIsModalOpen({ state: false, config: {} }); navigate('/admin/managerNotice'); }
                 }
             });
-            setNotice(null); // 에러 발생 시 notice를 null로 설정
+            setNotice(null); 
         } finally {
             setIsLoading(false);
         }
@@ -99,7 +95,6 @@ function ManagerNoticeDetail() {
         if (noticeId) {
             fetchNoticeByIdFromAPI(noticeId);
         } else {
-            // noticeId가 없는 경우 (URL에 ID가 없는 경우 등) 처리
             setIsLoading(false);
             setIsModalOpen({
                 state: true,
@@ -128,7 +123,6 @@ function ManagerNoticeDetail() {
             });
             return;
         }
-        // 수정 페이지로 이동 (main 브랜치 방식 - 상태 전달)
         navigate(`/admin/managerNoticeEdit/${notice.id}`, { state: { noticeData: notice } });
     };
 
@@ -203,14 +197,14 @@ function ManagerNoticeDetail() {
                 title: "공지사항 삭제 확인",
                 message: `공지사항 "${notice.title}" (ID: ${notice.id})을(를) 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`,
                 onConfirm: () => { 
-                    setIsModalOpen({ state: false, config: {} }); // 확인 모달 닫기
+                    setIsModalOpen({ state: false, config: {} }); 
                     processDeleteNotice(); 
                 },
                 confirmText: "삭제",
                 cancelText: "취소",
                 type: "warning",
-                confirmButtonType: 'danger', // 또는 'redButton' 등 CSS 클래스에 맞게
-                onCancel: () => setIsModalOpen({ state: false, config: {} }) // 취소 시 모달 닫기
+                confirmButtonType: 'danger', 
+                onCancel: () => setIsModalOpen({ state: false, config: {} }) 
             }
         });
     };
@@ -223,7 +217,6 @@ function ManagerNoticeDetail() {
         );
     }
 
-    // 로딩 완료 후 notice가 null일 때 (데이터 로드 실패 또는 ID 문제로 fetch 로직 내에서 모달 처리 후 null로 설정된 경우)
     if (!notice && !isLoading) {
         return (
             <div className={styles.container}>
@@ -238,8 +231,8 @@ function ManagerNoticeDetail() {
         );
     }
     
-    // notice 객체가 유효할 때만 아래 JSX 렌더링
-    if (!notice) return null; // 최종 방어 코드
+
+    if (!notice) return null; 
 
     return (
         <>

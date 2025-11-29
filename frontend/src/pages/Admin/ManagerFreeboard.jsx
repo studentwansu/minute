@@ -1,7 +1,6 @@
-// src/pages/Admin/ManagerFreeboard.jsx
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Link가 import 되어 있는지 확인
+import { Link, useNavigate } from 'react-router-dom';
 import reportOffIcon from "../../assets/images/able-alarm.png";
 import likeOffIcon from "../../assets/images/b_thumbup.png";
 import reportOnIcon from "../../assets/images/disable-alarm.png";
@@ -38,7 +37,6 @@ function ManagerFreeboard() {
     });
 
     const getToken = () => localStorage.getItem("token");
-    // const getLoggedInUserId = () => localStorage.getItem("userId"); // 이 페이지에서는 직접 사용 안 함
 
     const formatDate = (dateString) => {
         if (!dateString) return "N/A";
@@ -56,7 +54,6 @@ function ManagerFreeboard() {
             page: currentPage - 1,
             size: itemsPerPage,
         };
-        // 날짜 필터는 모든 탭에 적용 가능하도록 params에 미리 할당
         if (dateRange.start) params.startDate = dateRange.start;
         if (dateRange.end) params.endDate = dateRange.end;
         
@@ -85,7 +82,6 @@ function ManagerFreeboard() {
             params.sort = sortOrder === 'latest' ? "commentCreatedAt,desc" :
                           sortOrder === 'likes' ? "commentLikeCount,desc" : defaultSortField;
             
-            // "관리자 작성 댓글" 탭에서 댓글 내용 검색 지원
             if (currentSearch) {
                 params.searchKeyword = currentSearch;
             }
@@ -99,18 +95,15 @@ function ManagerFreeboard() {
         }
 
         try {
-            console.log(`[Admin] Fetching from URL: ${url}`, "Params:", params); // 요청 정보 로깅
+            console.log(`[Admin] Fetching from URL: ${url}`, "Params:", params); 
             const response = await axios.get(url, { params, headers });
             const data = response.data;
-            console.log("[Admin] Received data:", data); // 응답 데이터 로깅
+            console.log("[Admin] Received data:", data); 
 
             if (data && data.content) {
-                // 👇 이 로그를 통해 API가 실제 어떤 데이터를 보내주는지 확인합니다.
             console.log("[Admin] Received data.content (아이템 목록):", JSON.parse(JSON.stringify(data.content))); 
                 setItems(data.content);
                 setTotalPages(data.totalPages || 0);
-                // API 응답의 currentPage가 0-based이면 +1, 1-based이면 그대로 사용
-                // 백엔드 PageResponseDTO의 currentPage는 1부터 시작하는 것으로 통일했으므로, data.currentPage를 그대로 사용하거나 null/undefined일 때 1로.
                 setCurrentPage(data.currentPage !== undefined ? data.currentPage : 1);
             } else {
                 setItems([]); setTotalPages(0); setCurrentPage(1);
@@ -140,17 +133,17 @@ function ManagerFreeboard() {
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
-        setCurrentPage(1); // 페이지, 검색어, 정렬, 날짜 초기화
+        setCurrentPage(1); 
         setCurrentSearch(''); 
         setSearchTerm(''); 
         setSortOrder('latest'); 
         setDateRange({ start: '', end: '' }); 
-        setItems([]); // <<<--- 탭 변경 시 items 배열을 비워줍니다!
-        setError(null); // 에러 상태도 초기화
+        setItems([]); 
+        setError(null); 
     };
     
     const handleSearch = (e) => {
-        e.preventDefault(); // <form>의 onSubmit으로 호출되므로 기본 동작 방지
+        e.preventDefault(); 
         setCurrentPage(1);
         setCurrentSearch(searchTerm);
     };
@@ -194,7 +187,7 @@ function ManagerFreeboard() {
             ));
             setModalProps({ title: '신고 접수', message: `게시물 ID ${postIdToReport}을(를) 신고 접수했습니다.`, type: 'success' });
         } catch (err) {
-             if (err.response && (err.response.status === 409 || err.response.status === 400) ) { // GlobalExceptionHandler가 보낸 상태 코드에 맞춰 수정
+             if (err.response && (err.response.status === 409 || err.response.status === 400) ) { 
                 setModalProps({ title: '알림', message: err.response.data.message || "이미 신고한 게시글입니다.", type: 'warning'});
             } else {
                 setModalProps({ title: '오류', message: err.response?.data?.message || "신고 처리에 실패했습니다.", type: 'error' });
@@ -223,7 +216,6 @@ function ManagerFreeboard() {
     const handleRowClick = (item) => {
         const isCommentView = activeTab === 'myComments';
         if (isCommentView) {
-            // item은 FreeboardCommentResponseDTO. DTO의 postId가 댓글의 원본 게시글 ID.
             if (item.postId && item.commentId) { 
                  navigate(`/admin/managerFreeboardDetail/${item.postId}?highlightCommentId=${item.commentId}`);
             } else {
@@ -232,7 +224,6 @@ function ManagerFreeboard() {
                 setIsModalOpen(true);
             }
         } else { 
-            // item은 FreeboardPostSimpleResponseDTO
             if (item.postId) {
                 navigate(`/admin/managerFreeboardDetail/${item.postId}`);
             } else {
@@ -261,7 +252,6 @@ function ManagerFreeboard() {
                             {activeTab !== 'myComments' && <option value="views">조회순</option>}
                             <option value="likes">좋아요순</option>
                         </select>
-                        {/* 검색창: form으로 감싸서 Enter키로도 검색 가능하게 */}
                         <form onSubmit={handleSearch} className={styles.searchForm}> 
                             <input 
                                 type="text" 
@@ -269,12 +259,10 @@ function ManagerFreeboard() {
                                 className={`${styles.filterElement} ${styles.filterSearchInput}`} 
                                 value={searchTerm} 
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                // disabled 속성 제거하여 댓글 탭에서도 검색 가능하도록 함
                             />
                             <button 
                                 type="submit" 
                                 className={styles.filterSearchButton}
-                                // disabled 속성 제거
                             >
                                 <img src={searchButtonIcon} alt="검색" className={styles.searchIcon} />
                             </button>
@@ -298,7 +286,7 @@ function ManagerFreeboard() {
                             ) : error ? (
                                 <tr><td colSpan={activeTab === 'myComments' ? 6 : 7}>{error}</td></tr>
                             ) : items.length > 0 ? (
-                                items.map(item => { // item이 게시글 또는 댓글 객체
+                                items.map(item => { 
                                     const isCommentView = activeTab === 'myComments';
                                     const itemId = isCommentView ? item.commentId : item.postId;
                                     const displayContent = isCommentView 
@@ -306,7 +294,7 @@ function ManagerFreeboard() {
                                         : (item.postTitle?.length > 30 ? `${item.postTitle.substring(0,30)}...` : item.postTitle);
                                     
                                     const isLikedByAdmin = item.likedByCurrentUser || false; 
-                                    const isReportedByAdmin = item.reportedByCurrentUser || false; // 백엔드 DTO 필드명 reportedByCurrentUser 가정
+                                    const isReportedByAdmin = item.reportedByCurrentUser || false; 
 
                                     return (
                                         <tr key={isCommentView ? `comment-${itemId}` : `post-${itemId}`} onClick={() => handleRowClick(item)} className={styles.clickableRow}>
@@ -314,8 +302,8 @@ function ManagerFreeboard() {
                                             <td className={styles.postTitleCell} onClick={(e) => { e.stopPropagation(); handleRowClick(item); }}>
                                                 <Link 
                                                     to={isCommentView 
-                                                        ? `/admin/managerFreeboardDetail/${item.postId}?highlightCommentId=${item.commentId}` // 댓글: 원본게시글ID(item.postId)와 댓글ID(item.commentId) 사용
-                                                        : `/admin/managerFreeboardDetail/${item.postId}` // 게시글: 게시글ID(item.postId) 사용
+                                                        ? `/admin/managerFreeboardDetail/${item.postId}?highlightCommentId=${item.commentId}` 
+                                                        : `/admin/managerFreeboardDetail/${item.postId}` 
                                                     }
                                                 >
                                                     {displayContent}
@@ -334,7 +322,7 @@ function ManagerFreeboard() {
                                                 <span className={styles.countText}>{isCommentView ? item.commentLikeCount : item.postLikeCount}</span>
                                             </td>
                                             <td>
-                                                {!isCommentView ? ( // 게시글인 경우에만 관리자 신고 버튼 표시
+                                                {!isCommentView ? ( 
                                                     <button
                                                         onClick={(e) => handlePostReportClick(e, item)}
                                                         className={`${styles.iconButton} ${isReportedByAdmin ? styles.reportActioned : ''}`}
@@ -344,7 +332,7 @@ function ManagerFreeboard() {
                                                         <img src={isReportedByAdmin ? reportOnIcon : reportOffIcon} alt="신고" className={styles.buttonIcon}/>
                                                     </button>
                                                 ) : (
-                                                    <span>-</span> // 관리자 본인 댓글에는 신고 버튼 없음
+                                                    <span>-</span> 
                                                 )}
                                             </td>
                                         </tr>

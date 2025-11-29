@@ -1,4 +1,3 @@
-// src/pages/Board/FreeboardDetail.jsx
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -106,46 +105,37 @@ function FreeboardDetail() {
         }
     }, [postId, commentsPerPage]);
 
-    // [수정된 부분] 새로운 데이터 로딩 useEffect
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const targetCommentId = params.get('commentId');
 
         const initializePage = async () => {
-            // 게시글 정보를 먼저 불러옵니다.
             await fetchPostDetail();
 
-            let pageToFetch = 1; // 기본적으로 댓글 1페이지를 불러옵니다.
+            let pageToFetch = 1; 
 
-            // 만약 URL에 commentId가 있다면, 해당 댓글이 속한 페이지를 조회합니다.
             if (targetCommentId) {
                 try {
-                    // 백엔드에 새로 만든 API를 호출합니다.
                     const response = await axios.get(`${API_BASE_URL}/board/free/comments/page`, {
                         params: {
                             commentId: targetCommentId,
-                            size: commentsPerPage // 기존에 정의된 페이지 당 댓글 수 변수
+                            size: commentsPerPage 
                         },
-                        // ▼▼▼ 이 부분이 정확히 있는지 확인해주세요 ▼▼▼
                         headers: { Authorization: `Bearer ${getToken()}` }
                     });
-                    pageToFetch = response.data.page; // 백엔드로부터 받은 페이지 번호
+                    pageToFetch = response.data.page; 
                     console.log(`Target comment is on page: ${pageToFetch}`);
                 } catch (err) {
                     console.error("해당 댓글의 페이지 번호를 가져오는 데 실패했습니다:", err);
-                    // 실패 시에도 기본 1페이지를 로드하도록 pageToFetch는 1로 유지됩니다.
                 }
             }
 
-            // 최종적으로 결정된 페이지의 댓글 목록을 불러옵니다.
             fetchComments(pageToFetch);
         };
 
         initializePage();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [postId, location.search]);
 
-    // 기존 스크롤 useEffect (이 로직은 이제 정상 동작합니다)
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const targetCommentId = params.get('commentId');

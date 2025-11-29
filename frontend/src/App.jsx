@@ -84,7 +84,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* --- Routes that use the main Layout (Header, Footer) --- */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
           <Route path="camping" element={<CampingPage />} />
@@ -114,21 +113,20 @@ function App() {
 
           <Route path="freeboard" element={<div className="mainContentWithFixedHeader"><FreeBoard /></div>} />
           <Route path="freeboardDetail/:postId" element={<div className="mainContentWithFixedHeader"><FreeboardDetail /></div>} />
-          {/* 👇 자유게시판 글쓰기 페이지에 ProtectedRoute 적용 */}
           <Route
             path="freeboardWrite"
             element={
-              <ProtectedRoute> {/* ProtectedRoute로 감싸기 */}
+              <ProtectedRoute> 
                 <div className="mainContentWithFixedHeader"><FreeboardWrite /></div>
               </ProtectedRoute>
             }
           />
 
-          {/* 👇 자유게시판 글수정 페이지에 ProtectedRoute 적용 */}
+          
           <Route
             path="freeboardEdit/:postId"
             element={
-              <ProtectedRoute> {/* ProtectedRoute로 감싸기 */}
+              <ProtectedRoute> 
                 <div className="mainContentWithFixedHeader"><FreeboardEdit /></div>
               </ProtectedRoute>
             }

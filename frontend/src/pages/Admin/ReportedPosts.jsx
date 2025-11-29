@@ -1,4 +1,3 @@
-// src/pages/Admin/ReportedPosts.jsx
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -7,7 +6,7 @@ import styles from '../../assets/styles/ReportedPosts.module.css';
 import Modal from '../../components/Modal/Modal';
 import Pagination from '../../components/Pagination/Pagination';
 
-const API_BASE_URL = '/api/v1'; // Vite 프록시 사용 시
+const API_BASE_URL = '/api/v1'; 
 
 function ReportedPosts() {
     const navigate = useNavigate();
@@ -62,7 +61,6 @@ function ReportedPosts() {
         }
         
         let endpoint = '';
-        // 기본적으로 searchKeyword를 사용, qna 탭일 때만 searchTerm으로 변경하고 searchKeyword 삭제
         const params = {
             page: page - 1, 
             size: itemsPerPage,
@@ -84,11 +82,10 @@ function ReportedPosts() {
             if (currentFilters.startDate) params.qnaCreationStartDate = currentFilters.startDate;
             if (currentFilters.endDate) params.qnaCreationEndDate = currentFilters.endDate;
             
-            // ⭐ 문의 탭 검색어 파라미터명 변경
             if (currentFilters.searchTerm.trim()) {
-                params.searchTerm = currentFilters.searchTerm.trim(); // 'searchTerm'으로 설정
+                params.searchTerm = currentFilters.searchTerm.trim(); 
             }
-            delete params.searchKeyword; // 공통으로 설정된 searchKeyword 삭제
+            delete params.searchKeyword; 
         } else {
             console.warn(`[ReportedPosts] Unknown tab: ${tab}. Clearing items.`);
             setIsLoading(false);
@@ -142,8 +139,7 @@ function ReportedPosts() {
     rawDateValue = item.originalPostDate || item.inquiryCreatedAt || item.createdAt;
     specificProps = {
         id: item.id,
-        // itemType: item.itemType || '문의', // 기존 코드
-        itemType: '문의', // 수정된 코드: 'qna' 탭의 아이템 타입을 항상 '문의'로 통일
+        itemType: '문의', 
         originalPostId: item.id,
         titleOrContentSnippet: item.titleOrContentSnippet,
     };

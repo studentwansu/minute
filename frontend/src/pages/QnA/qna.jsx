@@ -1,39 +1,36 @@
-// src/pages/QnA/Qna.jsx (또는 실제 파일 경로)
-import axios from 'axios'; // 페이지마다 직접 임포트
+import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import searchButtonIcon from "../../assets/images/search_icon.png";
 import qnaStyle from "../../assets/styles/qna.module.css";
 import Modal from '../../components/Modal/Modal';
 import MypageNav from '../../components/MypageNavBar/MypageNav';
-import Pagination from "../../components/Pagination/Pagination"; // Pagination 컴포넌트 경로 확인
+import Pagination from "../../components/Pagination/Pagination";
 
 function Qna() {
-    const [qnaPage, setQnaPage] = useState(null); // API 응답 Page 객체 전체를 저장
+    const [qnaPage, setQnaPage] = useState(null); 
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
 
-    // 모달 상태
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalProps, setModalProps] = useState({
         title: '', message: '', onConfirm: null, confirmText: '확인',
         cancelText: null, type: 'default', confirmButtonType: 'primary', cancelButtonType: 'secondary'
     });
 
-    // 필터 상태: URL 쿼리 파라미터에서 초기값 가져오기
     const [filters, setFilters] = useState({
         startDate: searchParams.get('startDate') || '',
         endDate: searchParams.get('endDate') || '',
-        status: searchParams.get('status') || '', // 백엔드는 "PENDING", "ANSWERED"
+        status: searchParams.get('status') || '', 
         searchTerm: searchParams.get('searchTerm') || ''
     });
-    const currentPage = parseInt(searchParams.get('page') || '0', 10); // 백엔드는 0-indexed
-    const itemsPerPage = 15; // 백엔드에 size로 전달될 값
+    const currentPage = parseInt(searchParams.get('page') || '0', 10); 
+    const itemsPerPage = 15; 
 
     const fetchQnaData = useCallback(async (currentFilters, page) => {
         setIsLoading(true);
-        const token = localStorage.getItem('token'); // 토큰 가져오기
+        const token = localStorage.getItem('token'); 
 
         if (!token) {
             setIsLoading(false);
@@ -51,7 +48,7 @@ function Qna() {
                 page: page,
                 size: itemsPerPage,
                 sort: 'inquiryCreatedAt,desc',
-                searchTerm: currentFilters.searchTerm || undefined, // 빈 문자열이면 파라미터에서 제외
+                searchTerm: currentFilters.searchTerm || undefined, 
                 statusFilter: currentFilters.status || undefined,
                 startDate: currentFilters.startDate || undefined,
                 endDate: currentFilters.endDate || undefined,
@@ -59,7 +56,7 @@ function Qna() {
 
             const response = await axios.get('/api/v1/qna', {
                 headers: { 'Authorization': `Bearer ${token}` },
-                params // params 객체를 여기에 전달
+                params 
             });
             setQnaPage(response.data);
         } catch (error) {
@@ -68,7 +65,6 @@ function Qna() {
             if (error.response) {
                 if (error.response.status === 401) {
                     errorMessage = "인증에 실패했습니다. 다시 로그인해주세요.";
-                    // 추가적으로 로그인 페이지로 보내는 로직
                 } else if (error.response.data && error.response.data.message) {
                     errorMessage = error.response.data.message;
                 }
@@ -89,7 +85,6 @@ function Qna() {
     }, [itemsPerPage, navigate]);
 
     useEffect(() => {
-        // URL 쿼리 파라미터가 변경될 때마다 필터 상태를 업데이트하고 데이터를 다시 가져옴
         const newFilters = {
             startDate: searchParams.get('startDate') || '',
             endDate: searchParams.get('endDate') || '',
@@ -99,7 +94,7 @@ function Qna() {
         setFilters(newFilters);
         const newCurrentPage = parseInt(searchParams.get('page') || '0', 10);
         fetchQnaData(newFilters, newCurrentPage);
-    }, [searchParams, fetchQnaData]); // searchParams가 변경될 때마다 실행
+    }, [searchParams, fetchQnaData]); 
 
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
@@ -113,11 +108,11 @@ function Qna() {
         if (filters.endDate) newSearchParams.set('endDate', filters.endDate);
         if (filters.status) newSearchParams.set('status', filters.status);
         if (filters.searchTerm) newSearchParams.set('searchTerm', filters.searchTerm);
-        newSearchParams.set('page', '0'); // 검색 시 항상 첫 페이지로
+        newSearchParams.set('page', '0'); 
         setSearchParams(newSearchParams);
     };
 
-    const handlePageChange = (pageNumber) => { // Pagination 컴포넌트가 0-indexed 페이지를 반환한다고 가정
+    const handlePageChange = (pageNumber) => { 
         const newSearchParams = new URLSearchParams(searchParams);
         newSearchParams.set('page', pageNumber.toString());
         setSearchParams(newSearchParams);
@@ -130,7 +125,7 @@ function Qna() {
     const getStatusText = (status) => {
         if (status === 'PENDING') return '대기';
         if (status === 'ANSWERED') return '완료';
-        return status; // 혹시 모를 다른 상태값
+        return status; 
     };
 
     return (
@@ -206,9 +201,9 @@ function Qna() {
                             <div className={qnaStyle.paginationContainerInBottomControls}>
                                 {!isModalOpen && qnaPage && qnaPage.totalPages > 0 && qnaPage.content?.length > 0 && (
                                     <Pagination
-                                        currentPage={qnaPage.number} // 백엔드에서 받은 현재 페이지 (0-indexed)
+                                        currentPage={qnaPage.number} 
                                         totalPages={qnaPage.totalPages}
-                                        onPageChange={handlePageChange} // 페이지 변경 시 0-indexed 페이지 번호로 호출
+                                        onPageChange={handlePageChange} 
                                     />
                                 )}
                             </div>

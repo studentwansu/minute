@@ -1,12 +1,11 @@
-// src/pages/Board/FreeboardWrite.jsx
-import axios from 'axios'; // axios import
+import axios from 'axios';
 import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import banner from "../../assets/images/banner.png";
 import freeboardWriteStyle from "../../assets/styles/freeboardWrite.module.css";
 import Modal from '../../components/Modal/Modal';
 
-const API_BASE_URL = "http://localhost:8080/api/v1"; // API 기본 URL
+const API_BASE_URL = "http://localhost:8080/api/v1"; 
 
 function FreeboardWrite() {
     const freeboardPath = "/freeboard";
@@ -14,7 +13,7 @@ function FreeboardWrite() {
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [isSubmitting, setIsSubmitting] = useState(false); // 제출 중 상태
+    const [isSubmitting, setIsSubmitting] = useState(false); 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalProps, setModalProps] = useState({
@@ -24,9 +23,6 @@ function FreeboardWrite() {
     });
 
     const getToken = () => localStorage.getItem("token");
-    // isUserLoggedIn 함수는 ProtectedRoute에서 이미 사용하고 있을 수 있지만, 
-    // 만약 페이지 내에서도 추가적인 UI 제어가 필요하면 사용할 수 있습니다.
-    // const isUserLoggedIn = () => !!getToken(); 
 
     const handleSubmit = async (event) => {
         event.preventDefault(); 
@@ -47,7 +43,7 @@ function FreeboardWrite() {
             return;
         }
 
-        setIsSubmitting(true); // 제출 시작
+        setIsSubmitting(true); 
         const token = getToken();
         if (!token) {
             setModalProps({
@@ -61,8 +57,6 @@ function FreeboardWrite() {
         }
 
         try {
-            // API 호출: 새 게시글 생성
-            // 백엔드 FreeboardPostRequestDTO는 { "postTitle": title, "postContent": content } 형식
             await axios.post(
                 `${API_BASE_URL}/board/free`, 
                 { postTitle: title, postContent: content },
@@ -73,10 +67,10 @@ function FreeboardWrite() {
                 title: '등록 완료', message: '게시글이 성공적으로 등록되었습니다.',
                 confirmText: '확인', type: 'success', confirmButtonType: 'primary',
                 onConfirm: () => {
-                    setIsModalOpen(false); // 모달을 먼저 닫고 이동
+                    setIsModalOpen(false); 
                     navigate(freeboardPath); 
                 },
-                cancelText: null // 등록 완료에는 취소 버튼 불필요
+                cancelText: null 
             });
             setIsModalOpen(true);
 
@@ -96,7 +90,7 @@ function FreeboardWrite() {
             }
             setIsModalOpen(true);
         } finally {
-            setIsSubmitting(false); // 제출 종료
+            setIsSubmitting(false); 
         }
     };
 
@@ -106,7 +100,7 @@ function FreeboardWrite() {
                 title: '작성 취소', message: '작성을 취소하시겠습니까?\n입력하신 내용은 저장되지 않습니다.',
                 confirmText: '예, 취소합니다', cancelText: '계속 작성',
                 onConfirm: () => { setIsModalOpen(false); navigate(freeboardPath); },
-                onCancel: () => setIsModalOpen(false), // 취소 버튼 클릭 시 모달만 닫기
+                onCancel: () => setIsModalOpen(false), 
                 type: 'warning', confirmButtonType: 'danger', cancelButtonType: 'secondary'
             });
             setIsModalOpen(true);
@@ -140,7 +134,7 @@ function FreeboardWrite() {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             placeholder="제목을 입력하세요"
-                            disabled={isSubmitting} // 제출 중 비활성화
+                            disabled={isSubmitting} 
                         />
 
                         <label
@@ -156,7 +150,7 @@ function FreeboardWrite() {
                             onChange={(e) => setContent(e.target.value)}
                             placeholder="내용을 입력하세요"
                             rows="10"
-                            disabled={isSubmitting} // 제출 중 비활성화
+                            disabled={isSubmitting} 
                         ></textarea>
 
                         <div className={freeboardWriteStyle.wirte}>
@@ -165,14 +159,14 @@ function FreeboardWrite() {
                                 onClick={handleCancel}
                                 className={`${freeboardWriteStyle.submitButton} ${freeboardWriteStyle.cancelButton || ''}`} 
                                 style={{ marginRight: '10px' }}
-                                disabled={isSubmitting} // 제출 중 비활성화
+                                disabled={isSubmitting} 
                             >
                                 취소
                             </button>
                             <button
                                 type="submit" 
                                 className={freeboardWriteStyle.submitButton} 
-                                disabled={isSubmitting || !title.trim() || !content.trim()} // 제출 중 또는 내용 미입력 시 비활성화
+                                disabled={isSubmitting || !title.trim() || !content.trim()} 
                             >
                                 {isSubmitting ? '등록 중...' : '작성'}
                             </button>
@@ -184,7 +178,6 @@ function FreeboardWrite() {
                 isOpen={isModalOpen}
                 onClose={() => {
                     setIsModalOpen(false);
-                    // 확인 후 이동하는 경우 onConfirm에서 처리하므로, 여기서는 onConfirm을 null로 만들 필요 없음
                 }}
                 {...modalProps}
             />

@@ -1,6 +1,4 @@
-// src/pages/Notice/NoticeDetail.jsx
-
-import axios from 'axios'; // axios import 추가
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import NoticeDetailStyle from "../../assets/styles/noticeDetail.module.css";
@@ -164,7 +162,6 @@ function NoticeDetail() {
                             )) : notice.content}
                         </div>
                     </div>
-                    {/* "목록으로" 버튼이 제거되었습니다. */}
                 </div>
             </div>
             <Modal

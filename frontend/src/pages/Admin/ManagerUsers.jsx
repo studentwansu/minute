@@ -17,7 +17,6 @@ const ManagerUsers = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // 사용자 데이터 로드
   useEffect(() => {
     axios.get("http://localhost:8080/api/v1/user/all")
       .then(res => {
@@ -29,7 +28,6 @@ const ManagerUsers = () => {
       });
   }, []);
 
-  // 필터링 및 검색
   useEffect(() => {
     let filteredUsers = [...allUsers];
 
@@ -53,7 +51,6 @@ const ManagerUsers = () => {
     setCurrentPage(1);
   }, [allUsers, statusFilter, searchTerm]);
 
-  // 페이지 관련 계산
   const totalPages = Math.ceil(usersToDisplay.length / itemsPerPage);
   const indexOfLastUser = currentPage * itemsPerPage;
   const indexOfFirstUser = indexOfLastUser - itemsPerPage;

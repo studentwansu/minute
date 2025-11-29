@@ -1,4 +1,3 @@
-// src/pages/Admin/Qna/ManagerQnaDetail.jsx
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -8,7 +7,7 @@ import styles from '../../assets/styles/ManagerQnaDetail.module.css';
 import Modal from '../../components/Modal/Modal';
 
 function ManagerQnaDetail() {
-    const { qnaId } = useParams(); // App.jsx에서 :qnaId로 설정되어 있어야 함
+    const { qnaId } = useParams(); 
     const navigate = useNavigate();
 
     console.log("[ManagerQnaDetail] Component mounted. qnaId from useParams:", qnaId);
@@ -29,10 +28,10 @@ function ManagerQnaDetail() {
         cancelButtonType: 'secondary'
     });
 
-    const fetchQnaDetailForAdmin = useCallback(async (idToFetch) => { // 파라미터로 idToFetch 받도록 수정
+    const fetchQnaDetailForAdmin = useCallback(async (idToFetch) => { 
         console.log("[ManagerQnaDetail] fetchQnaDetailForAdmin called with idToFetch:", idToFetch);
         setIsLoading(true);
-        setQnaPost(null); // API 호출 전 이전 데이터 초기화 (선택적)
+        setQnaPost(null); 
 
         const token = localStorage.getItem('token');
         if (!token) {
@@ -74,17 +73,17 @@ function ManagerQnaDetail() {
                 onConfirm: () => { setIsModalOpen(false); navigate('/admin/managerQna'); }
             });
             setIsModalOpen(true);
-            setQnaPost(null); // 오류 시 qnaPost 확실히 null 처리
+            setQnaPost(null);
         } finally {
             console.log("[ManagerQnaDetail] fetchQnaDetailForAdmin finished. Setting isLoading to false.");
             setIsLoading(false);
         }
-    }, [navigate]); // qnaId를 의존성 배열에서 제거하고, 호출 시 명시적으로 받도록 함
+    }, [navigate]); 
 
     useEffect(() => {
         console.log("[ManagerQnaDetail] useEffect [qnaId] triggered. Current qnaId:", qnaId);
         if (qnaId && qnaId !== "undefined" && qnaId !== "null") {
-            fetchQnaDetailForAdmin(qnaId); // 인자로 qnaId 전달
+            fetchQnaDetailForAdmin(qnaId); 
         } else {
             console.error("[ManagerQnaDetail] useEffect - qnaId is missing or invalid:", qnaId);
             setIsLoading(false);
@@ -98,7 +97,7 @@ function ManagerQnaDetail() {
             });
             setIsModalOpen(true);
         }
-    }, [qnaId, fetchQnaDetailForAdmin, navigate]); // fetchQnaDetailForAdmin은 useCallback으로 감싸져 있으므로 의존성 추가
+    }, [qnaId, fetchQnaDetailForAdmin, navigate]); 
 
     useEffect(() => {
         if (isEditingAdminAnswer && adminAnswerEditInputRef.current) {
@@ -144,7 +143,7 @@ function ManagerQnaDetail() {
     };
 
     const handleAdminAnswerDoubleClick = () => {
-        if (qnaPost && qnaPost.reply && !isSubmitting) { // 제출 중 아닐 때만
+        if (qnaPost && qnaPost.reply && !isSubmitting) { 
             console.log("[ManagerQnaDetail] Double-clicked to edit admin answer.");
             setEditedAdminAnswerContent(qnaPost.reply.replyContent);
             setIsEditingAdminAnswer(true);
@@ -295,13 +294,11 @@ function ManagerQnaDetail() {
     const getStatusText = (status) => (status === 'ANSWERED' ? '답변완료' : (status === 'PENDING' ? '미답변' : status));
     const formatDate = (dateString) => dateString ? new Date(dateString).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
 
-    // --- 렌더링 로직 ---
     if (isLoading) {
         console.log("[ManagerQnaDetail] Rendering: Loading state");
         return <div className={styles.container}><main className={styles.detailContentCard}><div className={styles.loadingContainer}>데이터를 불러오는 중입니다...</div></main></div>;
     }
     
-    // qnaPost가 null이고, 모달도 닫혀있고, 로딩도 끝난 상태 -> 데이터 없음 또는 로드 실패
     if (!qnaPost && !isModalOpen && !isLoading) {
         console.log("[ManagerQnaDetail] Rendering: Error or No Data state (qnaPost is null, no modal, not loading)");
         return (
@@ -322,17 +319,12 @@ function ManagerQnaDetail() {
         );
     }
 
-    // qnaPost가 null이지만 모달이 열려있는 경우, 모달이 화면을 가리므로 null 반환하여 현재 화면 유지
     if (!qnaPost && isModalOpen) {
         console.log("[ManagerQnaDetail] Rendering: null (qnaPost is null, but modal is open)");
-        // Modal 컴포넌트가 루트 레벨에서 렌더링되므로, 여기서는 null을 반환하여
-        // 현재 컴포넌트의 렌더링을 중단하고 모달만 보이도록 함.
-        // 또는 <Modal ... /> 만 반환할 수도 있음. (Modal 구현에 따라 다름)
         return (
              <Modal
                 isOpen={isModalOpen}
                 onClose={() => {
-                    // 모달 닫기 로직 (필요시 onConfirm/onCancel에서 이미 처리)
                     if (!modalProps.onConfirm && !modalProps.onCancel) setIsModalOpen(false);
                     else if (modalProps.onConfirm && !modalProps.cancelText) setIsModalOpen(false);
                     else setIsModalOpen(false);
@@ -342,11 +334,9 @@ function ManagerQnaDetail() {
         );
     }
     
-    // qnaPost가 정상적으로 로드된 경우
     if (qnaPost) {
       console.log("[ManagerQnaDetail] Rendering: Main content with qnaPost:", qnaPost);
     } else {
-      // 이 경우는 거의 발생하지 않아야 함 (위의 조건들에서 걸러짐)
       console.error("[ManagerQnaDetail] Rendering: Fallback - qnaPost is unexpectedly null here.");
       return <div>오류: 문의 데이터를 표시할 수 없습니다.</div>;
     }

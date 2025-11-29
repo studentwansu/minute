@@ -1,27 +1,24 @@
-// src/pages/Admin/Notice/ManagerNoticeEdit.jsx
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// 경로 확인: 실제 프로젝트 구조에 맞게 ../../../assets/... 등으로 변경될 수 있습니다.
 import styles from '../../assets/styles/ManagerNoticeEdit.module.css';
 import Modal from '../../components/Modal/Modal';
 
 const API_BASE_URL = "/api/v1";
 
 function ManagerNoticeEdit() {
-    const { id: noticeId } = useParams(); // URL 파라미터에서 noticeId를 가져옵니다.
+    const { id: noticeId } = useParams(); 
     const navigate = useNavigate();
 
     const [isImportant, setIsImportant] = useState(false);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     
-    // 원본 데이터 보관용 (수정 여부 확인 및 취소 시 복원, UI 표시용)
     const [originalPostData, setOriginalPostData] = useState(null); 
-    const [isLoading, setIsLoading] = useState(true); // 페이지 초기 데이터 로딩
-    const [isSubmitting, setIsSubmitting] = useState(false); // 폼 제출 로딩
+    const [isLoading, setIsLoading] = useState(true); 
+    const [isSubmitting, setIsSubmitting] = useState(false); 
 
-    // 모달 상태 관리
+
     const [isModalOpen, setIsModalOpen] = useState({ state: false, config: {} });
 
     const getToken = () => localStorage.getItem("token");
@@ -71,14 +68,14 @@ function ManagerNoticeEdit() {
             setTitle(data.noticeTitle);
             setContent(data.noticeContent);
             setIsImportant(data.noticeIsImportant);
-            setOriginalPostData({ // 원본 데이터 저장
+            setOriginalPostData({ 
                 title: data.noticeTitle,
                 content: data.noticeContent,
                 isImportant: data.noticeIsImportant,
-                author: data.authorNickname, // API 응답 필드명 확인 필요
+                author: data.authorNickname, 
                 views: data.noticeViewCount,
                 createdAt: formattedDate,
-                rawCreatedAt: data.noticeCreatedAt // 원본 날짜 (필요시)
+                rawCreatedAt: data.noticeCreatedAt 
             });
         } catch (error) {
             console.error("Error fetching notice for edit:", error);
@@ -93,7 +90,7 @@ function ManagerNoticeEdit() {
                     onConfirm: () => { setIsModalOpen({ state: false, config: {} }); navigate('/admin/managerNotice'); } 
                 } 
             });
-            setOriginalPostData(null); // 에러 발생 시 데이터 초기화
+            setOriginalPostData(null); 
         } finally {
             setIsLoading(false);
         }
@@ -147,7 +144,6 @@ function ManagerNoticeEdit() {
             return;
         }
 
-        // 변경 사항이 있는지 확인
         if (originalPostData && title === originalPostData.title && content === originalPostData.content && isImportant === originalPostData.isImportant) {
             setIsModalOpen({ 
                 state: true, 
@@ -181,9 +177,8 @@ function ManagerNoticeEdit() {
                     }
                 }
             });
-            // 수정 성공 시 originalPostData도 현재 값으로 업데이트
             setOriginalPostData(prev => ({
-                ...prev, // author, views, createdAt 등 기존 정보 유지
+                ...prev, 
                 title: title,
                 content: content,
                 isImportant: isImportant
@@ -247,11 +242,7 @@ function ManagerNoticeEdit() {
         );
     }
     
-    // 초기 로딩 에러 또는 데이터를 찾지 못한 경우
     if (!originalPostData && !isLoading) {
-        // fetchNoticeDataForEdit에서 이미 모달로 에러 메시지를 띄우고 navigate를 처리할 수 있음
-        // 이 경우, 여기서는 추가적인 UI 렌더링 없이 null을 반환하여 모달만 보이게 하거나
-        // 또는 아래와 같이 명시적인 오류 페이지를 보여줄 수 있음
         return (
             <div className={styles.container}>
                 <main className={styles.editContentCard}>
@@ -330,7 +321,7 @@ function ManagerNoticeEdit() {
                             <button 
                                 type="submit" 
                                 className={`${styles.actionButton} ${styles.submitButton}`}
-                                disabled={isSubmitting || !title.trim() || !content.trim()} // 기본 유효성 검사도 버튼 비활성화에 포함
+                                disabled={isSubmitting || !title.trim() || !content.trim()} 
                             >
                                 {isSubmitting ? "수정 중..." : "수정 완료"}
                             </button>

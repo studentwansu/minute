@@ -15,7 +15,6 @@ const MemberDetail = () => {
   const [isEmailChanged, setIsEmailChanged] = useState(false);
   const [isPhoneChanged, setIsPhoneChanged] = useState(false);
 
-  // 유저 정보 조회
 useEffect(() => {
   axios.get(`http://localhost:8080/api/v1/user/${userId}`, {
     headers: {
@@ -24,7 +23,7 @@ useEffect(() => {
     withCredentials: true
   })
   .then((res) => {
-    console.log("회원 응답 데이터:", res.data); // 응답 구조 확인용 로그
+    console.log("회원 응답 데이터:", res.data); 
 
     const data = res.data;
 
@@ -45,7 +44,6 @@ useEffect(() => {
 }, [userId]);
 
 
-  // 정보 수정 핸들러
   const handleUpdate = async (field, value) => {
     try {
       const response = await axios.patch('http://localhost:8080/api/v1/user/modify', {

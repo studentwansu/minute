@@ -16,11 +16,9 @@ const ReportedMembers = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // 실제 API로부터 유저 목록 불러오기
   useEffect(() => {
     axios.get("http://localhost:8080/api/v1/user/all")
       .then(res => {
-        // 신고 누적 1 이상인 회원만 필터링
         const filteredUsers = res.data.body.userList.filter(user => (user.userReport || 0) >= 1);
 
         const users = filteredUsers.map(user => ({
@@ -42,7 +40,6 @@ const ReportedMembers = () => {
       });
   }, []);
 
-  // 필터링 & 검색
   useEffect(() => {
     let filteredMembers = [...allReportedMembers];
     if (statusFilter !== 'all') {
@@ -79,15 +76,13 @@ const ReportedMembers = () => {
     return;
   }
 
-  // 토큰은 보통 상위 컴포넌트에서 받아오거나, 로컬스토리지에서 꺼내옵니다.
-  const token = localStorage.getItem('token'); // 예시
+  const token = localStorage.getItem('token'); 
 
   if (!token) {
     alert("로그인이 필요합니다.");
     return;
   }
 
-  // 상태 변경 API 호출 - userId를 URL에 넣고, 데이터는 필요 없으면 빈 객체 {}
   axios.patch(`http://localhost:8080/api/v1/admin/status/${userId}`, {}, {
     headers: {
         Authorization: `Bearer ${token}`, 
@@ -95,7 +90,6 @@ const ReportedMembers = () => {
   })
   .then(() => {
     alert("회원 상태 변경 완료.");
-    // 변경 후 목록 다시 갱신
     return axios.get("http://localhost:8080/api/v1/user/all");
   })
   .then(res => {

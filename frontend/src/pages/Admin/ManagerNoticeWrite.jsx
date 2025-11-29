@@ -1,8 +1,6 @@
-// src/pages/Admin/Notice/ManagerNoticeWrite.jsx
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// 경로 확인: 실제 프로젝트 구조에 맞게 ../../../assets/... 등으로 변경될 수 있습니다.
 import styles from "../../assets/styles/ManagerNoticeWrite.module.css";
 import Modal from '../../components/Modal/Modal';
 
@@ -13,9 +11,8 @@ function ManagerNoticeWrite() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [isImportant, setIsImportant] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false); // 제출 중 로딩 상태
+    const [isSubmitting, setIsSubmitting] = useState(false); 
 
-    // 모달 상태 관리 (view/문의-백엔드-연동 방식 채택)
     const [isModalOpen, setIsModalOpen] = useState({ state: false, config: {} });
 
     const getToken = () => localStorage.getItem("token");
@@ -29,7 +26,7 @@ function ManagerNoticeWrite() {
                     title: '입력 오류', 
                     message: '제목을 입력해주세요.', 
                     confirmText: '확인',
-                    type: 'warning', // 'adminWarning' 대신 표준 타입 사용 또는 Modal 컴포넌트 확인
+                    type: 'warning', 
                     onConfirm: () => setIsModalOpen({ state: false, config: {} })
                 }
             });
@@ -76,7 +73,6 @@ function ManagerNoticeWrite() {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
-            // 성공 시 (HTTP 201 Created)
             if (response.status === 201) {
                 setIsModalOpen({
                     state: true,
@@ -84,19 +80,19 @@ function ManagerNoticeWrite() {
                         title: '등록 완료',
                         message: '공지사항이 성공적으로 등록되었습니다.',
                         confirmText: '목록으로 이동',
-                        type: 'success', // 'adminSuccess' 대신 표준 타입 사용 또는 Modal 컴포넌트 확인
+                        type: 'success', 
                         onConfirm: () => { 
                             setIsModalOpen({ state: false, config: {} }); 
                             navigate('/admin/managerNotice'); 
                         }
                     }
                 });
-                // 폼 초기화
+
                 setTitle('');
                 setContent('');
                 setIsImportant(false);
             } else {
-                 // 201이 아닌 다른 성공 상태 코드 처리 (필요시)
+
                  setIsModalOpen({
                     state: true,
                     config: {
@@ -120,7 +116,7 @@ function ManagerNoticeWrite() {
                     title: "등록 실패", 
                     message: errorMsg, 
                     confirmText: "확인", 
-                    type: 'error', // 'adminError' 대신 표준 타입 사용 또는 Modal 컴포넌트 확인
+                    type: 'error', 
                     onConfirm: () => {
                         setIsModalOpen({ state: false, config: {} });
                         if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -145,7 +141,7 @@ function ManagerNoticeWrite() {
                     cancelText: '계속 작성',
                     onConfirm: () => { setIsModalOpen({ state: false, config: {} }); navigate('/admin/managerNotice'); },
                     onCancel: () => setIsModalOpen({ state: false, config: {} }),
-                    type: 'warning', // 'adminConfirm' 대신 표준 타입 사용 또는 Modal 컴포넌트 확인
+                    type: 'warning', 
                     confirmButtonType: 'danger', 
                     cancelButtonType: 'secondary'
                 }

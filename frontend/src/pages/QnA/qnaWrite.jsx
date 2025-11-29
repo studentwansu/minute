@@ -1,6 +1,5 @@
-// src/pages/QnA/QnaWrite.jsx
-import axios from 'axios'; // 페이지마다 직접 임포트
-import { useEffect, useState } from 'react'; // React import 확인 (기존 코드에 React가 명시적으로 import 안되어있다면 추가)
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import xIcon from '../../assets/images/x.png';
 import qnaWriteStyle from '../../assets/styles/qnaWrite.module.css';
@@ -11,9 +10,9 @@ function QnaWrite() {
     const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [selectedFiles, setSelectedFiles] = useState([]); // File 객체 목록
-    const [previewImages, setPreviewImages] = useState([]); // Object URL 목록
-    const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
+    const [selectedFiles, setSelectedFiles] = useState([]); 
+    const [previewImages, setPreviewImages] = useState([]); 
+    const [isLoading, setIsLoading] = useState(false); 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalProps, setModalProps] = useState({
@@ -30,9 +29,8 @@ function QnaWrite() {
     const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
 
-    // --- 프론트엔드 개별 파일 크기 제한 로직 (예: 5MB) --- START
-    const MAX_INDIVIDUAL_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-    for (const file of files) { // 새로 선택된 파일들에 대해서만 검사
+    const MAX_INDIVIDUAL_FILE_SIZE = 5 * 1024 * 1024; 
+    for (const file of files) { 
         if (file.size > MAX_INDIVIDUAL_FILE_SIZE) {
             setModalProps({
                 title: '파일 크기 초과',
@@ -43,11 +41,10 @@ function QnaWrite() {
                 onConfirm: () => setIsModalOpen(false)
             });
             setIsModalOpen(true);
-            event.target.value = null; // 파일 입력 초기화
-            return; // 함수 종료
+            event.target.value = null; 
+            return; 
         }
     }
-    // --- 프론트엔드 개별 파일 크기 제한 로직 --- END
 
     if (files.length > 0 && (selectedFiles.length + files.length > 3)) {
         setModalProps({
@@ -56,7 +53,7 @@ function QnaWrite() {
             confirmText: '확인',
             type: 'warning',
             confirmButtonType: 'primary',
-            onConfirm: () => setIsModalOpen(false) // 모달 확인 시 닫기
+            onConfirm: () => setIsModalOpen(false) 
         });
         setIsModalOpen(true);
         event.target.value = null;
@@ -78,7 +75,7 @@ function QnaWrite() {
         setPreviewImages(prevPreviews => prevPreviews.filter((_, index) => index !== indexToRemove));
     };
 
-    const handleSubmit = async (event) => { // async 추가
+    const handleSubmit = async (event) => { 
         event.preventDefault();
         if (!title.trim()) {
             setModalProps({ title: '입력 오류', message: '제목을 입력해주세요.', confirmText: '확인', type: 'warning', confirmButtonType: 'primary', onConfirm: () => setIsModalOpen(false) });
@@ -91,13 +88,13 @@ function QnaWrite() {
             return;
         }
 
-        setIsLoading(true); // 로딩 시작
+        setIsLoading(true); 
 
         const token = localStorage.getItem('token');
         if (!token) {
             setModalProps({
                 title: "인증 오류", message: "로그인이 필요합니다. 로그인 페이지로 이동합니다.",
-                confirmText: "확인", type: "error", confirmButtonType: 'blackButton', // 버튼 타입 일치
+                confirmText: "확인", type: "error", confirmButtonType: 'blackButton', 
                 onConfirm: () => { setIsModalOpen(false); navigate('/login'); }
             });
             setIsModalOpen(true);
@@ -132,7 +129,6 @@ function QnaWrite() {
                     title: '등록 완료', message: '문의가 성공적으로 등록되었습니다.', confirmText: '확인', type: 'success', confirmButtonType: 'primary',
                     onConfirm: () => {
                         setIsModalOpen(false);
-                        // 성공 시 상태 초기화는 navigate 전에 할 필요 없음 (페이지 이동 시 컴포넌트 언마운트)
                         navigate(`/qnaDetail/${response.data.inquiryId}`);
                     }
                 });
@@ -157,7 +153,7 @@ function QnaWrite() {
             });
             setIsModalOpen(true);
         } finally {
-            setIsLoading(false); // 로딩 종료
+            setIsLoading(false); 
         }
     };
 
@@ -169,11 +165,10 @@ function QnaWrite() {
                 confirmText: '예, 취소합니다',
                 cancelText: '계속 작성',
                 onConfirm: () => {
-                    // previewImages.forEach(url => URL.revokeObjectURL(url)); // cleanup useEffect에서 처리
-                    setIsModalOpen(false); // 모달 먼저 닫기
+                    setIsModalOpen(false); 
                     navigate('/qna');
                 },
-                onCancel: () => setIsModalOpen(false), // 모달 닫기 추가
+                onCancel: () => setIsModalOpen(false), 
                 type: 'warning',
                 confirmButtonType: 'danger',
                 cancelButtonType: 'secondary'
@@ -185,11 +180,10 @@ function QnaWrite() {
     };
 
     useEffect(() => {
-        // 컴포넌트 언마운트 시 Object URL 해제 (메모리 누수 방지)
         return () => {
             previewImages.forEach(url => URL.revokeObjectURL(url));
         };
-    }, [previewImages]); // previewImages가 변경될 때마다 이전 URL들을 해제하는 것은 아님, 언마운트 시 현재 URL들 해제
+    }, [previewImages]); 
 
     return (
         <>
@@ -214,7 +208,7 @@ function QnaWrite() {
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                     required
-                                    disabled={isLoading} // 로딩 중 비활성화
+                                    disabled={isLoading} 
                                 />
                             </div>
 
@@ -228,7 +222,7 @@ function QnaWrite() {
                                     onChange={(e) => setContent(e.target.value)}
                                     required
                                     rows="10"
-                                    disabled={isLoading} // 로딩 중 비활성화
+                                    disabled={isLoading} 
                                 ></textarea>
                             </div>
 
@@ -242,19 +236,19 @@ function QnaWrite() {
                                     multiple
                                     accept="image/*"
                                     onChange={handleFileChange}
-                                    style={{ display: 'none' }} // 숨겨진 input
-                                    disabled={selectedFiles.length >= 3 || isLoading} // 로딩 중 또는 파일 개수 초과 시 비활성화
+                                    style={{ display: 'none' }} 
+                                    disabled={selectedFiles.length >= 3 || isLoading} 
                                 />
                                 <div className={qnaWriteStyle.imagePreviewContainer}>
                                     {previewImages.map((previewUrl, index) => (
-                                        <div key={previewUrl} className={qnaWriteStyle.imagePreviewItem}> {/* 사용자가 제공한 key={previewUrl} 사용 */}
+                                        <div key={previewUrl} className={qnaWriteStyle.imagePreviewItem}> 
                                             <img src={previewUrl} alt={`미리보기 ${index + 1}`} className={qnaWriteStyle.previewImage} />
                                             <button
                                                 type="button"
                                                 className={qnaWriteStyle.removeImageButton}
-                                                onClick={() => !isLoading && handleRemoveImage(index)} // 로딩 중 아닐 때만 동작
+                                                onClick={() => !isLoading && handleRemoveImage(index)} 
                                                 title="이미지 제거"
-                                                disabled={isLoading} // 로딩 중 비활성화
+                                                disabled={isLoading} 
                                             >
                                                 <img src={xIcon} alt="제거" className={qnaWriteStyle.removeIcon} />
                                             </button>
@@ -262,10 +256,10 @@ function QnaWrite() {
                                     ))}
                                     {selectedFiles.length < 3 && (
                                         <div
-                                            className={`${qnaWriteStyle.imagePlaceholder} ${isLoading ? qnaWriteStyle.disabledPlaceholder : ''}`} // 로딩 시 스타일 변경 위한 클래스 (선택적)
-                                            onClick={() => !isLoading && document.getElementById('qnaFormImages').click()} // 로딩 중 아닐 때만 동작
+                                            className={`${qnaWriteStyle.imagePlaceholder} ${isLoading ? qnaWriteStyle.disabledPlaceholder : ''}`} 
+                                            onClick={() => !isLoading && document.getElementById('qnaFormImages').click()} 
                                             role="button"
-                                            tabIndex={isLoading ? -1 : 0} // 로딩 중 포커스 불가
+                                            tabIndex={isLoading ? -1 : 0} 
                                             onKeyPress={(e) => { if (!isLoading && (e.key === 'Enter' || e.key === ' ')) document.getElementById('qnaFormImages').click(); }}
                                         >
                                             + 이미지 추가 ({selectedFiles.length}/3)
@@ -289,19 +283,11 @@ function QnaWrite() {
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => {
-                    // 모달의 onConfirm/onCancel 핸들러가 있으면 그것들이 setIsModalOpen(false)를 호출할 것이므로,
-                    // 여기서는 기본 닫기 동작만 처리하거나, 혹은 onConfirm/onCancel이 없을 경우에만 닫도록 할 수 있습니다.
-                    // 현재는 onConfirm, onCancel에서 setIsModalOpen(false)를 호출하도록 되어 있으므로,
-                    // onClose는 사용자가 외부 클릭 등으로 닫는 경우를 대비해 둘 수 있습니다. (Modal 구현에 따라 다름)
-                    // 여기서는 onConfirm/onCancel 핸들러가 모달을 닫도록 유도하고, onClose는 단순 닫기로 남겨둡니다.
                     if (!modalProps.onConfirm && !modalProps.onCancel) {
                         setIsModalOpen(false);
-                    } else if (modalProps.onConfirm && !modalProps.cancelText) { // 확인 버튼만 있는 경우
-                         // 사용자가 닫기 버튼(X)을 누를 때의 동작을 onConfirm과 동일하게 할지, 아니면 그냥 닫을지 결정
-                         // 여기서는 그냥 닫도록 함.
+                    } else if (modalProps.onConfirm && !modalProps.cancelText) { 
                          setIsModalOpen(false);
                     } else {
-                        // 확인/취소 버튼이 모두 있는 경우, X 버튼으로 닫을 때의 기본 동작
                         setIsModalOpen(false);
                     }
                 }}

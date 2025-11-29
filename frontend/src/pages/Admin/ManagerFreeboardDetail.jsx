@@ -1,4 +1,3 @@
-// src/pages/Admin/ManagerFreeboardDetail.jsx
 import axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -14,7 +13,6 @@ import Pagination from '../../components/Pagination/Pagination';
 
 const API_BASE_URL = "http://localhost:8080/api/v1";
 
-// 헬퍼 함수들
 const getToken = () => localStorage.getItem("token");
 const getLoggedInUserIdFromStorage = () => localStorage.getItem("userId");
 const isUserLoggedIn = () => !!getToken();
@@ -108,7 +106,6 @@ function ManagerFreeboardDetail() {
             console.error("Error fetching comments for admin:", err);
             setComments([]);
             setCommentPageInfo({ currentPage: 1, totalPages: 0, totalElements: 0 });
-            // 댓글 로딩 실패는 게시글 전체 에러로 처리하지 않을 수 있음
         } finally { setIsLoadingComments(false); }
     }, [postId, commentsPerPage]);
 
@@ -193,7 +190,6 @@ function ManagerFreeboardDetail() {
             setModalProps({ title: '알림', message: '이미 관리자님께서 신고한 게시글입니다.', type: 'info' });
             setIsModalOpen(true); return;
         }
-        // 백엔드에서 자신의 글 신고 방지 로직이 있다고 가정.
         setModalProps({
             title: '게시글 신고 (관리자)',
             message: `관리자 권한으로 이 게시글(ID: ${post.postId})을 신고 처리하시겠습니까?`,
@@ -254,7 +250,7 @@ function ManagerFreeboardDetail() {
             setModalProps({ title: '신고 불가', message: '다른 관리자의 댓글은 신고할 수 없습니다.', type: 'warning'});
             setIsModalOpen(true); return;
         }
-        if (comment.reportedByCurrentUser) { // 또는 isReportedByCurrentUser - DTO 필드명 확인
+        if (comment.reportedByCurrentUser) { 
             setModalProps({ title: '알림', message: '이미 관리자님께서 신고한 댓글입니다.', type: 'info'});
             setIsModalOpen(true); return;
         }
@@ -362,7 +358,6 @@ function ManagerFreeboardDetail() {
             setIsModalOpen(true); return;
         }
         const commentToDelete = comments.find(c => c.commentId === commentIdToDelete);
-        // 관리자 본인 댓글만 삭제 가능하도록 정책 유지
         if (!commentToDelete || commentToDelete.userId !== loggedInAdminId) { 
             setModalProps({ title: '권한 없음', message: '관리자 본인이 작성한 댓글만 삭제할 수 있습니다.', type: 'error' });
             setIsModalOpen(true); return;
@@ -379,7 +374,7 @@ function ManagerFreeboardDetail() {
             let pageToFetch = commentPageInfo.currentPage;
             if (pageToFetch > newTotalPages && newTotalPages > 0) {
                 pageToFetch = newTotalPages;
-            } else if (newTotalPages === 0 && pageToFetch > 1) { // 마지막 페이지의 마지막 댓글 삭제 시
+            } else if (newTotalPages === 0 && pageToFetch > 1) { 
                 pageToFetch = Math.max(1, pageToFetch -1);
             } else if (newTotalPages === 0){
                  pageToFetch = 1;

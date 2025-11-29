@@ -1,6 +1,4 @@
-// src/pages/Notice/notice.js
-
-import axios from 'axios'; // axios import 추가
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import noticeStyle from "../../assets/styles/notice.module.css";
@@ -11,7 +9,7 @@ function Notice() {
     const [noticesToDisplay, setNoticesToDisplay] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const [totalElements, setTotalElements] = useState(0); // 전체 게시물 수
+    const [totalElements, setTotalElements] = useState(0); 
 
     const itemsPerPage = 10;
     const navigate = useNavigate();
@@ -21,7 +19,7 @@ function Notice() {
         title: "",
         message: "",
         confirmText: "확인",
-        type: "error", // 기본 타입을 에러로 설정해둘 수 있습니다.
+        type: "error", 
         confirmButtonType: 'blackButton',
         onConfirm: () => setIsModalOpen(false)
     });
@@ -29,15 +27,9 @@ function Notice() {
     useEffect(() => {
         const fetchNoticesFromAPI = async () => {
             try {
-                // API 요청 시 페이지 번호는 0부터 시작하므로 (currentPage - 1)
-                // 기존 (vite.config.js 공개 전 제안)
-                // const response = await axios.get(`http://localhost:8080/api/notices?page=${currentPage - 1}&size=${itemsPerPage}`);
-
-                // vite.config.js 프록시 설정 활용 (권장)
                 const response = await axios.get(`/api/v1/notices?page=${currentPage - 1}&size=${itemsPerPage}`);
 
-                // axios는 응답 데이터를 response.data에 담아줍니다.
-                const data = response.data; // PageResponseDTO<NoticeListResponseDTO> 형태의 응답
+                const data = response.data; 
 
                 let regularNoticeCounter = 1;
                 const mappedNotices = data.content.map(notice => {
@@ -63,10 +55,9 @@ function Notice() {
             } catch (error) {
                 console.error("Error fetching notices:", error);
                 let errorMessage = "공지사항을 불러오는 중 문제가 발생했습니다.\n잠시 후 다시 시도해주세요.";
-                // axios 에러 처리: error.response.data.message가 서버에서 보낸 메시지일 가능성이 높음
                 if (error.response && error.response.data && error.response.data.message) {
                     errorMessage = error.response.data.message;
-                } else if (error.message) { // 네트워크 에러 또는 기타 클라이언트 측 에러
+                } else if (error.message) { 
                     errorMessage = error.message;
                 }
 
@@ -98,7 +89,6 @@ function Notice() {
     return (
         <>
             <div className={noticeStyle.background}>
-                {/* 상단 제목 영역 등은 기존 구조 유지한다고 가정 */}
                 <div className={noticeStyle.titleArea}>
                     <h1>공지사항</h1>
                 </div>
@@ -133,7 +123,7 @@ function Notice() {
                                             <Link
                                                 to={`/noticeDetail/${notice.id}`}
                                                 className={noticeStyle.titleLink}
-                                                onClick={(e) => e.stopPropagation()} // row 클릭과 Link 클릭 분리
+                                                onClick={(e) => e.stopPropagation()} 
                                             >
                                                 {notice.title}
                                             </Link>
