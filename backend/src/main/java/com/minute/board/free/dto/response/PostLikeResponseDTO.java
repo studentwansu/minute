@@ -1,4 +1,4 @@
-package com.minute.board.free.dto.response; // 실제 프로젝트 구조에 맞게 패키지 경로를 수정해주세요.
+package com.minute.board.free.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-@AllArgsConstructor // 모든 필드를 사용하는 생성자
+@AllArgsConstructor
 @Schema(description = "게시글 좋아요 처리 응답 DTO")
 public class PostLikeResponseDTO {
 

@@ -1,4 +1,4 @@
-package com.minute.board.qna.entity; // 또는 enums 패키지
+package com.minute.board.qna.entity;
 
 public enum QnaStatus {
     PENDING, // 답변 대기

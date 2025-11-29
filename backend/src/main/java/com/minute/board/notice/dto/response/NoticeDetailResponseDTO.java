@@ -35,7 +35,4 @@ public class NoticeDetailResponseDTO {
     @Schema(description = "중요 공지 여부", example = "true")
     private boolean noticeIsImportant;
 
-    // 필요하다면 이전 글/다음 글 정보도 추가할 수 있습니다. (선택 사항)
-    // private SimpleNoticeInfo prevNotice;
-    // private SimpleNoticeInfo nextNotice;
 }

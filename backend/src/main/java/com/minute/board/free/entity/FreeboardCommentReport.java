@@ -1,6 +1,6 @@
 package com.minute.board.free.entity;
 
-import com.minute.user.entity.User; // User 엔티티 경로
+import com.minute.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "freeboard_comment_reports",
-        uniqueConstraints = { // 복합 유니크 키 설정
+        uniqueConstraints = {
                 @UniqueConstraint(name = "uk_fcr_user_comment", columnNames = {"user_id", "comment_id"})
         }
 )
@@ -30,7 +30,7 @@ public class FreeboardCommentReport {
     private LocalDateTime commentReportDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "comment_id", nullable = false) // FreeboardComment의 FK
+    @JoinColumn(name = "comment_id", nullable = false)
     private FreeboardComment freeboardComment;
 
     @ManyToOne(fetch = FetchType.LAZY)

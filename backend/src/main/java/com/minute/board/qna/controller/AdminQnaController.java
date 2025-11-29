@@ -27,20 +27,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import com.minute.board.qna.dto.response.QnaReportResponseDTO; // 추가
-import com.minute.board.qna.dto.response.ReportedQnaItemResponseDTO; // 추가
+import com.minute.board.qna.dto.response.QnaReportResponseDTO;
+import com.minute.board.qna.dto.response.ReportedQnaItemResponseDTO;
 
 import java.time.LocalDate;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/admin/qna") // 관리자용 QnA API 경로
+@RequestMapping("/api/v1/admin/qna")
 @RequiredArgsConstructor
 @Tag(name = "02. QnA (Admin)", description = "관리자용 문의(Q&A) 관리 API")
-@SecurityRequirement(name = "bearerAuth") // Swagger UI에서 JWT 인증 필요 명시
+@SecurityRequirement(name = "bearerAuth")
 public class AdminQnaController {
 
-    private final QnaService qnaService; // QnaServiceImpl 주입
+    private final QnaService qnaService;
 
     @Operation(summary = "전체 문의 목록 조회 (관리자용)", description = "관리자가 모든 문의 목록을 페이징, 검색, 필터 조건과 함께 조회합니다.")
     @Parameters({
@@ -64,7 +64,7 @@ public class AdminQnaController {
             @RequestParam(required = false) String statusFilter,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            Authentication authentication) { // 관리자 권한 확인은 Spring Security에서 처리
+            Authentication authentication) {
 
         log.info("Admin request: Get all QnAs. Filters - Search: '{}', Status: '{}', Start: {}, End: {}",
                 searchTerm, statusFilter, startDate, endDate);
@@ -104,14 +104,13 @@ public class AdminQnaController {
             @Valid @RequestBody QnaReplyRequestDTO requestDTO,
             Authentication authentication) {
 
-        String adminUserId = authentication.getName(); // 관리자 ID (Principal)
+        String adminUserId = authentication.getName();
         log.info("Admin request: Create reply for qnaId: {} by admin: {}", qnaId, adminUserId);
 
         QnaReplyResponseDTO createdReply = qnaService.createReplyToQna(qnaId, requestDTO, adminUserId);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdReply);
     }
 
-    // --- 관리자 답변 수정/삭제 엔드포인트 (새로 추가) ---
 
     @Operation(summary = "문의 답변 수정 (관리자용)", description = "관리자가 특정 문의 답변을 수정합니다.")
     @ApiResponses(value = {
@@ -121,7 +120,7 @@ public class AdminQnaController {
             @ApiResponse(responseCode = "403", description = "접근 권한 없음"),
             @ApiResponse(responseCode = "404", description = "수정할 답변을 찾을 수 없음")
     })
-    @PutMapping("/replies/{replyId}") // 경로를 /replies/{replyId}로 명확히 함
+    @PutMapping("/replies/{replyId}")
     public ResponseEntity<QnaReplyResponseDTO> updateAdminReply(
             @Parameter(description = "수정할 답변 ID", required = true, example = "1") @PathVariable Integer replyId,
             @Valid @RequestBody QnaReplyRequestDTO requestDTO,
@@ -141,7 +140,7 @@ public class AdminQnaController {
             @ApiResponse(responseCode = "403", description = "접근 권한 없음"),
             @ApiResponse(responseCode = "404", description = "삭제할 답변을 찾을 수 없음")
     })
-    @DeleteMapping("/replies/{replyId}") // 경로를 /replies/{replyId}로 명확히 함
+    @DeleteMapping("/replies/{replyId}")
     public ResponseEntity<Void> deleteAdminReply(
             @Parameter(description = "삭제할 답변 ID", required = true, example = "1") @PathVariable Integer replyId,
             Authentication authentication) {
@@ -150,10 +149,9 @@ public class AdminQnaController {
         log.info("Admin request: Delete reply ID: {} by admin: {}", replyId, adminUserId);
 
         qnaService.deleteAdminReply(replyId, adminUserId);
-        return ResponseEntity.noContent().build(); // HTTP 204 No Content
+        return ResponseEntity.noContent().build();
     }
 
-    // --- 관리자 QnA 신고 생성 엔드포인트 (새로 추가) ---
     @Operation(summary = "문의에 대한 관리자 신고 생성", description = "관리자가 특정 문의(QnA)에 대해 신고(QnaReport)를 생성합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "관리자 신고 성공적으로 생성됨",
@@ -163,23 +161,19 @@ public class AdminQnaController {
             @ApiResponse(responseCode = "404", description = "신고할 문의 또는 관리자 계정을 찾을 수 없음"),
             @ApiResponse(responseCode = "409", description = "이미 해당 관리자가 신고한 문의 (Conflict)")
     })
-    @PostMapping("/{qnaId}/reports") // 특정 QnA에 대한 'reports' 리소스 생성으로 해석
+    @PostMapping("/{qnaId}/reports")
     public ResponseEntity<QnaReportResponseDTO> createQnaReportByAdmin(
             @Parameter(description = "신고할 문의(QnA)의 ID", required = true, example = "1") @PathVariable Integer qnaId,
             Authentication authentication) {
 
-        String adminUserId = authentication.getName(); // 관리자 ID (Principal)
+        String adminUserId = authentication.getName();
         log.info("Admin request: Admin {} creating report for QnA ID: {}", adminUserId, qnaId);
 
-        // 서비스 호출: 성공 시 QnaReportResponseDTO 반환, 이미 신고했거나 문제 발생 시 예외 발생
-        // (QnaServiceImpl에서 EntityNotFoundException 또는 IllegalStateException 등을 던지도록 구현)
         QnaReportResponseDTO reportResponse = qnaService.createQnaReportByAdmin(qnaId, adminUserId);
 
-        // 성공적으로 새로운 신고가 생성된 경우
         return ResponseEntity.status(HttpStatus.CREATED).body(reportResponse);
     }
 
-    // --- (관리자용) 신고된 QnA 목록 조회 엔드포인트 (새로 추가) ---
     @Operation(summary = "신고된 QnA 목록 조회 (관리자용)",
             description = "관리자가 신고한 QnA 목록을 페이징, 검색, QnA 작성일자 필터 조건과 함께 조회합니다.")
     @Parameters({
@@ -187,7 +181,6 @@ public class AdminQnaController {
             @Parameter(name = "size", description = "페이지 당 항목 수", example = "10", in = ParameterIn.QUERY),
             @Parameter(name = "sort", description = "정렬 조건 (QnA 필드 기준, 예: inquiryCreatedAt,desc).", example = "inquiryCreatedAt,desc", in = ParameterIn.QUERY),
             @Parameter(name = "searchTerm", description = "검색어 (QnA 제목, 내용, QnA 작성자ID, 닉네임)", example = "문제", in = ParameterIn.QUERY),
-            // 👇 파라미터 이름 및 설명 변경
             @Parameter(name = "qnaCreationStartDate", description = "QnA 작성일 검색 시작일 (YYYY-MM-DD)", example = "2024-01-01", in = ParameterIn.QUERY),
             @Parameter(name = "qnaCreationEndDate", description = "QnA 작성일 검색 종료일 (YYYY-MM-DD)", example = "2024-12-31", in = ParameterIn.QUERY)
     })
@@ -200,13 +193,12 @@ public class AdminQnaController {
     public ResponseEntity<Page<ReportedQnaItemResponseDTO>> getReportedQnasForAdmin(
             @PageableDefault(size = 10, sort = "inquiryCreatedAt", direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(required = false) String searchTerm,
-            // 👇 @RequestParam 이름 변경
             @RequestParam(required = false, name = "qnaCreationStartDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate qnaCreationStartDate,
             @RequestParam(required = false, name = "qnaCreationEndDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate qnaCreationEndDate,
             Authentication authentication) {
 
         log.info("Admin request: Get reported QnAs. Search: '{}', QnA Creation Start: {}, QnA Creation End: {}",
-                searchTerm, qnaCreationStartDate, qnaCreationEndDate); // 로그 메시지 파라미터명 변경
+                searchTerm, qnaCreationStartDate, qnaCreationEndDate);
         Page<ReportedQnaItemResponseDTO> reportedQnaPage = qnaService.getReportedQnasForAdmin(pageable, searchTerm, qnaCreationStartDate, qnaCreationEndDate);
         return ResponseEntity.ok(reportedQnaPage);
     }

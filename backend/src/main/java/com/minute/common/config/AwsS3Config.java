@@ -1,4 +1,4 @@
-package com.minute.common.config; // 또는 com.minute.config
+package com.minute.common.config;
 
 //import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.context.annotation.Bean;

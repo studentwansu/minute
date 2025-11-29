@@ -41,7 +41,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Slf4j // <<< @Slf4j 어노테이션 추가
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

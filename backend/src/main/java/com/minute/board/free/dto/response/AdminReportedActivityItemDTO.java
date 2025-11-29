@@ -1,4 +1,4 @@
-package com.minute.board.free.dto.response; // 또는 com.minute.board.admin.dto 등
+package com.minute.board.free.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -38,7 +38,7 @@ public class AdminReportedActivityItemDTO {
     private String reporterNickname;
 
     @Schema(description = "신고 일시 (이 필드를 기준으로 정렬 가능)", example = "2025-05-27T10:00:00", requiredMode = Schema.RequiredMode.REQUIRED)
-    private LocalDateTime reportCreatedAt; // FreeboardPostReport의 postReportDate 또는 FreeboardCommentReport의 commentReportDate
+    private LocalDateTime reportCreatedAt;
 
     @Schema(description = "신고된 원본 항목 생성일시", example = "2025-05-26T15:00:00")
     private LocalDateTime originalItemCreatedAt;
@@ -46,7 +46,6 @@ public class AdminReportedActivityItemDTO {
     @Schema(description = "신고된 원본 항목 숨김 처리 여부", example = "false")
     private boolean isItemHidden;
 
-    // 댓글 신고의 경우, 해당 댓글이 달린 원본 게시글 ID (선택적)
     @Schema(description = "댓글 신고인 경우, 원본 게시글 ID", example = "205")
     private Integer originalPostIdForComment;
 }

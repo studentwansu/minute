@@ -23,13 +23,9 @@ import org.springframework.util.StringUtils;
 import com.minute.board.free.repository.specification.FreeboardPostReportSpecification;
 import com.minute.board.free.repository.specification.FreeboardCommentReportSpecification;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,20 +43,14 @@ public class AdminReportViewServiceImpl implements AdminReportViewService {
 
         AdminReportFilterDTO queryFilter = prepareQueryFilter(filter);
 
-        // 1. 게시글 신고 목록 필터링 및 조회
         Specification<FreeboardPostReport> postReportSpec = createPostReportSpecification(queryFilter);
-        // Pageable의 'reportCreatedAt' 정렬을 엔티티의 'postReportDate'로 변경
         Sort postSort = replaceSortProperty(pageable.getSort(), "reportCreatedAt", "postReportDate");
         List<FreeboardPostReport> postReports = freeboardPostReportRepository.findAll(postReportSpec, postSort);
 
-        // 2. 댓글 신고 목록 필터링 및 조회
         Specification<FreeboardCommentReport> commentReportSpec = createCommentReportSpecification(queryFilter);
-        // Pageable의 'reportCreatedAt' 정렬을 엔티티의 'commentReportDate'로 변경
         Sort commentSort = replaceSortProperty(pageable.getSort(), "reportCreatedAt", "commentReportDate");
         List<FreeboardCommentReport> commentReports = freeboardCommentReportRepository.findAll(commentReportSpec, commentSort);
 
-        // ... (이하 DTO 변환, 병합, 최종 정렬, 수동 페이징 로직은 이전 답변과 동일)
-        // 3. DTO 변환 및 병합
         List<AdminReportedActivityItemDTO> activities = new ArrayList<>();
 
         postReports.forEach(report -> {
@@ -83,7 +73,7 @@ public class AdminReportViewServiceImpl implements AdminReportViewService {
                     .reportedItemAuthorNickname(postAuthor.getUserNickName())
                     .reporterUserId(reporter.getUserId())
                     .reporterNickname(reporter.getUserNickName())
-                    .reportCreatedAt(report.getPostReportDate()) // DTO 필드명과 일치
+                    .reportCreatedAt(report.getPostReportDate())
                     .originalItemCreatedAt(post.getPostCreatedAt())
                     .isItemHidden(post.isPostIsHidden())
                     .build());
@@ -110,17 +100,15 @@ public class AdminReportViewServiceImpl implements AdminReportViewService {
                     .reportedItemAuthorNickname(commentAuthor.getUserNickName())
                     .reporterUserId(reporter.getUserId())
                     .reporterNickname(reporter.getUserNickName())
-                    .reportCreatedAt(report.getCommentReportDate()) // DTO 필드명과 일치
+                    .reportCreatedAt(report.getCommentReportDate())
                     .originalItemCreatedAt(comment.getCommentCreatedAt())
                     .isItemHidden(comment.isCommentIsHidden())
                     .originalPostIdForComment(originalPost.getPostId())
                     .build());
         });
 
-        // 4. 통합 목록 정렬 (메모리에서 DTO의 reportCreatedAt 필드 기준)
         if (pageable.getSort().isSorted()) {
             for (Sort.Order order : pageable.getSort()) {
-                // getComparableField는 DTO의 필드명("reportCreatedAt" 등)을 사용해야 함
                 Comparator<AdminReportedActivityItemDTO> comparator = Comparator.comparing(
                         activity -> getComparableField(activity, order.getProperty()),
                         Comparator.nullsLast(Comparator.naturalOrder())
@@ -134,11 +122,10 @@ public class AdminReportViewServiceImpl implements AdminReportViewService {
             activities.sort(Comparator.comparing(AdminReportedActivityItemDTO::getReportCreatedAt, Comparator.nullsLast(Comparator.reverseOrder())));
         }
 
-        // 5. 수동 페이징 처리
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), activities.size());
         List<AdminReportedActivityItemDTO> pageContent = List.of();
-        if (start < end ) { // activities.size() > start 조건도 내포
+        if (start < end ) {
             pageContent = activities.subList(start, end);
         }
 
@@ -156,10 +143,9 @@ public class AdminReportViewServiceImpl implements AdminReportViewService {
                 .build();
     }
 
-    // Sort 객체의 프로퍼티 이름을 변경하는 헬퍼 메서드
     private Sort replaceSortProperty(Sort originalSort, String fromProperty, String toProperty) {
         if (!originalSort.isSorted()) {
-            return originalSort; // 정렬 조건이 없으면 그대로 반환
+            return originalSort;
         }
         List<Sort.Order> newOrders = originalSort.stream()
                 .map(order -> {
@@ -172,7 +158,6 @@ public class AdminReportViewServiceImpl implements AdminReportViewService {
         return Sort.by(newOrders);
     }
 
-    // ... (prepareQueryFilter, getComparableField, create...Specification 메서드들은 이전과 동일)
     private AdminReportFilterDTO prepareQueryFilter(AdminReportFilterDTO originalFilter) {
         AdminReportFilterDTO queryFilter = new AdminReportFilterDTO();
         queryFilter.setKeyword(originalFilter.getKeyword());

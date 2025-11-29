@@ -28,18 +28,17 @@ public class AdminReportedCommentFilterDTO {
     @Schema(description = "댓글 숨김 상태 (true: 숨김, false: 공개, null: 전체)", example = "false")
     private Boolean isHidden;
 
-    @Schema(description = "댓글 작성일 검색 시작일 (YYYY-MM-DD)", example = "2025-05-01") // 설명 변경: 신고일 -> 댓글 작성일
+    @Schema(description = "댓글 작성일 검색 시작일 (YYYY-MM-DD)", example = "2025-05-01")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate commentCreatedAtStartDate; // 필드명 변경: reportStartDate -> commentCreatedAtStartDate
+    private LocalDate commentCreatedAtStartDate;
 
-    @Schema(description = "댓글 작성일 검색 종료일 (YYYY-MM-DD)", example = "2025-05-31") // 설명 변경: 신고일 -> 댓글 작성일
+    @Schema(description = "댓글 작성일 검색 종료일 (YYYY-MM-DD)", example = "2025-05-31")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate commentCreatedAtEndDate; // 필드명 변경: reportEndDate -> commentCreatedAtEndDate
-
-    // --- JPQL 쿼리용 조정된 날짜 필드 ---
-    @Schema(hidden = true)
-    private LocalDateTime queryCommentCreatedAtStartDate; // 필드명 변경: queryReportStartDate -> queryCommentCreatedAtStartDate
+    private LocalDate commentCreatedAtEndDate;
 
     @Schema(hidden = true)
-    private LocalDateTime queryCommentCreatedAtEndDate; // 필드명 변경: queryReportEndDate -> queryCommentCreatedAtEndDate
+    private LocalDateTime queryCommentCreatedAtStartDate;
+
+    @Schema(hidden = true)
+    private LocalDateTime queryCommentCreatedAtEndDate;
 }

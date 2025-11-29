@@ -1,7 +1,7 @@
 package com.minute.board.notice.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Size; // 선택적 필드에도 길이 제한은 유효할 수 있음
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,5 +20,5 @@ public class NoticeUpdateRequestDTO {
     private String noticeContent;
 
     @Schema(description = "수정할 중요 공지 여부 (선택 사항)", example = "true")
-    private Boolean noticeIsImportant; // boolean 대신 Boolean을 사용하여 null 값 허용 (수정 안 함을 의미)
+    private Boolean noticeIsImportant;
 }

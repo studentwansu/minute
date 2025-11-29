@@ -15,7 +15,7 @@ import java.util.UUID;
 public class LocalFileStorageService implements FileStorageService {
 
     @Value("${file.storage.local.base-path:C:/minute-uploads}")
-    private String basePath; // 예: C:/minute-uploads
+    private String basePath;
 
     @Override
     public String uploadFile(MultipartFile file, String subDirectory) throws IOException {
@@ -32,8 +32,6 @@ public class LocalFileStorageService implements FileStorageService {
         Path target = dir.resolve(savedName);
         Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
 
-        // spring.web.resources.static-locations에 basePath가 잡혀있으니
-        // URL은 "/{subDirectory}/{savedName}"로 접근 가능
         String urlPath = "/" + (subDirectory == null ? "" : subDirectory + "/") + savedName;
         return urlPath;
     }
@@ -54,7 +52,6 @@ public class LocalFileStorageService implements FileStorageService {
     @Override
     public void deleteFile(String fileKey) {
         if (fileKey == null || fileKey.isEmpty()) return;
-        // fileKey가 "/qna/xxx" 형태라고 가정
         String rel = fileKey.startsWith("/") ? fileKey.substring(1) : fileKey;
         Path p = Paths.get(basePath, rel);
         try { Files.deleteIfExists(p); } catch (IOException ignored) { }
@@ -62,6 +59,6 @@ public class LocalFileStorageService implements FileStorageService {
 
     @Override
     public String getFileUrl(String fileKey) {
-        return fileKey; // 정적 리소스로 서빙되므로 상대경로 그대로 반환
+        return fileKey;
     }
 }

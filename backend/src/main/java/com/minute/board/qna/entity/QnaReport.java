@@ -1,6 +1,6 @@
 package com.minute.board.qna.entity;
 
-import com.minute.user.entity.User; // User 엔티티 경로
+import com.minute.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "inquiry_reports", // DB 테이블명은 'inquiry_reports'
-        uniqueConstraints = { // 복합 유니크 키 설정
+@Table(name = "inquiry_reports",
+        uniqueConstraints = {
                 @UniqueConstraint(name = "uk_ir_user_inquiry", columnNames = {"user_id", "inquiry_id"})
         }
 )
-public class QnaReport { // 클래스명은 'QnaReport'
+public class QnaReport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class QnaReport { // 클래스명은 'QnaReport'
     private LocalDateTime inquiryReportDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "inquiry_id", nullable = false) // Qna의 FK
+    @JoinColumn(name = "inquiry_id", nullable = false)
     private Qna qna;
 
     @ManyToOne(fetch = FetchType.LAZY)

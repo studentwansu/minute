@@ -1,4 +1,4 @@
-package com.minute.board.common.dto.response; // 공통 응답 DTO 패키지로 이동 고려
+package com.minute.board.common.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

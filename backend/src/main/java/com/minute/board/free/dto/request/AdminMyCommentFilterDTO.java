@@ -1,4 +1,4 @@
-package com.minute.board.free.dto.request; // 실제 패키지 경로에 맞게 조정해주세요.
+package com.minute.board.free.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -24,7 +24,6 @@ public class AdminMyCommentFilterDTO {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate endDate;
 
-    // --- JPQL 또는 Specification 내부에서 사용할 조정된 날짜 필드 ---
     @Schema(hidden = true)
     private LocalDateTime queryStartDate;
 

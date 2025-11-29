@@ -1,6 +1,6 @@
 package com.minute.board.free.entity;
 
-import com.minute.user.entity.User; // User 엔티티 경로
+import com.minute.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -31,10 +31,10 @@ public class FreeboardComment {
 
     @Column(name = "comment_like_count", nullable = false)
     @ColumnDefault("0")
-    private int commentLikeCount = 0; // 실제 좋아요 수는 FreeboardCommentLike 테이블 집계를 통해 관리될 수도 있습니다.
+    private int commentLikeCount = 0;
 
     @Column(name = "comment_is_hidden", nullable = false)
-    @ColumnDefault("false") // DB 스키마: DEFAULT 0
+    @ColumnDefault("false")
     private boolean commentIsHidden = false;
 
     @CreationTimestamp
@@ -50,7 +50,7 @@ public class FreeboardComment {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id", nullable = false) // FreeboardPost의 FK
+    @JoinColumn(name = "post_id", nullable = false)
     private FreeboardPost freeboardPost;
 
     @OneToMany(mappedBy = "freeboardComment", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

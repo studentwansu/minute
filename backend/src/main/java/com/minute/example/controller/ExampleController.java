@@ -1,7 +1,7 @@
 package com.minute.example.controller;
 
-import com.minute.example.dto.ExampleRequestDto; // 방금 만드신 DTO 임포트
-import com.minute.example.dto.ExampleResponseDto; // 방금 만드신 DTO 임포트
+import com.minute.example.dto.ExampleRequestDto;
+import com.minute.example.dto.ExampleResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*; // Spring Web 어노테이션 임포트
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI; // ResponseEntity.created() 사용 시 필요
 

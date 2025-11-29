@@ -27,5 +27,4 @@ public class QnaUpdateRequestDTO {
     @Schema(description = "삭제할 기존 첨부파일 ID 목록 (없으면 빈 리스트 또는 null)", example = "[1, 3]")
     private List<Integer> attachmentIdsToDelete;
 
-    // 새로운 첨부파일은 컨트롤러에서 @RequestPart List<MultipartFile> newFiles 로 받습니다.
 }

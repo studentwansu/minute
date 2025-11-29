@@ -22,5 +22,4 @@ public class QnaCreateRequestDTO {
     @Schema(description = "문의 내용", requiredMode = Schema.RequiredMode.REQUIRED, example = "문의 내용입니다...")
     private String inquiryContent;
 
-    // 첨부파일은 컨트롤러에서 @RequestPart List<MultipartFile> files 로 받습니다.
 }

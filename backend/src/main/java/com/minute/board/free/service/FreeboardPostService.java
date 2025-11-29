@@ -1,11 +1,11 @@
-package com.minute.board.free.service; // 실제 프로젝트 구조에 맞게 패키지 경로를 수정해주세요.
+package com.minute.board.free.service;
 
 import com.minute.board.common.dto.response.PageResponseDTO;
 import com.minute.board.common.dto.response.ReportSuccessResponseDTO;
-import com.minute.board.free.dto.request.*; // request DTO들 import
-import com.minute.board.free.dto.response.*; // response DTO들 import
+import com.minute.board.free.dto.request.*;
+import com.minute.board.free.dto.response.*;
 import org.springframework.data.domain.Pageable;
-import org.springframework.lang.Nullable; // @Nullable 어노테이션 사용
+import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
 
@@ -49,7 +49,7 @@ public interface FreeboardPostService {
      * @return 생성된 게시글 상세 정보 (FreeboardPostResponseDTO)
      * @throws jakarta.persistence.EntityNotFoundException currentUserId에 해당하는 사용자가 없을 경우
      */
-    FreeboardPostResponseDTO createPost(FreeboardPostRequestDTO requestDto, String currentUserId); // <<< currentUserId 파라미터 추가
+    FreeboardPostResponseDTO createPost(FreeboardPostRequestDTO requestDto, String currentUserId);
 
     /**
      * 특정 ID의 자유게시판 게시글을 수정합니다.
@@ -61,7 +61,7 @@ public interface FreeboardPostService {
      * @throws jakarta.persistence.EntityNotFoundException 해당 ID의 게시글이 없거나, currentUserId에 해당하는 사용자가 없을 경우
      * @throws org.springframework.security.access.AccessDeniedException 수정 권한이 없을 경우
      */
-    FreeboardPostResponseDTO updatePost(Integer postId, FreeboardPostRequestDTO requestDto, String currentUserId); // <<< currentUserId 파라미터 추가
+    FreeboardPostResponseDTO updatePost(Integer postId, FreeboardPostRequestDTO requestDto, String currentUserId);
 
     /**
      * 특정 ID의 자유게시판 게시글을 삭제합니다.
@@ -71,7 +71,7 @@ public interface FreeboardPostService {
      * @throws jakarta.persistence.EntityNotFoundException 해당 ID의 게시글이 없을 경우
      * @throws org.springframework.security.access.AccessDeniedException 삭제 권한이 없을 경우
      */
-    void deletePost(Integer postId, String currentUserId); // <<< requestUserId를 currentUserId로 변경
+    void deletePost(Integer postId, String currentUserId);
 
     /**
      * 특정 게시글에 대한 사용자의 좋아요 상태를 토글(추가/삭제)합니다.
@@ -81,7 +81,7 @@ public interface FreeboardPostService {
      * @return 게시글의 현재 좋아요 수와 사용자의 좋아요 상태 (PostLikeResponseDTO)
      * @throws jakarta.persistence.EntityNotFoundException 해당 ID의 게시글 또는 사용자가 없을 경우
      */
-    PostLikeResponseDTO togglePostLike(Integer postId, String currentUserId); // <<< requestDto 파라미터 제거, currentUserId 추가
+    PostLikeResponseDTO togglePostLike(Integer postId, String currentUserId);
 
     /**
      * 특정 게시글을 신고합니다. 사용자는 하나의 게시글에 대해 한 번만 신고할 수 있습니다.
@@ -93,7 +93,7 @@ public interface FreeboardPostService {
      * @throws jakarta.persistence.EntityNotFoundException 해당 ID의 게시글 또는 사용자가 없을 경우
      * @throws IllegalStateException 이미 신고한 게시글이거나 자신의 게시글을 신고하려는 경우
      */
-    ReportSuccessResponseDTO reportPost(Integer postId, String currentUserId); // <<< requestDto 파라미터 제거, currentUserId 추가
+    ReportSuccessResponseDTO reportPost(Integer postId, String currentUserId);
 
     /**
      * 관리자가 신고된 게시글 목록을 페이징하여 조회합니다.
@@ -121,5 +121,5 @@ public interface FreeboardPostService {
      * @param pageable 페이징 정보 (정렬 기준은 주로 createdAt)
      * @return 페이징된 사용자 활동 목록
      */
-    PageResponseDTO<FreeboardUserActivityItemDTO> getUserFreeboardActivity(String currentUserId, Pageable pageable); // <<< userId를 currentUserId로 변경
+    PageResponseDTO<FreeboardUserActivityItemDTO> getUserFreeboardActivity(String currentUserId, Pageable pageable);
 }

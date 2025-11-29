@@ -1,4 +1,4 @@
-package com.minute.board.free.repository.specification; // specification 패키지 예시
+package com.minute.board.free.repository.specification;
 
 import com.minute.board.free.entity.FreeboardPost;
 import org.springframework.data.jpa.domain.Specification;
@@ -46,8 +46,6 @@ public class FreeboardPostSpecification {
      */
     public static Specification<FreeboardPost> authorNicknameContains(String keyword) {
         return (root, query, criteriaBuilder) -> {
-            // 명시적 조인 (User 엔티티의 userNickName 필드 검색)
-            // Join<FreeboardPost, User> userJoin = root.join("user", JoinType.INNER); // 이미 관계 매핑이 되어 있다면 root.get("user")로 접근 가능
             return criteriaBuilder.like(root.get("user").get("userNickName"), "%" + keyword + "%");
         };
     }

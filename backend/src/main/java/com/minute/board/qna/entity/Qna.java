@@ -1,6 +1,6 @@
 package com.minute.board.qna.entity;
 
-import com.minute.user.entity.User; // User 엔티티 경로
+import com.minute.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,8 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "inquiries") // DB 테이블명은 'inquiries'
-public class Qna { // 클래스명은 'Qna'
+@Table(name = "inquiries")
+public class Qna {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public class Qna { // 클래스명은 'Qna'
 
     @Enumerated(EnumType.STRING)
     @Column(name = "inquiry_status", nullable = false)
-    @ColumnDefault("'PENDING'") // DB ENUM 기본값: PENDING
+    @ColumnDefault("'PENDING'")
     private QnaStatus inquiryStatus = QnaStatus.PENDING;
 
     @CreationTimestamp
@@ -49,7 +49,6 @@ public class Qna { // 클래스명은 'Qna'
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "user_id")
     private User user;
 
-    // Qna 입장에서 QnaReply는 하나만 가짐 (1:1 관계, QnaReply가 Qna의 FK를 가짐)
     @OneToOne(mappedBy = "qna", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private QnaReply qnaReply;
 

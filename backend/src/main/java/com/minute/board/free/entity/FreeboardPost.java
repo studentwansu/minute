@@ -1,6 +1,6 @@
 package com.minute.board.free.entity;
 
-import com.minute.user.entity.User; // User 엔티티 경로
+import com.minute.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -38,10 +38,10 @@ public class FreeboardPost {
 
     @Column(name = "post_like_count", nullable = false)
     @ColumnDefault("0")
-    private int postLikeCount = 0; // 실제 좋아요 수는 FreeboardPostLike 테이블 집계를 통해 관리될 수도 있습니다.
+    private int postLikeCount = 0;
 
     @Column(name = "post_is_hidden", nullable = false)
-    @ColumnDefault("false") // DB 스키마: DEFAULT 0
+    @ColumnDefault("false")
     private boolean postIsHidden = false;
 
     @CreationTimestamp

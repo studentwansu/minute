@@ -1,4 +1,4 @@
-package com.minute.board.free.dto.response; // 패키지 경로는 실제 프로젝트에 맞게 조정해주세요.
+package com.minute.board.free.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -45,6 +45,6 @@ public class FreeboardCommentResponseDTO {
     @Schema(description = "현재 로그인한 사용자의 해당 댓글 신고 여부", example = "false")
     private boolean isReportedByCurrentUser;
 
-    @Schema(description = "댓글 작성자의 역할", example = "USER") // 예: "USER", "ADMIN"
+    @Schema(description = "댓글 작성자의 역할", example = "USER")
     private String authorRole;
 }

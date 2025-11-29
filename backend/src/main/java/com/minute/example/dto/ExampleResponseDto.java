@@ -14,7 +14,6 @@ public class ExampleResponseDto {
     @Schema(description = "요청된 항목 이름", example = "샘플 항목")
     private String requestedItemName;
 
-    // --- 생성자 및 Getter/Setter ---
     public ExampleResponseDto(Long resultId, String message, String requestedItemName) {
         this.resultId = resultId;
         this.message = message;

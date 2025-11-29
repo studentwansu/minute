@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "inquiry_attachments") // DB 테이블명은 'inquiry_attachments'
-public class QnaAttachment { // 클래스명은 'QnaAttachment'
+@Table(name = "inquiry_attachments")
+public class QnaAttachment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class QnaAttachment { // 클래스명은 'QnaAttachment'
     private Integer imgId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "inquiry_id", nullable = false) // Qna의 FK
+    @JoinColumn(name = "inquiry_id", nullable = false)
     private Qna qna;
 
     @Column(name = "img_file_path", nullable = false, length = 255)

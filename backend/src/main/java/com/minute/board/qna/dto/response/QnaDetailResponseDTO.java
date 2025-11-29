@@ -33,23 +33,9 @@ public class QnaDetailResponseDTO {
     private LocalDateTime inquiryUpdatedAt;
 
     @Schema(description = "첨부파일 목록")
-    private List<QnaAttachmentResponseDTO> attachments; // 내부적으로 S3 URL 포함
+    private List<QnaAttachmentResponseDTO> attachments;
 
     @Schema(description = "답변 정보 (없을 경우 null)")
     private QnaReplyResponseDTO reply;
 
-    // Qna 엔티티, 첨부파일 DTO 목록, 답변 DTO로부터 이 DTO를 생성하는 정적 메서드 (예시)
-    // public static QnaDetailResponseDTO fromEntity(Qna qna, List<QnaAttachmentResponseDTO> attachmentDTOs, QnaReplyResponseDTO replyDTO) {
-    //     return QnaDetailResponseDTO.builder()
-    //             .inquiryId(qna.getInquiryId())
-    //             .inquiryTitle(qna.getInquiryTitle())
-    //             .inquiryContent(qna.getInquiryContent())
-    //             .authorNickname(qna.getUser() != null ? qna.getUser().getUserNickName() : "알 수 없음")
-    //             .inquiryStatus(qna.getInquiryStatus().name())
-    //             .inquiryCreatedAt(qna.getInquiryCreatedAt())
-    //             .inquiryUpdatedAt(qna.getInquiryUpdatedAt())
-    //             .attachments(attachmentDTOs)
-    //             .reply(replyDTO)
-    //             .build();
-    // }
 }

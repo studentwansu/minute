@@ -6,14 +6,13 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime; // LocalDateTime 사용 시
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Schema(description = "관리자용 신고된 게시글 목록 검색/필터 조건 DTO")
 public class AdminReportedPostFilterDTO {
 
-    // ... (다른 필드들은 동일)
     @Schema(description = "게시글 ID로 검색", example = "101")
     private Integer postId;
 
@@ -40,7 +39,6 @@ public class AdminReportedPostFilterDTO {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate postEndDate;
 
-    // --- JPQL 쿼리용 조정된 날짜 필드 ---
     @Schema(hidden = true)
     private LocalDateTime queryPostStartDate;
 

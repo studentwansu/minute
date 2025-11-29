@@ -20,7 +20,7 @@ public class QnaSummaryResponseDTO {
     private String authorNickname;
 
     @Schema(description = "문의 상태 (PENDING, ANSWERED)", example = "ANSWERED")
-    private String inquiryStatus; // QnaStatus Enum 값을 문자열로
+    private String inquiryStatus;
 
     @Schema(description = "문의 작성 시각")
     private LocalDateTime inquiryCreatedAt;
@@ -28,15 +28,4 @@ public class QnaSummaryResponseDTO {
     @Schema(description = "첨부파일 존재 여부", example = "true")
     private boolean hasAttachments;
 
-    // Qna 엔티티로부터 DTO를 생성하는 정적 메서드 (예시)
-    // public static QnaSummaryResponseDTO fromEntity(Qna qna) {
-    //     return QnaSummaryResponseDTO.builder()
-    //             .inquiryId(qna.getInquiryId())
-    //             .inquiryTitle(qna.getInquiryTitle())
-    //             .authorNickname(qna.getUser() != null ? qna.getUser().getUserNickName() : "알 수 없음")
-    //             .inquiryStatus(qna.getInquiryStatus().name())
-    //             .inquiryCreatedAt(qna.getInquiryCreatedAt())
-    //             .hasAttachments(qna.getAttachments() != null && !qna.getAttachments().isEmpty())
-    //             .build();
-    // }
 }

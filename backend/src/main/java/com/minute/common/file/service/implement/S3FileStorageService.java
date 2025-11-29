@@ -1,6 +1,6 @@
-package com.minute.common.file.service.implement; // 또는 com.minute.board.qna.service.implement
+package com.minute.common.file.service.implement;
 
-//import com.minute.common.file.service.FileStorageService; // 인터페이스 경로
+//import com.minute.common.file.service.FileStorageService;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.stereotype.Service;

@@ -37,32 +37,16 @@ public class AdminQnaDetailResponseDTO {
     private LocalDateTime inquiryUpdatedAt;
 
     @Schema(description = "첨부파일 목록")
-    private List<QnaAttachmentResponseDTO> attachments; // 내부적으로 S3 URL 포함
+    private List<QnaAttachmentResponseDTO> attachments;
 
     @Schema(description = "답변 정보 (없을 경우 null)")
     private QnaReplyResponseDTO reply;
 
     @Schema(description = "해당 문의에 대한 신고 건수", example = "0")
-    private long reportCount; // QnaReport 개수
+    private long reportCount;
 
-    // 👇 새로운 필드 추가
     @Schema(description = "현재 요청한 관리자가 이 문의를 신고했는지 여부", example = "false")
-    private boolean reportedByCurrentUserAdmin; // 필드명은 상황에 맞게 조절 가능
+    private boolean reportedByCurrentUserAdmin;
 
-    // Qna 엔티티 등에서 이 DTO를 생성하는 정적 메서드 (예시)
-    // public static AdminQnaDetailResponseDTO fromEntity(Qna qna, List<QnaAttachmentResponseDTO> attachmentDTOs, QnaReplyResponseDTO replyDTO, long reportCount) {
-    //     return AdminQnaDetailResponseDTO.builder()
-    //             .inquiryId(qna.getInquiryId())
-    //             .inquiryTitle(qna.getInquiryTitle())
-    //             .inquiryContent(qna.getInquiryContent())
-    //             .authorUserId(qna.getUser() != null ? qna.getUser().getUserId() : "알 수 없음")
-    //             .authorNickname(qna.getUser() != null ? qna.getUser().getUserNickName() : "알 수 없음")
-    //             .inquiryStatus(qna.getInquiryStatus().name())
-    //             .inquiryCreatedAt(qna.getInquiryCreatedAt())
-    //             .inquiryUpdatedAt(qna.getInquiryUpdatedAt())
-    //             .attachments(attachmentDTOs)
-    //             .reply(replyDTO)
-    //             .reportCount(reportCount)
-    //             .build();
-    // }
+
 }

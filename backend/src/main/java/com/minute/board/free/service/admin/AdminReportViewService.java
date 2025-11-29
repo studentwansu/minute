@@ -1,8 +1,8 @@
-package com.minute.board.free.service.admin; // 예시 패키지
+package com.minute.board.free.service.admin;
 
 import com.minute.board.common.dto.response.PageResponseDTO;
 import com.minute.board.free.dto.request.AdminReportFilterDTO;
-import com.minute.board.free.dto.response.AdminReportedActivityItemDTO; // 위에서 정의한 DTO
+import com.minute.board.free.dto.response.AdminReportedActivityItemDTO;
 import org.springframework.data.domain.Pageable;
 
 public interface AdminReportViewService {
@@ -14,7 +14,7 @@ public interface AdminReportViewService {
      * @return 페이징된 신고 활동 목록
      */
     PageResponseDTO<AdminReportedActivityItemDTO> getAllReportedActivities(
-            AdminReportFilterDTO filter, // <<< filter 파라미터 추가
+            AdminReportFilterDTO filter,
             Pageable pageable
     );
 }

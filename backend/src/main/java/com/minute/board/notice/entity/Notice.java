@@ -1,6 +1,6 @@
 package com.minute.board.notice.entity;
 
-import com.minute.user.entity.User; // User 엔티티 경로
+import com.minute.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -31,7 +31,7 @@ public class Notice {
     private String noticeContent;
 
     @Column(name = "notice_is_important", nullable = false)
-    @ColumnDefault("false") // DB 스키마: DEFAULT 0
+    @ColumnDefault("false")
     private boolean noticeIsImportant = false;
 
     @Column(name = "notice_view_count", nullable = false)
@@ -48,5 +48,5 @@ public class Notice {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "user_id")
-    private User user; // User 엔티티 참조
+    private User user;
 }

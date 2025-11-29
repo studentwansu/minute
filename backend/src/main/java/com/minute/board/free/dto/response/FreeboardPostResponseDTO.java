@@ -1,4 +1,4 @@
-package com.minute.board.free.dto.response; // 실제 프로젝트 구조에 맞게 패키지 경로를 수정해주세요.
+package com.minute.board.free.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-@Builder // 빌더 패턴 사용 (Service에서 DTO 변환 시 유용)
+@Builder
 @Schema(description = "자유게시판 게시글 상세 조회 응답 DTO")
 public class FreeboardPostResponseDTO {
 
@@ -27,7 +27,7 @@ public class FreeboardPostResponseDTO {
     private int postLikeCount;
 
     @Schema(description = "게시글 숨김 여부 (true: 숨김, false: 공개)", example = "false")
-    private boolean postIsHidden; // DB는 TINYINT(1) 이지만 Java에서는 boolean
+    private boolean postIsHidden;
 
     @Schema(description = "게시글 작성일시", example = "2025-05-24T10:30:00")
     private LocalDateTime postCreatedAt;
@@ -36,12 +36,11 @@ public class FreeboardPostResponseDTO {
     private LocalDateTime postUpdatedAt;
 
     @Schema(description = "작성자 User ID", example = "testUser123")
-    private String userId; // User 엔티티의 ID
+    private String userId;
 
     @Schema(description = "작성자 닉네임", example = "날씨요정")
-    private String userNickName; // User 엔티티에서 가져올 닉네임
+    private String userNickName;
 
-    // <<< 추가된 필드 >>>
     @Schema(description = "현재 로그인한 사용자의 해당 게시글 좋아요 여부", example = "true")
     private boolean isLikedByCurrentUser;
 

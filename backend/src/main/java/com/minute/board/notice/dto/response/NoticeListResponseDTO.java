@@ -1,11 +1,11 @@
 package com.minute.board.notice.dto.response;
 
-import io.swagger.v3.oas.annotations.media.Schema; // Schema 임포트
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import java.time.LocalDateTime;
 
-@Schema(description = "공지사항 목록 항목 응답 DTO") // 클래스에 대한 설명
+@Schema(description = "공지사항 목록 항목 응답 DTO")
 @Getter
 @Builder
 public class NoticeListResponseDTO {
