@@ -52,3 +52,17 @@
 
 ## 프로젝트 회고
 <img src="./images/24.png" width="900">
+
+## 실행에 필요한 환경변수
+값은 저장소에 넣지 않습니다.
+
+**`frontend/api/.env`** (유튜브 수집 스크립트 `saveYoutube.js` — 예시: `frontend/api/.env.example`)
+
+| 이름 | 용도 |
+|:--|:--|
+| `YOUTUBE_API_KEY` | YouTube Data API v3 키 |
+| `DB_HOST` · `DB_USER` · `DB_PASS` · `DB_NAME` | 영상을 저장할 MySQL 접속 정보 |
+
+**`frontend/.env`** (선택): `VITE_API_BASE_URL` — 백엔드 주소
+
+**`backend` `application.yml`** (git에서 제외된 파일): `jwt.key` · `jwt.time` · `youtube.api.key` · `weather.api.key`와 DB 설정
